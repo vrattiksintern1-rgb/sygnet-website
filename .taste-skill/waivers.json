@@ -1,0 +1,42 @@
+[
+  {
+    "check": "section-height",
+    "target": "main > section",
+    "reason": "Client request 2026-11-18: sections fit their content instead of filling one or two screens (also covers one-section, section-air, section-tile)."
+  },
+  {
+    "check": "phone-number",
+    "target": "+91 95749 60077",
+    "reason": "Client brief requires the real phone number on every page (approved conflict #1)."
+  },
+  {
+    "check": "no-visual",
+    "target": "section#trust",
+    "reason": "Brief requires hospital names as text only, no logos, until the client sends files and written permission."
+  },
+  {
+    "check": "button-styles",
+    "target": "footer.closing",
+    "reason": "On the Indigo band Signal Blue reaches only 2:1 against the ground, so the inverse action takes the brand's Sky."
+  },
+  {
+    "check": "palette",
+    "target": ":root",
+    "reason": "Client brand kit (BrandKit (1).pdf) overrides the earlier steel blue + Mona Sans decision: Indigo #293681, Signal Blue #4675d7, Sky #94cddd, Mist #f5ffff, Jost; Nulshock not shipped (desktop-only licence)."
+  },
+  {
+    "check": "button-styles",
+    "target": "section.hx, header.nav--glass",
+    "reason": "Client brief 2026-11-19 (Home hero rebuild): rounded glass card, pill nav, outlined header button and pill hero button on the dark hero; the cut-corner buttons stay on every other surface."
+  },
+  {
+    "check": "hero-enter",
+    "target": "section.hx",
+    "reason": "Client brief 2026-11-19: the Home hero runs its own ~3 s timeline (word fade, typewriter, workflow drawing in) in site.css instead of the kit's data-enter entrance."
+  },
+  {
+    "check": "loop-pause",
+    "target": "section.hx",
+    "reason": "Client brief 2026-11-19 asks for the tiles' slow float and the connector pulse to keep moving. They are decorative, pause off screen and under reduced motion; a visible pause control is still to be agreed with the client (WCAG 2.2.2)."
+  }
+]

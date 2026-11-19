@@ -1,0 +1,36 @@
+{
+ "history": [
+  {
+   "at": "2026-11-19T04:16:38.738Z",
+   "mode": "hook",
+   "host": "claude",
+   "decision": "block",
+   "reason": "site/index.html is a tasteskill page with no build armed: told how to arm it",
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-19T04:16:41.962Z",
+   "mode": "hook",
+   "host": "claude",
+   "decision": "allow",
+   "reason": "no build is active here",
+   "stopHookActive": true
+  },
+  {
+   "at": "2026-11-19T05:44:22.751Z",
+   "mode": "hook",
+   "host": "claude",
+   "decision": "allow",
+   "reason": "no build is active here",
+   "stopHookActive": false
+  },
+  {
+   "at": "2026-11-19T07:24:08.826Z",
+   "mode": "hook",
+   "host": "claude",
+   "decision": "allow",
+   "reason": "no build is active here",
+   "stopHookActive": false
+  }
+ ]
+}

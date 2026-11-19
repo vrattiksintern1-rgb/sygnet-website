@@ -1,0 +1,1328 @@
+{
+ "start": "2026-11-18T04:37:11.854Z",
+ "round": 0,
+ "idle": 0,
+ "errors": 0,
+ "status": "done",
+ "history": [
+  {
+   "at": "2026-11-19T04:08:27.838Z",
+   "mode": "hook",
+   "host": "claude",
+   "status": "fail",
+   "fails": 30,
+   "round": 0,
+   "reused": false,
+   "stopHookActive": false,
+   "decision": "block",
+   "reason": "30 FAILs remain (not a round: the gate has not been run by hand in this build yet):"
+  },
+  {
+   "at": "2026-11-19T04:09:00.236Z",
+   "mode": "done",
+   "status": "done",
+   "reason": "User: stop at the end of Phase A and tell me what to preview",
+   "round": 0
+  },
+  {
+   "at": "2026-11-19T04:09:14.328Z",
+   "mode": "hook",
+   "host": "claude",
+   "decision": "allow",
+   "reason": "no build is active here",
+   "stopHookActive": true
+  }
+ ],
+ "max": 3,
+ "marker": {
+  "page": null,
+  "dir": "D:\\Sygnet website",
+  "kind": "tech",
+  "start": "2026-11-18T04:37:11.854Z",
+  "by": "start.mjs"
+ },
+ "roundKey": "7eb5253c12d65df9:195eab1f",
+ "roundFree": true,
+ "idleFree": false,
+ "blockKey": "7eb5253c12d65df9:195eab1f",
+ "fp": "7eb5253c12d65df9",
+ "page": "site/index.html",
+ "found": {
+  "fails": [
+   {
+    "check": "caption",
+    "where": "div.wrap > div.grid.grid--top > div.span-6.start-7 > p.t-small.muted \"As listed in the NCS catalog. Certificat\"",
+    "msg": "a line about the page, not the client: \"to follow.\"",
+    "fix": "no line under a picture: never how it was made, what it shows, what is missing or what will follow (credits: one footer line)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "caption"
+    ],
+    "wheres": [
+     "div.wrap > div.grid.grid--top > div.span-6.start-7 > p.t-small.muted \"As listed in the NCS catalog. Certificat\""
+    ]
+   },
+   {
+    "check": "no-visual",
+    "where": "section#trust \"Hospitals using Sygnet nurse call. Named\"",
+    "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+    "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "no-visual"
+    ],
+    "wheres": [
+     "section#trust \"Hospitals using Sygnet nurse call. Named\""
+    ]
+   },
+   {
+    "check": "no-visual",
+    "where": "section#why \"Circuit to cloud, in one company. Hardwa\"",
+    "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+    "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "no-visual"
+    ],
+    "wheres": [
+     "section#why \"Circuit to cloud, in one company. Hardwa\""
+    ]
+   },
+   {
+    "check": "no-visual",
+    "where": "section#industries \"Nine industries, one platform. Pick your\"",
+    "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+    "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "no-visual"
+    ],
+    "wheres": [
+     "section#industries \"Nine industries, one platform. Pick your\""
+    ]
+   },
+   {
+    "check": "card-layout",
+    "where": "section#products > div.wrap > div.grid.grid--cards \"Product render Healthcare Nurse Call Wir\"",
+    "msg": "4 of 4 cards drawn one way (one panel, ground, placement and fragment): copies of one card",
+    "fix": "a card layout at most twice on a page: build the other sections another way",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "card-layout"
+    ],
+    "wheres": [
+     "section#products > div.wrap > div.grid.grid--cards \"Product render Healthcare Nurse Call Wir\""
+    ]
+   },
+   {
+    "check": "button-styles",
+    "where": "(the page)",
+    "msg": "3 button styles on the page: soft, fill #3a66c4 x3 (\"Request a demo\"); soft, fill #dcf2f6 x3 (\"Explore products\"); soft, fill #94cddd x1 (\"Request a demo\")",
+    "fix": "one primary and one secondary button: one shape, one height per size, one label size",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "button-styles"
+    ],
+    "wheres": [
+     "(the page)"
+    ]
+   },
+   {
+    "check": "same-action",
+    "where": "header.nav > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary \"Request a demo\"",
+    "msg": "\"Request a demo\" appears 3 times in different looks: soft, fill #3a66c4 and soft, fill #94cddd",
+    "fix": "draw one action the same way everywhere (only the nav copy may be one size smaller)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "same-action"
+    ],
+    "wheres": [
+     "header.nav > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary \"Request a demo\""
+    ]
+   },
+   {
+    "check": "phone-number",
+    "where": "div.closing__cta > div.section-head--split > div > p.t-lead \"+91 95749 60077\"",
+    "msg": "a phone number in international format: \"+91 95749 60077\"; a visitor can dial it and reach a stranger (and 2 more like it: div.footer__grid.grid > div.footer__brand.span-5 > address.footer__contact > a:nth-of-type(1), script[type=\"application/ld+json\"] in the JSON-LD)",
+    "fix": "drop the number and its tel: link (a \"Request a call\" form may stand in), unless the brief gives the number",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "phone-number"
+    ],
+    "wheres": [
+     "div.closing__cta > div.section-head--split > div > p.t-lead \"+91 95749 60077\""
+    ]
+   },
+   {
+    "check": "section-tile",
+    "where": "section#healthcare \"Nurse call and queues, one hospital syst\"",
+    "msg": "the section is 630px tall (0.70 screens at 1440x900), shorter than the screen: its tile (the screen from its top) shows 558px of it and 270px of the next section, its heading \"Connect. Monitor. Automate. Sc\" on screen",
+    "fix": "set every section after the hero to one screen or two (height: calc(var(--h,1) * 100vh)) and fit its content above --padb",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-tile"
+    ],
+    "wheres": [
+     "section#healthcare \"Nurse call and queues, one hospital syst\""
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "section#statement \"Connect. Monitor. Automate. Scale. From \"",
+    "msg": "the scene's section is 493px tall (0.5 screens), 407px short of one screen (900px): every section after the hero is one screen or two, 2px either way; a pinned scene is (hold + 1) screens tall, so write data-big-scene-opts='{\"hold\": 1}' (two screens) and keep --h on the section (SR-2)",
+    "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height",
+     "screen-short",
+     "screen-height"
+    ],
+    "wheres": [
+     "section#statement \"Connect. Monitor. Automate. Scale. From \"",
+     "#statement section.section.mo-la \"Connect. Monitor. Automate. Scal\""
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "section#products \"ProductsSix products for work that canno\"",
+    "msg": "the section is 1456px tall (1.6 screens), 344px short of two screens (1800px): every section after the hero is one screen or two, 2px either way (SR-2)",
+    "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height",
+     "screen-height"
+    ],
+    "wheres": [
+     "section#products \"ProductsSix products for work that canno\"",
+     "#products section.section \"ProductsSix products for work th\""
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "section#industries \"Nine industries, one platform. Pick your\"",
+    "msg": "the section is 1241px tall (1.4 screens), 341px over one screen (900px): every section after the hero is one screen or two, 2px either way (and 5 more like it: \"Hospitals using Sygnet n\", \"Nurse call and queues, o\", \"See Sygnet running on yo\") (SR-2)",
+    "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height",
+     "screen-height"
+    ],
+    "wheres": [
+     "section#industries \"Nine industries, one platform. Pick your\"",
+     "#industries section.section \"Nine industries, one platform. P\""
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "section#trust \"Hospitals using Sygnet nurse call. Named\"",
+    "msg": "the section starts at 2356px, 344px above the screen grid (3 x 900px): sections start on whole screens (SR-2)",
+    "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height",
+     "screen-short",
+     "screen-height"
+    ],
+    "wheres": [
+     "section#trust \"Hospitals using Sygnet nurse call. Named\"",
+     "#trust section.section.trust \"Hospitals using Sygnet nurse cal\""
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "section#platform \"The platformOne platform under every pro\"",
+    "msg": "the section starts at 4827px, 327px below the screen grid (5 x 900px): sections start on whole screens (SR-2)",
+    "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height",
+     "screen-short",
+     "screen-height"
+    ],
+    "wheres": [
+     "section#platform \"The platformOne platform under every pro\"",
+     "#platform section.section.ground-inverse \"The platformOne platform under e\""
+    ]
+   },
+   {
+    "check": "section-height",
+    "where": "footer.footer.closing \"See Sygnet running on your siteTalk to o\"",
+    "msg": "the section starts at 6885px, 315px above the screen grid (8 x 900px): sections start on whole screens (and 4 more like it: \"Why SygnetCircuit to clo\", \"Nine industries, one pla\", \"Connect. Monitor. Automa\") (SR-2)",
+    "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-height"
+    ],
+    "wheres": [
+     "footer.footer.closing \"See Sygnet running on your siteTalk to o\""
+    ]
+   },
+   {
+    "check": "section-air",
+    "where": "footer.footer.closing > div.wrap > div.closing__cta \"See Sygnet running on your siteTalk to o\"",
+    "msg": "a bottom border across 100% of the container, between the section's content: sections and their parts are told apart by air and ground, not lines (SR-3)",
+    "fix": "take the rule out: sections and their parts are parted by their ground and the air between them",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "section-air"
+    ],
+    "wheres": [
+     "footer.footer.closing > div.wrap > div.closing__cta \"See Sygnet running on your siteTalk to o\""
+    ]
+   },
+   {
+    "check": "one-section",
+    "where": "h2#trust-h \"Hospitals using Sygnet nurse call. Named\"",
+    "msg": "the screen at scroll 1800px (stride 2) shows 344px of section 3 and the heading of section 3 whole and the content of 2 sections, over 24px each beside section 2: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+    "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "one-section"
+    ],
+    "wheres": [
+     "h2#trust-h \"Hospitals using Sygnet nurse call. Named\""
+    ]
+   },
+   {
+    "check": "one-section",
+    "where": "h2#close-h \"See Sygnet running on your site\"",
+    "msg": "the screen at scroll 6300px (stride 7) shows 315px of section 9 and the heading of section 9 whole and the content of 2 sections, over 24px each beside section 8: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+    "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "one-section"
+    ],
+    "wheres": [
+     "h2#close-h \"See Sygnet running on your site\""
+    ]
+   },
+   {
+    "check": "one-section",
+    "where": "section#why \"Why SygnetCircuit to cloud, in one compa\"",
+    "msg": "the screen at scroll 2356px (the top of section 3) shows 280px of section 4 and the content of 2 sections, over 24px each beside section 3: a screen shows one section (another may peek 8px, 24px WARN) (and 7 more like it: scroll 2700px, scroll 2976px, scroll 4827px) (SR-4)",
+    "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "one-section",
+     "neighbour"
+    ],
+    "wheres": [
+     "section#why \"Why SygnetCircuit to cloud, in one compa\"",
+     "#why section.section \"Why SygnetCircuit to cloud, in o\""
+    ]
+   },
+   {
+    "check": "container-edges",
+    "where": "section#products > div.wrap > p.eyebrow \"Products\"",
+    "msg": "3 text blocks start on a left line at x 102, 22px from the container's left: text starts on the container's left, or on one split line (x 623, 732, 841) (also \"Why Sygnet\", \"The platform\") (SR-6)",
+    "fix": "start the text on the container's left, or on the one split line every split shares",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "container-edges"
+    ],
+    "wheres": [
+     "section#products > div.wrap > p.eyebrow \"Products\""
+    ]
+   },
+   {
+    "check": "split-pair",
+    "where": "footer.footer.closing > div.wrap > div.closing__links > div.footer__grid.grid \"Operational Intelligence for Connected E\"",
+    "msg": "the split's left column starts with a picture or a box, not text: text left, the visual right, on every split (SR-8)",
+    "fix": "put the text in the left column and the visual in the right, on every split",
+    "widths": [
+     1440
+    ],
+    "from": "consistency",
+    "ids": [
+     "split-pair"
+    ],
+    "wheres": [
+     "footer.footer.closing > div.wrap > div.closing__links > div.footer__grid.grid \"Operational Intelligence for Connected E\""
+    ]
+   },
+   {
+    "check": "neighbour",
+    "where": "#products section.section \"ProductsSix products for work th\"",
+    "msg": "framed, 106px of #trust section.section.trust \"Hospitals using Sygnet nurse cal\" shows",
+    "fix": "keep the next section's heading and picture out of this screen",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "neighbour"
+    ],
+    "wheres": [
+     "#products section.section \"ProductsSix products for work th\""
+    ]
+   },
+   {
+    "check": "neighbour",
+    "where": "#trust section.section.trust \"Hospitals using Sygnet nurse cal\"",
+    "msg": "framed, 125px of #why section.section \"Why SygnetCircuit to cloud, in o\" shows",
+    "fix": "keep the next section's heading and picture out of this screen",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "neighbour"
+    ],
+    "wheres": [
+     "#trust section.section.trust \"Hospitals using Sygnet nurse cal\""
+    ]
+   },
+   {
+    "check": "screen-short",
+    "where": "#why section.section \"Why SygnetCircuit to cloud, in o\"",
+    "msg": "727px tall; one screen under the nav is 900px",
+    "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-short",
+     "screen-height"
+    ],
+    "wheres": [
+     "#why section.section \"Why SygnetCircuit to cloud, in o\""
+    ]
+   },
+   {
+    "check": "screen-short",
+    "where": "#healthcare section.section \"Nurse call and queues, one hospi\"",
+    "msg": "630px tall; one screen under the nav is 900px",
+    "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "screen-short",
+     "screen-height"
+    ],
+    "wheres": [
+     "#healthcare section.section \"Nurse call and queues, one hospi\""
+    ]
+   },
+   {
+    "check": "neighbour",
+    "where": "#healthcare section.section \"Nurse call and queues, one hospi\"",
+    "msg": "framed, 174px of #statement section.section.mo-la \"Connect. Monitor. Automate. Scal\" shows",
+    "fix": "keep the next section's heading and picture out of this screen",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "neighbour"
+    ],
+    "wheres": [
+     "#healthcare section.section \"Nurse call and queues, one hospi\""
+    ]
+   },
+   {
+    "check": "neighbour-ground",
+    "where": "#statement section.section.mo-la \"Connect. Monitor. Automate. Scal\"",
+    "msg": "framed, 407px of #platform section.section.ground-inverse \"The platformOne platform under e\"'s ground shows",
+    "fix": "end the ground with the section",
+    "widths": [
+     1440
+    ],
+    "from": "layout",
+    "ids": [
+     "neighbour-ground"
+    ],
+    "wheres": [
+     "#statement section.section.mo-la \"Connect. Monitor. Automate. Scal\""
+    ]
+   },
+   {
+    "check": "hero-lines",
+    "where": "section.hero h1",
+    "msg": "the check fills the h1 to 64 characters (this hero's maxChars in heroes.json), not the page's own: it takes 4 lines at 1440, 2 at most",
+    "fix": "the check fills the h1 to this hero's maxChars, not your own: take the next type pairing the deal printed (start.mjs); when the h1 is final and fits, waive it (target: section.hero h1)",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "hero-lines"
+    ],
+    "wheres": [
+     "section.hero h1"
+    ]
+   },
+   {
+    "check": "neighbour",
+    "where": "#statement section.section.mo-la \"Connect. Monitor. Automate. Scal\"",
+    "msg": "framed, 132px of #platform section.section.ground-inverse \"The platformOne platform under e\" shows",
+    "fix": "keep the next section's heading and picture out of this screen",
+    "widths": [
+     390
+    ],
+    "from": "layout",
+    "ids": [
+     "neighbour"
+    ],
+    "wheres": [
+     "#statement section.section.mo-la \"Connect. Monitor. Automate. Scal\""
+    ]
+   }
+  ],
+  "warns": [
+   {
+    "check": "flush",
+    "where": "section#platform > div.mo-lc__stage > div.mo-lc__cover",
+    "msg": "its first line sits 17px under the top edge of section#platform, where the ground changes",
+    "fix": "give the section its padding at the edge where the ground changes (the closing call keeps a clear gap above the footer)",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-headline",
+    "where": "h1#hero-h \"IoT systems for hospitals, schools, fact\"",
+    "msg": "the h1 has 9 words (2 to 8 read at a glance)",
+    "fix": "put the category noun in the h1 (and who it is for, or where), in 2 to 8 words",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-buttons",
+    "where": "div.grid.grid--top > div.span-6.stack-5 > div.btn-row > a.btn.btn--secondary \"About Sygnet IoT\"",
+    "msg": "\"About Sygnet IoT\" does not start with a verb (book, buy, try, start, get, see...)",
+    "fix": "label buttons with a verb and what the visitor gets (\"Book a room\", \"Start free trial\")",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "text-contrast",
+    "where": "div.win__body > div.qms > div.qms__now > span \"Counter 3\"",
+    "msg": "1 line of text in drawn mocks read under 4.5:1 (1 colour pair), the worst \"Counter 3\" in #4675d7 on #ffffff at 4.39:1",
+    "fix": "lift the mocks' muted text (labels, meta, initials) to 4.5:1 on their own panel, or set it larger",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "body-size",
+    "where": "div.wrap > div.grid.grid--top > div.span-6.stack-4:nth-of-type(1) > p.t-small.muted \"And three more institutions shown in the\"",
+    "msg": "5 of 9 paragraphs of running text are set under 16px (14px)",
+    "fix": "set running text at 16px or more",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "proximity",
+    "where": "section#products > div.wrap > div.grid.grid--cards \"Product render Healthcare Nurse Call Wir\"",
+    "msg": "the rows sit 24px apart, about as close as a picture to its own caption (20px): a caption reads with the row below",
+    "fix": "set the gap between rows at twice the gap between a picture and its caption or more",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "photo-set",
+    "where": "div.grid.grid--cards > a.card.span-4:nth-of-type(2) > div.shot.shot--dark > img \"qms-family.webp\"",
+    "msg": "3 photographs in more than one look: lightness from 0.42 to 0.87; the odd one out is qms-family.webp",
+    "fix": "grade the photographs to one look (light, colour, warmth), or replace the odd one out",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "fake-button",
+    "where": "div.grid.grid--top > div.span-6.stack-5 > div.inhouse > span:nth-of-type(1) \"Hardware\"",
+    "msg": "\"Hardware\" looks like a button (soft, fill #293681) but is not a link or a button (2 like it)",
+    "fix": "make it a real link or button, or drop its button look",
+    "widths": [
+     1440,
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-length",
+    "where": "h1#hero-h \"IoT systems for hospitals, schools, fact\"",
+    "msg": "a headline of 9 words on 4 lines at 69.1px: a paragraph set in display type",
+    "fix": "cut the heading to one short line (2 to 12 words) and move the rest into the text under it",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-length",
+    "where": "h2#why-h \"Circuit to cloud, in one company. Hardwa\"",
+    "msg": "a section heading of 13 words on 4 lines at 48px: a paragraph set in display type",
+    "fix": "cut the heading to one short line (2 to 12 words) and move the rest into the text under it",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-length",
+    "where": "h2#healthcare-h \"Nurse call and queues, one hospital syst\"",
+    "msg": "a section heading of 16 words on 4 lines at 48px: a paragraph set in display type",
+    "fix": "cut the heading to one short line (2 to 12 words) and move the rest into the text under it",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-length",
+    "where": "section#why \"Circuit to cloud, in one company. Hardwa\"",
+    "msg": "1 section over 90 words a screen outside the UI mocks (\"Circuit to cloud, in one\" 167); 75 words a screen across the page (679 words in 9 screens): a tech page says it in about 80 or fewer",
+    "fix": "cut every section to its heading, one line and the product UI: the UI says the rest; no second paragraph, no list of feature sentences",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-contrast",
+    "where": "div.hero-text > div.hero__c > div.btn-row > a.btn.btn--secondary \"Explore products\"",
+    "msg": "the button \"Explore products\" (#dcf2f6) stands only 1.14:1 off the ground around it: it reads as part of the ground, or as switched off",
+    "fix": "give the button a fill that stands at least 1.5:1 off what is around it, or an outline in the ink",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-contrast",
+    "where": "div.grid.grid--top > div.span-6.stack-5 > div.btn-row > a.btn.btn--secondary \"About Sygnet IoT\"",
+    "msg": "the button \"About Sygnet IoT\" (#dcf2f6) stands only 1.14:1 off the ground around it: it reads as part of the ground, or as switched off",
+    "fix": "give the button a fill that stands at least 1.5:1 off what is around it, or an outline in the ink",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-contrast",
+    "where": "div.grid.grid--top > div.span-6.stack-5 > div.btn-row > a.btn.btn--secondary \"Nurse call details\"",
+    "msg": "the button \"Nurse call details\" (#dcf2f6) stands only 1.14:1 off the ground around it: it reads as part of the ground, or as switched off",
+    "fix": "give the button a fill that stands at least 1.5:1 off what is around it, or an outline in the ink",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "split-align",
+    "where": "section#healthcare > div.wrap > div.grid.grid--top \"Nurse call and queues, one hospital syst\"",
+    "msg": "the picture beside \"Nurse call and queues, one hos\" sits loose against a text column 198px taller: its top and bottom line up with nothing",
+    "fix": "set the picture's top on the heading's top (align-items: start), or let it run the column's full height",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "one-screen",
+    "where": "section#trust \"Hospitals using Sygnet nurse call. Named\"",
+    "msg": "3 sections are shorter than the screen, so the next one's heading or picture shows with them: \"Hospitals using Sygnet nurse call. Named\" is 621px of the 828px under the nav, and \"Circuit to cloud, in one compa\" shows below it (\"Nurse call and queue\", \"Connect. Monitor. Au\")",
+    "fix": "give each section the screen (min-height: 100svh less the nav, its content centred), or join two short ones into one",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "loop-cycle",
+    "where": "div.wrap > div.hero-text > div.hero__window > div.win.ly-piece",
+    "msg": "a card loop of 1.0 s: under the 2.5-4 s cycle, it reads as blinking",
+    "fix": "set the loop's cycle to 2.5-4 s (--m-cycle) with every keyframe on it, repeating",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "action-repeat",
+    "where": "header.nav > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary \"request a demo\"",
+    "msg": "\"request a demo\" shows 2 times on the first screen at 1440px (nav, hero): the nav's button and the hero's; nothing else on the screen may repeat it",
+    "fix": "show the action once a screen besides the nav's button: the hero's, the close's or the phone bar's, never all at once",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "container-edges",
+    "where": "div.wrap > ol.layers > li:nth-of-type(1) > b \"Device\"",
+    "msg": "5 text blocks start on a left line at x 160, 80px from the container's left: text starts on the container's left, or on one split line (x 623, 732, 841) (also \"Edge\", \"Cloud\", \"Applications\") (it is in a scroll scene: told as a WARN) (SR-6)",
+    "fix": "start the text on the container's left, or on the one split line every split shares",
+    "widths": [
+     1440
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "cut-text",
+    "where": "div.hero__window > div.win.ly-piece > div.win__bar > span.win__title \"Nurse station · Ward B\"",
+    "msg": "shortened with an ellipsis (and 3 more like it: \"Ward B · Bed switch\", \"ICU · Code Blue\", \"OPD · Token display\")",
+    "fix": "give the text room: no overflow clipping a line, no line past its box",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-styles",
+    "where": "div.wrap > div.hero-text > div.hero__c > a.pill \"Sygnet IoT Connect\"",
+    "msg": "on the phone 3 buttons run the full width of their column, but  \"Sygnet IoT Connect\" is 131px of 342px: one action in two sizes",
+    "fix": "give every button the same width rule on the phone: all full width, or all at their own width",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "button-styles",
+    "where": "header.nav > div.wrap.nav__bar > button.nav__toggle",
+    "msg": "the menu button is filled in #dcf2f6, a fill none of the page's buttons use (#3a66c4, #ffffff, #94cddd): one more button look",
+    "fix": "draw the menu button as the secondary button (an outline in the ink) or as a bare icon",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "text-contrast",
+    "where": "div.ncs__list > div.ncs__row.ncs__row--new > em.st.st--call > i:nth-of-type(1) \"Calling\"",
+    "msg": "3 lines of text in drawn mocks read under 4.5:1 (3 colour pairs), the worst \"Calling\" in #cd8c5b on #b45309 at 1.8:1",
+    "fix": "lift the mocks' muted text (labels, meta, initials) to 4.5:1 on their own panel, or set it larger",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "section-gaps",
+    "where": "main#top > section.hero.hero--centred / section#products",
+    "msg": "uneven space at the edge of a band: 62px outside its edge, 24px inside it (the space on either side of a change of ground reads as one gap only when the two match)",
+    "fix": "use one gap between sections (all within 25% of each other)",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "grounds",
+    "where": "section.hero.hero--centred > div.wrap > div.hero-text > div.hero__window \"Nurse station · Ward B Illustrative scre\"",
+    "msg": "4 flat grounds across the page (#dcedf3 band, #f5ffff section x6, #e8f4f8 band x5, #293681 footer): three at most (the base, a surface, an inverse)",
+    "fix": "three flat grounds at most (the base, one surface, one inverse): lay the other bands on one of them",
+    "widths": [
+     390
+    ],
+    "from": "consistency"
+   },
+   {
+    "check": "copy-footer-signoff",
+    "msg": "a sign-off line in the footer",
+    "fix": "the footer holds facts: the brand, the year, Privacy, Terms, the credits line (references/copy-tells.md)",
+    "widths": [],
+    "from": "copy",
+    "where": "copy x1: \"Designed & developed ...\"",
+    "exact": false
+   }
+  ],
+  "crashed": [],
+  "seconds": {
+   "consistency": 148,
+   "layout": 9
+  }
+ },
+ "open": [
+  {
+   "check": "waivers",
+   "where": ".taste-skill/waivers.json",
+   "msg": "waivers.json is not a JSON array",
+   "fix": "write it as [{\"check\": \"<id>\", \"target\": \"<part of where>\", \"reason\": \"<why it is false>\"}]"
+  },
+  {
+   "check": "caption",
+   "where": "div.wrap > div.grid.grid--top > div.span-6.start-7 > p.t-small.muted \"As listed in the NCS catalog. Certificat\"",
+   "msg": "a line about the page, not the client: \"to follow.\"",
+   "fix": "no line under a picture: never how it was made, what it shows, what is missing or what will follow (credits: one footer line)",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "caption"
+   ],
+   "wheres": [
+    "div.wrap > div.grid.grid--top > div.span-6.start-7 > p.t-small.muted \"As listed in the NCS catalog. Certificat\""
+   ]
+  },
+  {
+   "check": "no-visual",
+   "where": "section#trust \"Hospitals using Sygnet nurse call. Named\"",
+   "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+   "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "no-visual"
+   ],
+   "wheres": [
+    "section#trust \"Hospitals using Sygnet nurse call. Named\""
+   ]
+  },
+  {
+   "check": "no-visual",
+   "where": "section#why \"Circuit to cloud, in one company. Hardwa\"",
+   "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+   "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "no-visual"
+   ],
+   "wheres": [
+    "section#why \"Circuit to cloud, in one company. Hardwa\""
+   ]
+  },
+  {
+   "check": "no-visual",
+   "where": "section#industries \"Nine industries, one platform. Pick your\"",
+   "msg": "no picture, effect or mock in this section; a feature section needs a visual",
+   "fix": "give the section a visual: a UI fragment on a ground, real icons, or a photograph that fits",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "no-visual"
+   ],
+   "wheres": [
+    "section#industries \"Nine industries, one platform. Pick your\""
+   ]
+  },
+  {
+   "check": "card-layout",
+   "where": "section#products > div.wrap > div.grid.grid--cards \"Product render Healthcare Nurse Call Wir\"",
+   "msg": "4 of 4 cards drawn one way (one panel, ground, placement and fragment): copies of one card",
+   "fix": "a card layout at most twice on a page: build the other sections another way",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "card-layout"
+   ],
+   "wheres": [
+    "section#products > div.wrap > div.grid.grid--cards \"Product render Healthcare Nurse Call Wir\""
+   ]
+  },
+  {
+   "check": "button-styles",
+   "where": "(the page)",
+   "msg": "3 button styles on the page: soft, fill #3a66c4 x3 (\"Request a demo\"); soft, fill #dcf2f6 x3 (\"Explore products\"); soft, fill #94cddd x1 (\"Request a demo\")",
+   "fix": "one primary and one secondary button: one shape, one height per size, one label size",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "button-styles"
+   ],
+   "wheres": [
+    "(the page)"
+   ]
+  },
+  {
+   "check": "same-action",
+   "where": "header.nav > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary \"Request a demo\"",
+   "msg": "\"Request a demo\" appears 3 times in different looks: soft, fill #3a66c4 and soft, fill #94cddd",
+   "fix": "draw one action the same way everywhere (only the nav copy may be one size smaller)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "same-action"
+   ],
+   "wheres": [
+    "header.nav > div.wrap.nav__bar > div.nav__actions > a.btn.btn--primary \"Request a demo\""
+   ]
+  },
+  {
+   "check": "phone-number",
+   "where": "div.closing__cta > div.section-head--split > div > p.t-lead \"+91 95749 60077\"",
+   "msg": "a phone number in international format: \"+91 95749 60077\"; a visitor can dial it and reach a stranger (and 2 more like it: div.footer__grid.grid > div.footer__brand.span-5 > address.footer__contact > a:nth-of-type(1), script[type=\"application/ld+json\"] in the JSON-LD)",
+   "fix": "drop the number and its tel: link (a \"Request a call\" form may stand in), unless the brief gives the number",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "phone-number"
+   ],
+   "wheres": [
+    "div.closing__cta > div.section-head--split > div > p.t-lead \"+91 95749 60077\""
+   ]
+  },
+  {
+   "check": "section-tile",
+   "where": "section#healthcare \"Nurse call and queues, one hospital syst\"",
+   "msg": "the section is 630px tall (0.70 screens at 1440x900), shorter than the screen: its tile (the screen from its top) shows 558px of it and 270px of the next section, its heading \"Connect. Monitor. Automate. Sc\" on screen",
+   "fix": "set every section after the hero to one screen or two (height: calc(var(--h,1) * 100vh)) and fit its content above --padb",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-tile"
+   ],
+   "wheres": [
+    "section#healthcare \"Nurse call and queues, one hospital syst\""
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "section#statement \"Connect. Monitor. Automate. Scale. From \"",
+   "msg": "the scene's section is 493px tall (0.5 screens), 407px short of one screen (900px): every section after the hero is one screen or two, 2px either way; a pinned scene is (hold + 1) screens tall, so write data-big-scene-opts='{\"hold\": 1}' (two screens) and keep --h on the section (SR-2)",
+   "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height",
+    "screen-short",
+    "screen-height"
+   ],
+   "wheres": [
+    "section#statement \"Connect. Monitor. Automate. Scale. From \"",
+    "#statement section.section.mo-la \"Connect. Monitor. Automate. Scal\""
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "section#products \"ProductsSix products for work that canno\"",
+   "msg": "the section is 1456px tall (1.6 screens), 344px short of two screens (1800px): every section after the hero is one screen or two, 2px either way (SR-2)",
+   "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height",
+    "screen-height"
+   ],
+   "wheres": [
+    "section#products \"ProductsSix products for work that canno\"",
+    "#products section.section \"ProductsSix products for work th\""
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "section#industries \"Nine industries, one platform. Pick your\"",
+   "msg": "the section is 1241px tall (1.4 screens), 341px over one screen (900px): every section after the hero is one screen or two, 2px either way (and 5 more like it: \"Hospitals using Sygnet n\", \"Nurse call and queues, o\", \"See Sygnet running on yo\") (SR-2)",
+   "fix": "set the section to one screen or two (height: calc(var(--h,1) * 100vh), --h 1 or 2) and cut or split its content to fit",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height",
+    "screen-height"
+   ],
+   "wheres": [
+    "section#industries \"Nine industries, one platform. Pick your\"",
+    "#industries section.section \"Nine industries, one platform. P\""
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "section#trust \"Hospitals using Sygnet nurse call. Named\"",
+   "msg": "the section starts at 2356px, 344px above the screen grid (3 x 900px): sections start on whole screens (SR-2)",
+   "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height",
+    "screen-short",
+    "screen-height"
+   ],
+   "wheres": [
+    "section#trust \"Hospitals using Sygnet nurse call. Named\"",
+    "#trust section.section.trust \"Hospitals using Sygnet nurse cal\""
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "section#platform \"The platformOne platform under every pro\"",
+   "msg": "the section starts at 4827px, 327px below the screen grid (5 x 900px): sections start on whole screens (SR-2)",
+   "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height",
+    "screen-short",
+    "screen-height"
+   ],
+   "wheres": [
+    "section#platform \"The platformOne platform under every pro\"",
+    "#platform section.section.ground-inverse \"The platformOne platform under e\""
+   ]
+  },
+  {
+   "check": "section-height",
+   "where": "footer.footer.closing \"See Sygnet running on your siteTalk to o\"",
+   "msg": "the section starts at 6885px, 315px above the screen grid (8 x 900px): sections start on whole screens (and 4 more like it: \"Why SygnetCircuit to clo\", \"Nine industries, one pla\", \"Connect. Monitor. Automa\") (SR-2)",
+   "fix": "make every section above it exactly one or two screens tall, so this one starts on a whole screen",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-height"
+   ],
+   "wheres": [
+    "footer.footer.closing \"See Sygnet running on your siteTalk to o\""
+   ]
+  },
+  {
+   "check": "section-air",
+   "where": "footer.footer.closing > div.wrap > div.closing__cta \"See Sygnet running on your siteTalk to o\"",
+   "msg": "a bottom border across 100% of the container, between the section's content: sections and their parts are told apart by air and ground, not lines (SR-3)",
+   "fix": "take the rule out: sections and their parts are parted by their ground and the air between them",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "section-air"
+   ],
+   "wheres": [
+    "footer.footer.closing > div.wrap > div.closing__cta \"See Sygnet running on your siteTalk to o\""
+   ]
+  },
+  {
+   "check": "one-section",
+   "where": "h2#trust-h \"Hospitals using Sygnet nurse call. Named\"",
+   "msg": "the screen at scroll 1800px (stride 2) shows 344px of section 3 and the heading of section 3 whole and the content of 2 sections, over 24px each beside section 2: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+   "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "one-section"
+   ],
+   "wheres": [
+    "h2#trust-h \"Hospitals using Sygnet nurse call. Named\""
+   ]
+  },
+  {
+   "check": "one-section",
+   "where": "h2#close-h \"See Sygnet running on your site\"",
+   "msg": "the screen at scroll 6300px (stride 7) shows 315px of section 9 and the heading of section 9 whole and the content of 2 sections, over 24px each beside section 8: a screen shows one section (another may peek 8px, 24px WARN) (SR-4)",
+   "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "one-section"
+   ],
+   "wheres": [
+    "h2#close-h \"See Sygnet running on your site\""
+   ]
+  },
+  {
+   "check": "one-section",
+   "where": "section#why \"Why SygnetCircuit to cloud, in one compa\"",
+   "msg": "the screen at scroll 2356px (the top of section 3) shows 280px of section 4 and the content of 2 sections, over 24px each beside section 3: a screen shows one section (another may peek 8px, 24px WARN) (and 7 more like it: scroll 2700px, scroll 2976px, scroll 4827px) (SR-4)",
+   "fix": "make each section exactly one screen or two, so a screen shows one section and no neighbour peeks",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "one-section",
+    "neighbour"
+   ],
+   "wheres": [
+    "section#why \"Why SygnetCircuit to cloud, in one compa\"",
+    "#why section.section \"Why SygnetCircuit to cloud, in o\""
+   ]
+  },
+  {
+   "check": "container-edges",
+   "where": "section#products > div.wrap > p.eyebrow \"Products\"",
+   "msg": "3 text blocks start on a left line at x 102, 22px from the container's left: text starts on the container's left, or on one split line (x 623, 732, 841) (also \"Why Sygnet\", \"The platform\") (SR-6)",
+   "fix": "start the text on the container's left, or on the one split line every split shares",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "container-edges"
+   ],
+   "wheres": [
+    "section#products > div.wrap > p.eyebrow \"Products\""
+   ]
+  },
+  {
+   "check": "split-pair",
+   "where": "footer.footer.closing > div.wrap > div.closing__links > div.footer__grid.grid \"Operational Intelligence for Connected E\"",
+   "msg": "the split's left column starts with a picture or a box, not text: text left, the visual right, on every split (SR-8)",
+   "fix": "put the text in the left column and the visual in the right, on every split",
+   "widths": [
+    1440
+   ],
+   "from": "consistency",
+   "ids": [
+    "split-pair"
+   ],
+   "wheres": [
+    "footer.footer.closing > div.wrap > div.closing__links > div.footer__grid.grid \"Operational Intelligence for Connected E\""
+   ]
+  },
+  {
+   "check": "neighbour",
+   "where": "#products section.section \"ProductsSix products for work th\"",
+   "msg": "framed, 106px of #trust section.section.trust \"Hospitals using Sygnet nurse cal\" shows",
+   "fix": "keep the next section's heading and picture out of this screen",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "neighbour"
+   ],
+   "wheres": [
+    "#products section.section \"ProductsSix products for work th\""
+   ]
+  },
+  {
+   "check": "neighbour",
+   "where": "#trust section.section.trust \"Hospitals using Sygnet nurse cal\"",
+   "msg": "framed, 125px of #why section.section \"Why SygnetCircuit to cloud, in o\" shows",
+   "fix": "keep the next section's heading and picture out of this screen",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "neighbour"
+   ],
+   "wheres": [
+    "#trust section.section.trust \"Hospitals using Sygnet nurse cal\""
+   ]
+  },
+  {
+   "check": "screen-short",
+   "where": "#why section.section \"Why SygnetCircuit to cloud, in o\"",
+   "msg": "727px tall; one screen under the nav is 900px",
+   "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-short",
+    "screen-height"
+   ],
+   "wheres": [
+    "#why section.section \"Why SygnetCircuit to cloud, in o\""
+   ]
+  },
+  {
+   "check": "screen-short",
+   "where": "#healthcare section.section \"Nurse call and queues, one hospi\"",
+   "msg": "630px tall; one screen under the nav is 900px",
+   "fix": "make the section one full screen (--h: 1, layout-v4.md section 2)",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "screen-short",
+    "screen-height"
+   ],
+   "wheres": [
+    "#healthcare section.section \"Nurse call and queues, one hospi\""
+   ]
+  },
+  {
+   "check": "neighbour",
+   "where": "#healthcare section.section \"Nurse call and queues, one hospi\"",
+   "msg": "framed, 174px of #statement section.section.mo-la \"Connect. Monitor. Automate. Scal\" shows",
+   "fix": "keep the next section's heading and picture out of this screen",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "neighbour"
+   ],
+   "wheres": [
+    "#healthcare section.section \"Nurse call and queues, one hospi\""
+   ]
+  },
+  {
+   "check": "neighbour-ground",
+   "where": "#statement section.section.mo-la \"Connect. Monitor. Automate. Scal\"",
+   "msg": "framed, 407px of #platform section.section.ground-inverse \"The platformOne platform under e\"'s ground shows",
+   "fix": "end the ground with the section",
+   "widths": [
+    1440
+   ],
+   "from": "layout",
+   "ids": [
+    "neighbour-ground"
+   ],
+   "wheres": [
+    "#statement section.section.mo-la \"Connect. Monitor. Automate. Scal\""
+   ]
+  },
+  {
+   "check": "hero-lines",
+   "where": "section.hero h1",
+   "msg": "the check fills the h1 to 64 characters (this hero's maxChars in heroes.json), not the page's own: it takes 4 lines at 1440, 2 at most",
+   "fix": "the check fills the h1 to this hero's maxChars, not your own: take the next type pairing the deal printed (start.mjs); when the h1 is final and fits, waive it (target: section.hero h1)",
+   "widths": [
+    1440,
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "hero-lines"
+   ],
+   "wheres": [
+    "section.hero h1"
+   ]
+  },
+  {
+   "check": "neighbour",
+   "where": "#statement section.section.mo-la \"Connect. Monitor. Automate. Scal\"",
+   "msg": "framed, 132px of #platform section.section.ground-inverse \"The platformOne platform under e\" shows",
+   "fix": "keep the next section's heading and picture out of this screen",
+   "widths": [
+    390
+   ],
+   "from": "layout",
+   "ids": [
+    "neighbour"
+   ],
+   "wheres": [
+    "#statement section.section.mo-la \"Connect. Monitor. Automate. Scal\""
+   ]
+  }
+ ],
+ "waived": [],
+ "warnCount": 27,
+ "at": "2026-11-19T04:09:00.237Z",
+ "session": "3a7c8d02-887d-4938-999a-70ba448e8c17",
+ "doneReason": "User: stop at the end of Phase A and tell me what to preview"
+}

@@ -1,0 +1,18 @@
+{
+  "phone-number": "Client brief requires the real phone +91 95749 60077 on every page (approved conflict #1).",
+  "placeholder": "Client brief requires clearly marked placeholders for assets not yet received (approved conflict #2). Since 2026-11-19: at most one Sky 'Awaiting from client' chip or one slim block per section.",
+  "sample-label": "Same as placeholder: 'Awaiting from client', 'Illustrative screen' and 'Product render' tags are required by the brief.",
+  "copy-footer-signoff": "Brief requires 'Designed & developed by Vrattiks' in every footer (approved conflict #9).",
+  "copy-two-fragment (terms)": "Numbered headings in the client's legal text carried over from the old site.",
+  "hero-fold (legal pages)": "Privacy and Terms are long documents in a plain document layout (approved conflict #8).",
+  "brand-kit (2026-11-19)": "Client brand kit (BrandKit (1).pdf) replaces the dealt palette and type, overriding the earlier 'steel blue + Mona Sans' decision: Sygnet Indigo #293681, Signal Blue #4675d7, Sky #94cddd, Mist #f5ffff (read from the kit's vector swatches), Jost self-hosted; Nulshock not shipped (free licence is desktop-only). Cut-corner cards and buttons, the logo hexagon and the mark's chevrons are the kit's motifs.",
+  "section-height, one-section, section-air, section-tile, hero-screen (sections after the hero)": "Client request 2026-11-18: sections fit their content instead of filling one or two screens.",
+  "caption (trust block)": "Brief requires the exact line 'As listed in the NCS catalog. Certificate copies to follow.' beside the certification badges.",
+  "no-visual (trust)": "Brief requires hospital names as text only, no logos, until the client sends files and written permission.",
+  "no-visual (why, industries)": "Brief asks for designed cards with hexagon and line icons instead of the old stock images; these sections carry the line icons.",
+  "card-layout (product rows)": "A product row is a catalogue grid: one card per product, each with its own catalog image.",
+  "button-styles, same-action (closing band)": "On the Indigo band Signal Blue reaches only 2:1 against the ground, so the inverse action takes Sky, as in the kit's logo-on-Sky variant.",
+  "container-edges (eyebrow)": "The eyebrow starts with the logo's hexagon on the container line; its text follows 22px in. Brand motif from the kit.",
+  "split-pair (footer)": "The footer's left column opens with the white logo lockup, as the kit shows it on Indigo.",
+  "fold-action (contact, phone)": "The demo form now grows with its fields so nothing overlaps (client bug report); the header's 'Request a demo' button stays on the first screen."
+}

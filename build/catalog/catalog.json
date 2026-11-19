@@ -1,0 +1,254 @@
+{
+ "flyer-napkin-vending": {
+  "w": 415,
+  "h": 715,
+  "ground": "light",
+  "source": "content/flyers/napkin-vending-flyer.jpg"
+ },
+ "flyer-smart-milk-vending": {
+  "w": 490,
+  "h": 655,
+  "ground": "light",
+  "source": "content/flyers/smart-milk-vending-flyer.jpg"
+ },
+ "flyer-water-atm-panel": {
+  "w": 450,
+  "h": 780,
+  "ground": "light",
+  "source": "content/flyers/water-atm-panel-flyer.jpg"
+ },
+ "ncs-station-display": {
+  "w": 265,
+  "h": 175,
+  "ground": "light",
+  "source": "Sygnet NCS Catalog.pdf p2"
+ },
+ "ncs-pendant-switch": {
+  "w": 160,
+  "h": 157,
+  "ground": "light",
+  "source": "Sygnet NCS Catalog.pdf p2"
+ },
+ "ncs-lcd-display": {
+  "w": 170,
+  "h": 143,
+  "ground": "light",
+  "source": "Sygnet NCS Catalog.pdf p2"
+ },
+ "ncs-bedside-pendant": {
+  "w": 150,
+  "h": 137,
+  "ground": "light",
+  "source": "Sygnet NCS Catalog.pdf p2"
+ },
+ "ncs-code-blue-switch": {
+  "w": 156,
+  "h": 130,
+  "ground": "light",
+  "source": "Sygnet NCS Catalog.pdf p3"
+ },
+ "ncs-nurse-station-unit": {
+  "w": 186,
+  "h": 152,
+  "ground": "light",
+  "source": "Sygnet NCS Catalog.pdf p3"
+ },
+ "ncs-patient-tracker": {
+  "w": 141,
+  "h": 166,
+  "ground": "light",
+  "source": "Sygnet NCS Catalog.pdf p3"
+ },
+ "ncs-staff-tracker": {
+  "w": 128,
+  "h": 166,
+  "ground": "light",
+  "source": "Sygnet NCS Catalog.pdf p3"
+ },
+ "ncs-staff-app": {
+  "w": 133,
+  "h": 228,
+  "ground": "light",
+  "source": "Sygnet NCS Catalog.pdf p3"
+ },
+ "bell-tbg": {
+  "w": 548,
+  "h": 542,
+  "ground": "light",
+  "source": "Sygnet Bell PA Systems.pdf p2"
+ },
+ "bell-range-tbg": {
+  "w": 183,
+  "h": 248,
+  "ground": "light",
+  "source": "Sygnet Bell PA Systems.pdf p1"
+ },
+ "bell-range-tba-wl": {
+  "w": 176,
+  "h": 248,
+  "ground": "light",
+  "source": "Sygnet Bell PA Systems.pdf p1"
+ },
+ "bell-range-tba-d": {
+  "w": 228,
+  "h": 222,
+  "ground": "light",
+  "source": "Sygnet Bell PA Systems.pdf p1"
+ },
+ "bell-range-tbw-wl": {
+  "w": 177,
+  "h": 248,
+  "ground": "light",
+  "source": "Sygnet Bell PA Systems.pdf p1"
+ },
+ "bell-range-tbw-d": {
+  "w": 256,
+  "h": 222,
+  "ground": "light",
+  "source": "Sygnet Bell PA Systems.pdf p1"
+ },
+ "bell-speaker": {
+  "w": 272,
+  "h": 346,
+  "ground": "light",
+  "source": "Sygnet Bell PA Systems.pdf p1"
+ },
+ "qms-lite": {
+  "w": 430,
+  "h": 360,
+  "ground": "dark",
+  "source": "Sygnet QMS.pdf p18"
+ },
+ "qms-kiosk": {
+  "w": 172,
+  "h": 412,
+  "ground": "dark",
+  "source": "Sygnet QMS.pdf p18"
+ },
+ "qms-counter-display": {
+  "w": 136,
+  "h": 190,
+  "ground": "dark",
+  "source": "Sygnet QMS.pdf p18"
+ },
+ "qms-family": {
+  "w": 900,
+  "h": 708,
+  "ground": "dark",
+  "source": "Sygnet QMS.pdf p19"
+ },
+ "hw-industrial-controller": {
+  "w": 500,
+  "h": 240,
+  "ground": "dark",
+  "source": "Sygnet Profile.pdf p7"
+ },
+ "hw-sensor-nodes": {
+  "w": 280,
+  "h": 150,
+  "ground": "dark",
+  "source": "Sygnet Profile.pdf p7"
+ },
+ "hw-wireless-node": {
+  "w": 230,
+  "h": 224,
+  "ground": "dark",
+  "source": "Sygnet Profile.pdf p7"
+ },
+ "hw-bridge-device": {
+  "w": 220,
+  "h": 174,
+  "ground": "dark",
+  "source": "Sygnet Profile.pdf p7"
+ },
+ "hw-industrial-gateway": {
+  "w": 310,
+  "h": 185,
+  "ground": "dark",
+  "source": "Sygnet Profile.pdf p7"
+ },
+ "hw-data-logger": {
+  "w": 236,
+  "h": 154,
+  "ground": "dark",
+  "source": "Sygnet Profile.pdf p7"
+ },
+ "hw-communication-module": {
+  "w": 240,
+  "h": 126,
+  "ground": "dark",
+  "source": "Sygnet Profile.pdf p7"
+ },
+ "hw-edge-computer": {
+  "w": 356,
+  "h": 204,
+  "ground": "dark",
+  "source": "Sygnet Profile.pdf p7"
+ },
+ "water-atm-kiosk": {
+  "w": 498,
+  "h": 668,
+  "ground": "light",
+  "source": "Sygnet_Water ATM_26-1.pdf p15"
+ },
+ "water-centre": {
+  "w": 655,
+  "h": 430,
+  "ground": "light",
+  "source": "Synget Water Centers_26.pdf p15"
+ },
+ "dairy-milk-atm": {
+  "w": 328,
+  "h": 430,
+  "ground": "light",
+  "source": "Sygnet Dairy Connect_26-1.pdf p14"
+ },
+ "dairy-mobile-milk-atm": {
+  "w": 405,
+  "h": 290,
+  "ground": "light",
+  "source": "Sygnet Dairy Connect_26-1.pdf p14"
+ },
+ "qms-kiosk-cut": {
+  "w": 158,
+  "h": 394,
+  "ground": "clear",
+  "source": "Sygnet QMS.pdf p18"
+ },
+ "water-atm-panel-cut": {
+  "w": 426,
+  "h": 705,
+  "ground": "clear",
+  "source": "water-atm-panel-flyer.jpg"
+ },
+ "ncs-station-display-cut": {
+  "w": 254,
+  "h": 141,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p2"
+ },
+ "bell-tbg-cut": {
+  "w": 538,
+  "h": 537,
+  "ground": "clear",
+  "source": "Sygnet Bell PA Systems.pdf p2"
+ },
+ "napkin-vending-cut": {
+  "w": 412,
+  "h": 714,
+  "ground": "clear",
+  "source": "napkin-vending-flyer.jpg"
+ },
+ "smart-milk-vending-cut": {
+  "w": 469,
+  "h": 641,
+  "ground": "clear",
+  "source": "smart-milk-vending-flyer.jpg"
+ },
+ "dairy-milk-atm-cut": {
+  "w": 316,
+  "h": 424,
+  "ground": "clear",
+  "source": "Sygnet Dairy Connect_26-1.pdf p14"
+ }
+}
