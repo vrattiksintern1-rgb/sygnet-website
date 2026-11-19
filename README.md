@@ -33,6 +33,7 @@ Open over http, not by double-clicking the HTML files: pages use root paths (`/a
 
 Upload the contents of `site/` to any static host (Netlify, Cloudflare Pages, GitHub Pages, cPanel).
 `404.html`, `sitemap.xml` and `robots.txt` are generated.
+On Vercel, `vercel.json` runs the build and serves `site/` (the repo root has no `index.html`, so without it every URL is a 404).
 
 ## Still to come from the client
 
