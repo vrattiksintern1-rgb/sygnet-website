@@ -1,11 +1,12 @@
 // The page shell shared by every page: head (SEO + share tags), the fixed light header with its mega
 // panels, and the closing footer (close row, company line, link groups, legal row with the Vrattiks credit).
 import { SITE, PRODUCTS, INDUSTRIES } from './data.mjs';
-import { esc, url, CHEV, btn } from './ui.mjs';
+import { esc, url, CHEV, btn, icon } from './ui.mjs';
 import { BRAND } from './brand.mjs';
 
-// fonts are self-hosted (build/fonts): Jost, the brand kit's text face, and Geist Mono for code samples.
-// Nulshock, the kit's display face, is not shipped: its free licence covers desktop use only, web embedding is paid.
+// fonts are self-hosted (build/fonts): Nulshock Bold, the brand kit's primary face, for h1/h2 headings; Jost, the
+// secondary face, for all other text; Geist Mono for code samples. Nulshock needs its paid web licence: its file
+// (build/fonts/nulshock-bold.woff2) is added once bought, and headings fall back to Jost until then.
 const FONTS = `<link rel="preload" href="/assets/fonts/jost-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/fonts/fonts.css">`;
 
@@ -18,6 +19,7 @@ const ROOT = `<style>
   --p-inv-bg: ${BRAND.indigo}; --p-inv-surface: #34439a; --p-inv-ink: ${BRAND.mist}; --p-inv-muted: #c6d0f0;
   --p-inv-accent: ${BRAND.sky}; --p-inv-accent-ink: #1e2762; --p-inv-action: ${BRAND.sky}; --p-inv-action-ink: #1e2762;
   --brand-indigo: ${BRAND.indigo}; --brand-blue: ${BRAND.blue}; --brand-sky: ${BRAND.sky}; --brand-mist: ${BRAND.mist}; --brand-tint: ${BRAND.tint};
+  --font-brand: "Nulshock", "Jost", system-ui, sans-serif;
   --font-display: "Jost", system-ui, sans-serif;
   --font-text: "Jost", system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
@@ -45,7 +47,7 @@ const NAV = [
   { key: 'industries', label: 'Industries', href: '/industries/', menu: menuList([
     ...INDUSTRIES.map(i => [url.industry(i.slug), i.name]), ['/industries/', 'All industries']]) },
   { key: 'platform', label: 'Platform', href: '/platform/', menu: menuList([
-    ['/platform/', 'Sygnet IoT Connect'], ['/hardware/', 'Smart edge hardware'], ['/developer/', 'Developer'], ['/solutions/', 'All solutions'], ['/resources/', 'Resources']]) },
+    ['/platform/', 'Sygnet IoT Connect'], ['/hardware/', 'Smart edge hardware'], ['/developer/', 'Developer'],['/resources/', 'Resources']]) },
   { key: 'solutions', label: 'Solutions', href: '/solutions/' },
   { key: 'partners', label: 'Partners', href: '/partners/' },
   { key: 'company', label: 'Company', href: '/company/', menu: menuList([
@@ -90,16 +92,25 @@ const FOOT = [
 function footer(close) {
   const c = close || {};
   const h2 = c.h2 || 'See Sygnet running on your site';
-  const line = c.line || `Talk to our team: call ${SITE.phone} or write to ${SITE.email}.`;
+  const line = c.line || 'Tell us what you run and we will walk you through it on your own use case.';
   const groups = FOOT.map(([t, links]) => `<details class="footer__group" open><summary>${t}</summary><ul>${links.map(([h, x]) => `<li><a href="${h}">${esc(x)}</a></li>`).join('')}</ul></details>`).join('');
-  return `<footer class="footer closing footer--dark ground-inverse" aria-labelledby="close-h">
+  // close: false (the Solutions page, which ends on its own one-line call to action): the footer without the Sky band
+  const band = close === false ? '' : null;
+  return `<footer class="footer closing footer--dark ground-inverse${band === '' ? ' closing--plain' : ''}" ${band === '' ? 'aria-label="Footer"' : 'aria-labelledby="close-h"'}>
   <div class="wrap">
-    <div class="closing__cta">
-      <div class="section-head--split">
-        <div><h2 id="close-h">${esc(h2)}</h2><p class="t-lead">${esc(line)}</p></div>
-        ${btn(c.href || '/contact/#demo', c.label || 'Request a demo')}
+    ${band ?? `<div class="closing__cta">
+      <div class="cta-band">
+        <div class="cta-band__copy">
+          <h2 id="close-h">${esc(h2)}</h2>
+          <p class="t-lead">${esc(line)}</p>
+        </div>
+        <div class="cta-band__act">
+          ${btn(c.href || '/contact/#demo', c.label || 'Request a demo')}
+          <a class="cta-band__row" href="tel:${SITE.tel}">${icon('phone')}<span>${SITE.phone}</span></a>
+          <a class="cta-band__row" href="mailto:${SITE.email}">${icon('mail')}<span>${SITE.email}</span></a>
+        </div>
       </div>
-    </div>
+    </div>`}
     <div class="closing__links">
       <div class="footer__grid grid">
         <div class="footer__brand span-5">

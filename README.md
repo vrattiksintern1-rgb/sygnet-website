@@ -22,8 +22,8 @@ Open over http, not by double-clicking the HTML files: pages use root paths (`/a
 | `build/ui.mjs` | Components and the illustrative product screens |
 | `build/brand.mjs` | Brand colours and art (hexagon tile, background chevrons); copies `build/brand/` logo files to `site/img/brand/` |
 | `build/brand/` | Logo SVGs and icons extracted from the brand kit PDF (`build/tools/extract_logo.py`, `make_logo_svgs.py`). Drop the designer's master SVGs here under the same names |
-| `build/catalog/` | Product shots cropped from the client catalogs as WebP (`py build/tools/crop_catalog.py content/flyers`); the product cards use transparent cut-outs, `*-cut.webp` (`py build/tools/cutout_cards.py content/flyers`, run after the crop script) |
-| `build/fonts/` | Self-hosted Jost and Geist Mono (OFL) |
+| `build/catalog/` | Product shots cropped from the client catalogs as WebP (`py build/tools/crop_catalog.py content/flyers`); the product cards use transparent cut-outs, `*-cut.webp` (`py build/tools/cutout_cards.py content/flyers`, run after the crop script); the School Bell & PA viewer's model and speaker cut-outs come from `py build/tools/cutout_bell.py content/flyers` (catalogue page 1, the only page where every model carries the Sygnet name); the Dairy Connect page's kiosk, mobile and tank cut-outs come from `py build/tools/cutout_dairy.py content/flyers` (catalogue pages 14 and 12) |
+| `build/fonts/` | Self-hosted Jost and Geist Mono (OFL). Nulshock Bold (brand primary, used for h1/h2) goes here as `nulshock-bold.woff2` once its web licence is bought; headings fall back to Jost until then |
 | `build/site.css` | Site styles on top of the taste-skill kit |
 | `build/legal/` | Privacy and Terms text carried over from the old site |
 | `site/` | Built output, ready to upload to any static host |

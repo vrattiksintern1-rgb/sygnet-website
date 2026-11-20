@@ -250,5 +250,191 @@
   "h": 424,
   "ground": "clear",
   "source": "Sygnet Dairy Connect_26-1.pdf p14"
+ },
+ "bell-range-tba-wl-cut": {
+  "w": 348,
+  "h": 446,
+  "ground": "clear",
+  "source": "Sygnet Bell PA Systems.pdf p1 (enlarged 2x)"
+ },
+ "bell-range-tba-d-cut": {
+  "w": 444,
+  "h": 354,
+  "ground": "clear",
+  "source": "Sygnet Bell PA Systems.pdf p1 (enlarged 2x)"
+ },
+ "bell-range-tbw-wl-cut": {
+  "w": 320,
+  "h": 446,
+  "ground": "clear",
+  "source": "Sygnet Bell PA Systems.pdf p1 (enlarged 2x)"
+ },
+ "bell-range-tbw-d-cut": {
+  "w": 498,
+  "h": 394,
+  "ground": "clear",
+  "source": "Sygnet Bell PA Systems.pdf p1 (enlarged 2x)"
+ },
+ "bell-speaker-cut": {
+  "w": 291,
+  "h": 352,
+  "ground": "clear",
+  "source": "Sygnet Bell PA Systems.pdf p1"
+ },
+ "dairy-kiosk-cut": {
+  "w": 636,
+  "h": 848,
+  "ground": "clear",
+  "source": "Sygnet Dairy Connect_26-1.pdf p14 (enlarged 2x)"
+ },
+ "dairy-mobile-cut": {
+  "w": 774,
+  "h": 564,
+  "ground": "clear",
+  "source": "Sygnet Dairy Connect_26-1.pdf p14 (enlarged 2x)"
+ },
+ "dairy-tank-cut": {
+  "w": 606,
+  "h": 1068,
+  "ground": "clear",
+  "source": "Sygnet Dairy Connect_26-1.pdf p12 (enlarged 2x)"
+ },
+ "ncs-plus-display-cut": {
+  "w": 510,
+  "h": 328,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p2 (enlarged 2x)"
+ },
+ "ncs-room-indicator-cut": {
+  "w": 212,
+  "h": 376,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p2 (enlarged 2x)"
+ },
+ "ncs-pendant-cut": {
+  "w": 298,
+  "h": 292,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p2 (enlarged 2x)"
+ },
+ "ncs-lcd-display-cut": {
+  "w": 328,
+  "h": 294,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p2 (enlarged 2x)"
+ },
+ "ncs-bedside-pendant-cut": {
+  "w": 276,
+  "h": 266,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p2 (enlarged 2x)"
+ },
+ "ncs-server-standard-cut": {
+  "w": 338,
+  "h": 306,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p2 (enlarged 2x)"
+ },
+ "ncs-bed-switch-cut": {
+  "w": 402,
+  "h": 274,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p3 (enlarged 2x)"
+ },
+ "ncs-pull-cord-cut": {
+  "w": 370,
+  "h": 274,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p3 (enlarged 2x)"
+ },
+ "ncs-code-blue-cut": {
+  "w": 298,
+  "h": 260,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p3 (enlarged 2x)"
+ },
+ "ncs-station-unit-cut": {
+  "w": 372,
+  "h": 304,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p3 (enlarged 2x)"
+ },
+ "ncs-patient-tracker-cut": {
+  "w": 242,
+  "h": 340,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p3 (enlarged 2x)"
+ },
+ "ncs-attend-switch-cut": {
+  "w": 372,
+  "h": 264,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p3 (enlarged 2x)"
+ },
+ "ncs-staff-tracker-cut": {
+  "w": 250,
+  "h": 338,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p3 (enlarged 2x)"
+ },
+ "ncs-server-enterprise-cut": {
+  "w": 378,
+  "h": 314,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p3 (enlarged 2x)"
+ },
+ "ncs-staff-app-cut": {
+  "w": 256,
+  "h": 466,
+  "ground": "clear",
+  "source": "Sygnet NCS Catalog.pdf p3 (enlarged 2x)"
+ },
+ "qms-lite-cut": {
+  "w": 834,
+  "h": 698,
+  "ground": "clear",
+  "source": "Sygnet QMS.pdf p18 (enlarged 2x)"
+ },
+ "qms-pro-cut": {
+  "w": 1128,
+  "h": 816,
+  "ground": "clear",
+  "source": "Sygnet QMS.pdf p18 (enlarged 2x)"
+ },
+ "qms-ent-cut": {
+  "w": 1076,
+  "h": 632,
+  "ground": "clear",
+  "source": "Sygnet QMS.pdf p18, screens redrawn (enlarged 2x)"
+ },
+ "qms-kiosk-lg": {
+  "w": 320,
+  "h": 796,
+  "ground": "clear",
+  "source": "Sygnet QMS.pdf p18 (enlarged 2x)"
+ },
+ "qms-callpad": {
+  "w": 358,
+  "h": 586,
+  "ground": "clear",
+  "source": "Sygnet QMS.pdf p19 (enlarged 2x)"
+ },
+ "water-atm-kiosk-cut": {
+  "w": 1014,
+  "h": 1344,
+  "ground": "clear",
+  "source": "Sygnet_Water ATM_26-1.pdf p15 (enlarged 2x)"
+ },
+ "rwc-centre-cut": {
+  "w": 1320,
+  "h": 836,
+  "ground": "clear",
+  "source": "Synget Water Centers_26.pdf p15 (enlarged 2x)"
+ },
+ "smart-milk-vending-clean-cut": {
+  "w": 469,
+  "h": 641,
+  "ground": "clear",
+  "source": "smart-milk-vending-flyer.jpg (Paytm sticker painted out)"
  }
 }

@@ -1,7 +1,8 @@
 # Crops the clean product shots out of the client's catalog PDFs into build/catalog/*.webp.
 # Usage: py build/tools/crop_catalog.py "content/flyers"   (re-run when the client sends new catalogs)
 # Boxes are in the native pixels of each page's embedded image. Excluded on purpose (see README):
-# room indicator, bathroom pull-cord, bedswitch and attend switch (unidentified third-party mark on the device),
+# room indicator, bathroom pull-cord, bedswitch and attend switch here (they carry a small non-Sygnet mark; the NCS page
+# uses them via cutout_ncs.py at the client's request until clean shots arrive),
 # reporting-server monitors and every dashboard screen (mock numbers), Water ATM kiosks showing "Waari",
 # bell units showing "VIDYALAYA", people and scene photographs, the Resonent thank-you slide.
 import sys, os, io, json, pymupdf
@@ -50,7 +51,7 @@ FIX = {
   'hw-wireless-node': [((748, 342, 782, 370), (5, 12, 27))],
   'bell-range-tbg': [((24, 512, 207, 524), (246, 247, 251))],
   'bell-range-tba-wl': [((222, 512, 398, 524), (246, 247, 251))],
-  'bell-range-tbw-wl': [((620, 512, 797, 524), (246, 247, 251))],
+  'bell-range-tbw-wl': [((620, 512, 797, 524), (246, 247, 251)), ((620, 512, 627, 560), (246, 247, 251))],
 }
 os.makedirs(OUT, exist_ok=True)
 pages = {}

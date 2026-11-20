@@ -7,3 +7,14 @@
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: "Geist Mono"; font-style: normal; font-weight: 400 500; font-display: swap;
   src: url("/assets/fonts/geist-mono-latin.woff2") format("woff2"); }
+
+/* Nulshock Bold, the brand kit's primary (display) face. Commercial font: the web-embedding licence must be
+   bought before it ships. Drop the licensed file into build/fonts as nulshock-bold.woff2 (or .woff / .otf / .ttf)
+   and rebuild; until then the browser skips this face and headings fall back to Jost.
+   One weight only, declared across 100-900 so the browser never fakes a bolder or lighter cut.
+   Nulshock is an extended face: size-adjust shrinks it so headings keep the width they were laid out for. */
+@font-face { font-family: "Nulshock"; font-style: normal; font-weight: 100 900; font-display: swap; size-adjust: 80%;
+  src: url("/assets/fonts/nulshock-bold.woff2") format("woff2"),
+       url("/assets/fonts/nulshock-bold.woff") format("woff"),
+       url("/assets/fonts/nulshock-bold.otf") format("opentype"),
+       url("/assets/fonts/nulshock-bold.ttf") format("truetype"); }

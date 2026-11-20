@@ -26,7 +26,7 @@ for (const f of readdirSync(DIR)) files[f] = readFileSync(join(DIR, f));
 // the mark's paths, reused for the kit's soft background chevrons (giant crops of the mark in a tint)
 const markSvg = files['sygnet-mark.svg'].toString();
 const recolour = (svg, c) => svg.replace(/fill="#[0-9a-f]{6}"/gi, `fill="${c}"`).replace(/ role="img" aria-label="[^"]*"/, ' aria-hidden="true"');
-files['bg-mark-tint.svg'] = recolour(markSvg, '#e6f2f6');   // on Mist, as on the kit's cover
+files['bg-mark-tint.svg'] = recolour(markSvg, '#eef8fa');   // on Mist, as on the kit's cover (lightened from #e6f2f6, 2026-11-19)
 files['bg-mark-band.svg'] = recolour(markSvg, '#31408f');   // on the Indigo band
 
 // the hexagon from the logo as a small repeating shape (a honeycomb of outlines)

@@ -11,6 +11,10 @@ const OWN_ICONS = {
   milk: '<path d="M8 2h8"/><path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2"/><path d="M7 15a6.472 6.472 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/>',
   hexagon: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>',
   recycle: '<path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/>',
+  // Textile Connect page (Lucide, ISC licence)
+  fuel: '<line x1="3" x2="15" y1="22" y2="22"/><line x1="4" x2="14" y1="9" y2="9"/><path d="M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18"/><path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5"/>',
+  fan: '<path d="M10.827 16.379a6.082 6.082 0 0 1-8.618-7.002l5.412 1.45a6.082 6.082 0 0 1 7.002-8.618l-1.45 5.412a6.082 6.082 0 0 1 8.618 7.002l-5.412-1.45a6.082 6.082 0 0 1-7.002 8.618l1.45-5.412Z"/><path d="M12 12v.01"/>',
+  shirt: '<path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>',
   sprout: '<path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>',
 };
 const iconCache = {};
@@ -138,16 +142,19 @@ const bar = (title, dark) => `<div class="win__bar"><span class="win__dots"><i><
 const win = (key, title, label, body, { dark = false, loop = false } = {}) =>
   `<div class="win win--${key}${dark ? ' win--dark' : ''}" role="img" aria-label="${esc(label)}"${loop ? ' data-m-loop' : ''}>${bar(title, dark)}<div class="win__body">${body}</div></div>`;
 
+// one call on the nurse station: status edge, source icon, bed and where the call came from, status pill
+const ncsRow = (st, ic, bed, from, pill) => `<li class="ncs__row ncs__row--${st}"><span class="ncs__ico">${icon(ic)}</span><span class="ncs__who"><b>${bed}</b><span>${from}</span></span>${pill}</li>`;
+
 export const WINDOWS = {
-  ncs: (loop) => win('ncs', 'Nurse station · Ward B', 'Nurse station display showing open calls by bed, with one call being attended', `
+  ncs: (loop) => win('ncs', 'Nurse station · Ward B', 'Nurse station display listing open calls by bed: a Code Blue in ICU, a bathroom pull-cord call, and a bed call being attended', `
 <div class="ncs">
-  <div class="ncs__list">
-    <div class="ncs__row ncs__row--new"><b>Bed 12</b><span>Ward B · Bed switch</span><em class="st st--call"><i>Calling</i><i>Attended</i></em></div>
-    <div class="ncs__row"><b>Bath 3</b><span>Ward B · Pull-cord</span><em class="st st--call"><i>Calling</i></em></div>
-    <div class="ncs__row ncs__row--blue"><b>Bed 21</b><span>ICU · Code Blue</span><em class="st st--blue"><i>Code Blue</i></em></div>
-    <div class="ncs__row ncs__row--done"><b>Bed 7</b><span>Ward A · Bed switch</span><em class="st st--ok"><i>Attended</i></em></div>
-  </div>
-  <div class="ncs__side"><p>On shift</p><span>Station B</span><span>Staff app · connected</span><span>Reporting · local server</span></div>
+  <ul class="ncs__list">
+    ${ncsRow('blue', 'siren', 'Bed 21', 'ICU · Code Blue switch', '<em class="st st--blue"><i>Code Blue</i></em>')}
+    ${ncsRow('call', 'bath', 'Bath 3', 'Ward B · Pull-cord', '<em class="st st--call"><i>Calling</i></em>')}
+    ${ncsRow('call ncs__row--new', 'bed-double', 'Bed 12', 'Ward B · Bed switch', '<em class="st st--call"><i>Calling</i><i>Attended</i></em>')}
+    ${ncsRow('done', 'bed-double', 'Bed 7', 'Ward A · Bed switch', '<em class="st st--ok"><i>Attended</i></em>')}
+  </ul>
+  <div class="ncs__foot"><span><span class="dot"></span>Staff app connected</span><span>${icon('server')}Reporting on local server</span></div>
 </div>`, { loop }),
 
   qms: (loop) => win('qms', 'OPD · Token display', 'Token display showing the token now being served and the next tokens', `
@@ -200,3 +207,20 @@ export const WINDOWS = {
 <div class="vend"><p>Insert</p><div class="vend__opts"><span class="is-on">Bottle</span><span>Can</span></div><p>Status</p><div class="vend__opts"><span>Collection logged</span></div><div class="water__foot"><span class="dot"></span>Online</div></div>`),
 };
 
+
+// the NCS product hero: the nurse station screen with the staff app phone in front of it, so the
+// picture shows the lead's promise (station and app know at once). The Bath 3 call lands on the phone
+// inside the same 3.2 s loop that turns Bed 12 to Attended on the station.
+export const SCENES = {
+  ncs: () => `<div class="ncs-scene" data-m-loop>
+  ${WINDOWS.ncs(false)}
+  <div class="phone" role="img" aria-label="Sygnet staff app on a nurse's phone showing the Bath 3 pull-cord call with an Accept button">
+    <div class="phone__screen">
+      <div class="phone__top"><span>Staff app</span><span class="phone__live"><span class="dot"></span>On shift</span></div>
+      <p class="phone__h">Calls for you</p>
+      <div class="phone__call phone__call--blue"><span class="phone__ico">${icon('siren')}</span><span><b>Bed 21</b><span>ICU · Code Blue</span></span></div>
+      <div class="phone__call phone__call--new"><span class="phone__ico">${icon('bath')}</span><span><b>Bath 3</b><span>Ward B · Pull-cord</span></span><span class="phone__btn">Accept</span></div>
+    </div>
+  </div>
+</div>`,
+};
