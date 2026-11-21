@@ -144,7 +144,10 @@ function footer(close) {
 // The script below hides each one on its own (.is-hidden) while it would sit over the footer or over anything that can
 // be pressed in the page (buttons, links, tabs, fields), so neither ever covers footer text or a call to action; a
 // button keeps its place while it has keyboard focus. Without script the footer's last line gets room under WhatsApp (site.css).
-const brFloat = p => `<button class="fab br-float" type="button" data-brochure-open data-product="${esc(p.slug)}" aria-haspopup="dialog" aria-label="Download brochure for ${esc(p.name)}" hidden>${icon('download')}</button>`;
+// On every other page (p = null) it opens the same form with a product picker (brochureDialog).
+const brFloat = p => p
+  ? `<button class="fab br-float" type="button" data-brochure-open data-product="${esc(p.slug)}" aria-haspopup="dialog" aria-label="Download brochure for ${esc(p.name)}" hidden>${icon('download')}</button>`
+  : `<button class="fab br-float" type="button" data-brochure-open aria-haspopup="dialog" aria-label="Download a product brochure" hidden>${icon('download')}</button>`;
 const waFloat = `<a class="fab wa-float" href="${SITE.whatsapp}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">${WA_ICON}</a>
 <script>(function(){var fs=[].slice.call(document.querySelectorAll('.fab'));if(!fs.length)return;document.documentElement.classList.add('wa-js');
 var q='main a[href], main button, main summary, main select, main input, main textarea, main [role=tab], main .hx-btn, footer',raf=0;
@@ -164,16 +167,20 @@ fs.forEach(function(a){a.addEventListener('blur',tick)});document.addEventListen
 // product (tiers and models share it). While it is empty, or a site path does not answer (checked with HEAD first),
 // nothing downloads: the form says "Thank you. We will send the brochure to you shortly." (no 404, no empty file).
 // data-endpoint: the client's form address (POST, FormData), same as the Contact form; empty = nothing is sent yet.
+// Every page that is not a product page (p = null) gets the same dialog with a required "Brochure for" picker of all
+// products; data-files holds each product's BROCHURE_URL and the chosen one is downloaded. `pick` preselects a product
+// (an industry page passes its first product).
 // site.css "brochure dialog".
-const brochureDialog = p => `<dialog class="bdlg" id="brochure" aria-labelledby="bdlg-h">
-<form class="form--card bform" method="dialog" novalidate data-endpoint="" data-file="${esc((BROCHURE_URL[p.slug] || '').trim())}" data-product="${esc(p.name)}">
+const brochureFiles = () => JSON.stringify(Object.fromEntries(PRODUCTS.map(p => [p.slug, (BROCHURE_URL[p.slug] || '').trim()])));
+const brochureDialog = (p, pick = '') => `<dialog class="bdlg" id="brochure" aria-labelledby="bdlg-h">
+<form class="form--card bform" method="dialog" novalidate data-endpoint="" ${p ? `data-file="${esc((BROCHURE_URL[p.slug] || '').trim())}" data-product="${esc(p.name)}"` : `data-files="${esc(brochureFiles())}"`}>
   <button class="bdlg__x" type="button" data-brochure-close aria-label="Close">${icon('x')}</button>
   <div class="bdlg__head field--full">
     <p class="eyebrow">Brochure</p>
-    <h2 id="bdlg-h">${esc(p.name)}</h2>
-    <p class="t-small muted">Tell us who you are and the brochure downloads straight away.</p>
+    <h2 id="bdlg-h">${p ? esc(p.name) : 'Download a product brochure'}</h2>
+    <p class="t-small muted">${p ? 'Tell us who you are and the brochure downloads straight away.' : 'Choose a product, tell us who you are and the brochure downloads straight away.'}</p>
   </div>
-  <input type="hidden" name="product" value="${esc(p.slug)}">
+  ${p ? `<input type="hidden" name="product" value="${esc(p.slug)}">` : `<div class="field field--full"><label for="b-product">Brochure for</label><select id="b-product" name="product" required aria-describedby="b-product-err"><option value="">Choose a product</option>${PRODUCTS.map(o => `<option value="${esc(o.slug)}"${o.slug === pick ? ' selected' : ''}>${esc(o.name)}</option>`).join('')}</select><p class="field__error" id="b-product-err" hidden>Choose the product you want the brochure for.</p></div>`}
   <div class="field"><label for="b-name">Your name</label><input id="b-name" name="name" type="text" autocomplete="name" required aria-describedby="b-name-err"><p class="field__error" id="b-name-err" hidden>Write your name.</p></div>
   <div class="field"><label for="b-email">Work email</label><input id="b-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="b-email-err"><p class="field__error" id="b-email-err" hidden>Write an email address with an @, like name@company.com.</p></div>
   <div class="field"><label for="b-phone">Mobile number</label><input id="b-phone" name="mobile" type="tel" autocomplete="tel" inputmode="tel" pattern="[+]?[0-9][0-9 \\-]{8,16}[0-9]" required aria-describedby="b-phone-err"><p class="field__error" id="b-phone-err" hidden>Write a mobile number of at least 10 digits, like +91 98765 43210.</p></div>
@@ -183,7 +190,7 @@ const brochureDialog = p => `<dialog class="bdlg" id="brochure" aria-labelledby=
 </form>
 </dialog>
 <script>(function(){var d=document.getElementById('brochure');if(!d||!d.showModal)return;var f=d.querySelector('form'),st=d.querySelector('[data-brochure-status]'),
-fs=[].slice.call(f.querySelectorAll('input:not([type=hidden])')),sub=f.querySelector('[type=submit]'),K='syg-brochure-lead';
+fs=[].slice.call(f.querySelectorAll('input:not([type=hidden]), select')),sub=f.querySelector('[type=submit]'),K='syg-brochure-lead';
 function chk(el){var ok=el.checkValidity(),e=document.getElementById(el.id+'-err');if(ok){el.removeAttribute('aria-invalid');if(e)e.hidden=true}else{el.setAttribute('aria-invalid','true');if(e)e.hidden=false}return ok}
 fs.forEach(function(el){el.addEventListener('input',function(){if(el.getAttribute('aria-invalid')==='true')chk(el)})});
 function open(){st.textContent='';sub.disabled=false;try{var s=JSON.parse(localStorage.getItem(K)||'{}');fs.forEach(function(el){if(!el.value&&s[el.name])el.value=s[el.name]})}catch(e){}
@@ -197,7 +204,7 @@ f.addEventListener('submit',function(e){e.preventDefault();var bad=fs.filter(fun
 if(bad.length){st.textContent=bad.length===1?'1 field to fix.':bad.length+' fields to fix.';bad[0].focus();return}
 var data={};fs.forEach(function(el){data[el.name]=el.value.trim()});try{localStorage.setItem(K,JSON.stringify(data))}catch(e){}
 var ep=(f.dataset.endpoint||'').trim();if(/^https?:\\/\\//.test(ep)||ep.charAt(0)==='/'){try{fetch(ep,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'},keepalive:true})}catch(e){}}
-var file=(f.dataset.file||'').trim();
+var file=(f.dataset.file||'').trim();if(f.dataset.files){try{file=(JSON.parse(f.dataset.files)[data.product]||'').trim()}catch(e){file=''}}
 function later(){st.textContent='Thank you. We will send the brochure to you shortly.';sub.disabled=true}
 function get(){var a=document.createElement('a');a.href=file;a.download='';document.body.appendChild(a);a.click();a.remove();
 st.textContent='Thank you, '+data.name+'. Your brochure is downloading.';setTimeout(function(){d.close()},2200)}
@@ -208,6 +215,8 @@ else get()})})()</script>`;
 export function page({ path, title, desc, type = 'product', nav, body, moments = [], close, noindex = false, glassNav = false }) {
   const canonical = SITE.domain + path;
   const product = PRODUCTS.find(p => path === url.product(p.slug));
+  const industry = INDUSTRIES.find(i => path === url.industry(i.slug));
+  const pick = industry && industry.products && industry.products[0] || '';
   const pre = moments.length ? `<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
 <link rel="modulepreload" href="/assets/moments/moments.js">
 <link rel="modulepreload" href="/assets/moments/lib.js">
@@ -258,7 +267,8 @@ ${header(nav, glassNav)}
 ${body}
 </main>
 ${footer(close)}
-${product ? brFloat(product) + '\n' + brochureDialog(product) : ''}
+${brFloat(product || null)}
+${brochureDialog(product || null, pick)}
 ${waFloat}
 <script type="module" src="/assets/system.js"></script>
 <script type="module" src="/assets/nav-dropdown.js"></script>

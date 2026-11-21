@@ -2721,7 +2721,7 @@ main > section.section.solp-list { padding: clamp(48px, 6vw, 80px) 0 clamp(48px,
 .bdlg { width: min(560px, calc(100% - 32px)); max-width: none; max-height: calc(100dvh - 32px); padding: 0; border: 0; background: none; color: var(--ink); overflow: visible; }
 .bdlg::backdrop { background: color-mix(in oklab, var(--brand-indigo) 62%, transparent); }
 .bform { position: relative; grid-template-columns: minmax(0, 1fr); max-height: calc(100dvh - 32px); overflow-y: auto; padding: var(--s-6); background: #ffffff; }
-.bform input { width: 100%; }
+.bform input, .bform select { width: 100%; }
 .bform > .field--full { grid-column: 1 / -1; }
 .bdlg__head { padding-right: 40px; }
 .bdlg__head .eyebrow { margin-bottom: var(--s-3); }
@@ -2753,3 +2753,18 @@ html:not([data-motion="off"]) .bdlg[open] { animation: bdlg-in 200ms cubic-bezie
 .social--foot a:hover { border-color: var(--brand-sky); color: var(--brand-sky); }
 .social--foot a:focus-visible { outline-color: var(--brand-sky); }
 .social--foot .soc-ico { width: 20px; height: 20px; }
+
+/* ------------------------------------------------------------ hardware: "Need features added to your hardware?"
+   (/hardware/ #engineering, pages.mjs hwForm) under the five rows: text left, the Contact page's white form card right,
+   stacked text-then-form below 1024px. The page's own ground and brand shapes stay as they are. */
+.hwf { margin-top: var(--s-8); row-gap: var(--s-6); align-items: start; }
+.hwf__text h3 { font: var(--display-weight) var(--t-h3)/1.2 var(--font-display); letter-spacing: var(--display-tracking); color: var(--head); margin: 0 0 var(--s-3); }
+.hwf__text p { margin: 0; max-width: 52ch; color: var(--ink); }
+/* the jump from the hero's "Talk to an engineer": the form lands 16px under the sticky header. The root's own
+   scroll-padding (nav + 16px) would add to this margin, so it is set aside only while this form is the target. */
+.hwf__form { scroll-margin-top: calc(var(--nav) + 16px); }
+html:has(#custom-hardware-form:target) { scroll-padding-top: 0; }
+.hwf__note { margin: 0; font-size: var(--t-small); color: var(--muted); }
+.hwf__req { margin-left: 2px; color: var(--error, #b42318); font-weight: 600; }
+.hwf__form :is(input, textarea) { min-height: 44px; }
+@media (min-width: 1024px) { .hwf__text { position: sticky; top: calc(var(--nav) + var(--s-6)); } }

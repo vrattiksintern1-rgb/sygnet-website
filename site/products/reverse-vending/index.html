@@ -169,7 +169,7 @@
 </form>
 </dialog>
 <script>(function(){var d=document.getElementById('brochure');if(!d||!d.showModal)return;var f=d.querySelector('form'),st=d.querySelector('[data-brochure-status]'),
-fs=[].slice.call(f.querySelectorAll('input:not([type=hidden])')),sub=f.querySelector('[type=submit]'),K='syg-brochure-lead';
+fs=[].slice.call(f.querySelectorAll('input:not([type=hidden]), select')),sub=f.querySelector('[type=submit]'),K='syg-brochure-lead';
 function chk(el){var ok=el.checkValidity(),e=document.getElementById(el.id+'-err');if(ok){el.removeAttribute('aria-invalid');if(e)e.hidden=true}else{el.setAttribute('aria-invalid','true');if(e)e.hidden=false}return ok}
 fs.forEach(function(el){el.addEventListener('input',function(){if(el.getAttribute('aria-invalid')==='true')chk(el)})});
 function open(){st.textContent='';sub.disabled=false;try{var s=JSON.parse(localStorage.getItem(K)||'{}');fs.forEach(function(el){if(!el.value&&s[el.name])el.value=s[el.name]})}catch(e){}
@@ -183,7 +183,7 @@ f.addEventListener('submit',function(e){e.preventDefault();var bad=fs.filter(fun
 if(bad.length){st.textContent=bad.length===1?'1 field to fix.':bad.length+' fields to fix.';bad[0].focus();return}
 var data={};fs.forEach(function(el){data[el.name]=el.value.trim()});try{localStorage.setItem(K,JSON.stringify(data))}catch(e){}
 var ep=(f.dataset.endpoint||'').trim();if(/^https?:\/\//.test(ep)||ep.charAt(0)==='/'){try{fetch(ep,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'},keepalive:true})}catch(e){}}
-var file=(f.dataset.file||'').trim();
+var file=(f.dataset.file||'').trim();if(f.dataset.files){try{file=(JSON.parse(f.dataset.files)[data.product]||'').trim()}catch(e){file=''}}
 function later(){st.textContent='Thank you. We will send the brochure to you shortly.';sub.disabled=true}
 function get(){var a=document.createElement('a');a.href=file;a.download='';document.body.appendChild(a);a.click();a.remove();
 st.textContent='Thank you, '+data.name+'. Your brochure is downloading.';setTimeout(function(){d.close()},2200)}

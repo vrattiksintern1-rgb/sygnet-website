@@ -1558,13 +1558,42 @@ function solutions() {
   return page({ path: '/solutions/', nav: 'solutions', title: 'Solutions: IoT monitoring solutions for every industry', desc: `IoT monitoring solutions from Sygnet IoT: water, energy, building and utility, industrial, healthcare, dairy and agriculture, and custom-designed hardware.`, body, close: false });
 }
 
+// "Need features added to your hardware?" under the five engineering rows (client, 2026-11-21): text left, enquiry form
+// right (stacked on a phone). Same form.form as the Contact page: system.js validation, inline errors and status line,
+// mailto: stand-in until data-endpoint holds the client's form address (then data-sent shows). No spam field: the
+// Contact form has none either. The hero's "Talk to an engineer" button jumps here (#custom-hardware-form).
+const HWF_REQ = '<span class="hwf__req" aria-hidden="true">*</span>';
+const hwfField = (id, label, input, { full = false, req = false, err = '' } = {}) =>
+  `<div class="field${full ? ' field--full' : ''}"><label for="${id}">${label}${req ? HWF_REQ : ''}</label>${input}${err ? `<p class="field__error" id="${id}-err" hidden>${err}</p>` : ''}</div>`;
+function hwForm() {
+  const form = `<form class="form form--card hwf__form" id="custom-hardware-form" action="mailto:${SITE.email}" method="post" enctype="text/plain" data-endpoint="" data-sent="Thank you. Our team will contact you shortly." novalidate aria-labelledby="hwf-h">
+    <input type="hidden" name="source" value="Custom design hardware">
+    <p class="hwf__note field--full">Fields marked <span class="hwf__req">*</span> are required.</p>
+    ${hwfField('hwf-name', 'Name', '<input id="hwf-name" name="name" type="text" autocomplete="name" required aria-describedby="hwf-name-err">', { req: true, err: 'Write your name.' })}
+    ${hwfField('hwf-email', 'Work email', '<input id="hwf-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="hwf-email-err">', { req: true, err: 'Write an email address with an @, like name@company.com.' })}
+    ${hwfField('hwf-phone', 'Mobile number', '<input id="hwf-phone" name="mobile" type="tel" autocomplete="tel" inputmode="tel" pattern="[+]?[0-9][0-9 \\-]{8,16}[0-9]" required aria-describedby="hwf-phone-err">', { req: true, err: 'Write a mobile number of at least 10 digits, like +91 98765 43210.' })}
+    ${hwfField('hwf-org', 'Organisation', '<input id="hwf-org" name="organisation" type="text" autocomplete="organization">')}
+    ${hwfField('hwf-current', 'Your current hardware or system', '<input id="hwf-current" name="current_hardware" type="text" autocomplete="off">', { full: true })}
+    ${hwfField('hwf-features', 'Features you want added', '<textarea id="hwf-features" name="features" rows="4" required aria-describedby="hwf-features-err"></textarea>', { full: true, req: true, err: 'Write the features you want added.' })}
+    ${hwfField('hwf-other', 'Anything else', '<textarea id="hwf-other" name="message" rows="3"></textarea>', { full: true })}
+    <div class="form__actions"><button class="btn btn--primary" type="submit">Send request</button></div>
+    <p class="form__status" role="status" aria-live="polite" data-form-status></p>
+  </form>`;
+  return `<div class="grid hwf">
+  <div class="hwf__text span-5"><h3 id="hwf-h">Need features added to your hardware?</h3>
+    <p>Already have a device or an existing system? We can add the features you need to your hardware and connect it to Sygnet IoT Connect or your own cloud. Tell us what you want to change and our engineers will get back to you.</p></div>
+  <div class="hwf__wrap span-6 start-7">${form}</div>
+</div>`;
+}
+
 function hardware() {
-  const body = `${heroSplit({ notice: 'Custom-designed hardware', h1: 'IoT hardware, and custom boards built to order', lead: 'Controllers, sensor nodes, gateways and edge devices made for Sygnet IoT Connect, plus custom-designed hardware, from PCB design and firmware through to certification and production.', visual: shotVisual('hw-industrial-gateway'), actions: demoBtn('Talk to an engineer') })}
+  const body = `${heroSplit({ notice: 'Custom-designed hardware', h1: 'IoT hardware, and custom boards built to order', lead: 'Controllers, sensor nodes, gateways and edge devices made for Sygnet IoT Connect, plus custom-designed hardware, from PCB design and firmware through to certification and production.', visual: shotVisual('hw-industrial-gateway'), actions: btn('#custom-hardware-form', 'Talk to an engineer') })}
 ${section({ id: 'range', h: 2 }, `${head('range', 'The hardware range.', 'Built for reliability, scalability and rapid deployment.')}
 <div class="grid grid--cards">${HARDWARE.map(([n, img]) => `<article class="card card--img span-3 m-nolift">${shot(img, '', { cls: 'card__shot' })}<h3>${esc(n)}</h3></article>`).join('')}</div>
 <div class="chips" style="margin-top: var(--s-6)">${HW_QUALITIES.map(q => `<span class="chip chip--static">${q}</span>`).join('')}</div>
 <div style="margin-top: var(--s-6)">${slot('Model-wise specifications for each category', 'Specifications coming soon')}</div>`)}
-${section({ id: 'engineering' }, `${head('engineering', 'Custom-designed hardware, from circuit to cloud.', 'One team from the first schematic to production.')}${layersList(ENGINEERING)}`)}
+${section({ id: 'engineering' }, `${head('engineering', 'Custom-designed hardware, from circuit to cloud.', 'One team from the first schematic to production.')}${layersList(ENGINEERING)}
+${hwForm()}`)}
 ${section({ id: 'certs' }, `${head('certs', 'Certifications.', 'As listed in our NCS catalog.')}
 <p class="t-label muted" style="margin-bottom: var(--s-4)">${esc(CERTS_NOTE)}</p>${certBadges()}</div>`)}`;
   return page({ path: '/hardware/', nav: 'solutions', title: 'Custom-designed hardware: controllers, gateways, sensor nodes and custom boards', desc: 'Sygnet custom-designed hardware: industrial controllers, sensor nodes, wireless nodes, bridge devices, industrial gateways, data loggers, communication modules and edge computing devices.', body });
