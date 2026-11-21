@@ -4,5 +4,27 @@
   "installCommand": "",
   "buildCommand": "node build/build.mjs",
   "outputDirectory": "site",
-  "trailingSlash": true
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/resources",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/resources/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/developer",
+      "destination": "/platform/",
+      "permanent": true
+    },
+    {
+      "source": "/developer/",
+      "destination": "/platform/",
+      "permanent": true
+    }
+  ]
 }

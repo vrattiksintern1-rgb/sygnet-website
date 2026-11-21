@@ -3,6 +3,12 @@
    repeating shape, the mark's soft chevrons behind the hero, Mist ground, Indigo ink, Signal Blue actions,
    Sky highlights and one Indigo band per page. Every size reads the kit's tokens. */
 
+/* ------------------------------------------------------------ anchors
+   2026-11-20: every in-page anchor (product tabs, tiers, solutions chips, the contact form) lands the same distance
+   below the fixed header: its height plus 16px. One rule on the scroll container, no per-element offsets. */
+html { scroll-padding-top: calc(var(--nav) + 16px); }
+html:has(.nav--glass) { scroll-padding-top: calc(var(--nav) + 12px + 16px); }   /* Home: the glass header floats 12px below the window top */
+
 /* ------------------------------------------------------------ draft guard
    2026-11-18, client request: sections fit their content instead of filling a screen. The hero keeps its screen. */
 main > section.section:not(.hero), footer.closing {
@@ -93,17 +99,26 @@ html:not([data-motion="off"]) .card--link:hover { background: color-mix(in oklab
 .nav__logo img { height: 42px; width: auto; display: block; }
 @media (max-width: 639px) { .nav__logo img { height: 34px; } }
 .nav__menu { background: #ffffff; }
+/* the dropdown chevron never shrinks away when the bar is tight (it used to flex to 0px wide at 1024 and 1280) */
+.nav__links .nav__link .chev { flex: none; }
 /* the dropdowns: plain lists of link names, one column or two */
 .nav__menu .menu-col--list { gap: 2px; }
 .nav__menu .menu-col--list a { display: block; padding: 9px 0; }
-/* seven nav words on a small laptop: a smaller logo, a tighter bar and no chevrons so the row clears the button */
+/* seven nav words on a small laptop: a smaller logo and a tighter bar so the row clears the button
+   (the dropdown chevrons stay on every page at every desktop width: client, 2026-11-21) */
 @media (min-width: 1024px) and (max-width: 1279px) {
   .nav .nav__bar { gap: var(--s-4); }
   .nav .nav__logo img { height: 34px; }
-  .nav__links .nav__link { padding: 0 6px; font-size: 14px; }
-  .nav__links .nav__link::before, .nav__links .nav__link[aria-current="page"]::after { left: 6px; right: 6px; }
-  .nav__links .nav__link .chev { display: none; }
+  .nav__links .nav__link { padding: 0 4px; font-size: 14px; gap: 2px; }
+  .nav__links .nav__link::before, .nav__links .nav__link[aria-current="page"]::after { left: 4px; right: 4px; }
+  .nav__links .nav__link .chev { width: 10px; height: 10px; }
   .nav__actions .btn { padding-inline: var(--s-4); }
+}
+/* a mid laptop (1280-1439): the light bar's wide gaps leave no room for the chevrons, so the bar tightens a little */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .nav:not(.nav--glass) .nav__bar { gap: var(--s-6); }
+  .nav:not(.nav--glass) .nav__links .nav__link { padding: 0 10px; }
+  .nav:not(.nav--glass) .nav__links .nav__link::before, .nav:not(.nav--glass) .nav__links .nav__link[aria-current="page"]::after { left: 10px; right: 10px; }
 }
 /* the phone and tablet menu sheet: one column per panel, every row whole, room above the fixed button bar */
 @media (max-width: 1023px) {
@@ -245,12 +260,13 @@ html:not([data-motion="off"]) .card--link:hover { background: color-mix(in oklab
 .tbc .chips { gap: var(--s-2); }
 
 /* numbered rows: layers, steps */
-.layers { list-style: none; margin: 0; padding: 0; counter-reset: l; }
-.layers li { display: grid; grid-template-columns: 56px minmax(0, 14ch) minmax(0, 1fr); gap: var(--s-5); align-items: baseline; padding: var(--s-5) 0; border-bottom: 1px solid var(--line); counter-increment: l; }
+.layers { list-style: none; margin: 0; padding: 0; counter-reset: l; display: grid; grid-template-columns: 56px max-content minmax(0, 1fr); column-gap: var(--s-6); }
+/* subgrid: the name column takes the width of the longest name, so every row lines up and no name runs into its text */
+.layers li { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid; align-items: baseline; padding: var(--s-5) 0; border-bottom: 1px solid var(--line); counter-increment: l; }
 .layers li::before { content: counter(l, decimal-leading-zero); font: 500 var(--t-small)/1 var(--font-mono); color: var(--brand-blue); }
 .ground-inverse .layers li::before { color: var(--brand-sky); }
 .layers b { font: var(--display-weight) var(--t-h3)/1.2 var(--font-display); letter-spacing: var(--display-tracking); color: var(--head); }
-@media (max-width: 639px) { .layers li { grid-template-columns: 40px minmax(0, 1fr); } .layers li span { grid-column: 2; } }
+@media (max-width: 639px) { .layers { grid-template-columns: 40px minmax(0, 1fr); row-gap: 0; } .layers li { row-gap: var(--s-2); } .layers li span { grid-column: 2; } }
 
 /* partner tiers */
 .tier { display: grid; gap: var(--s-3); align-content: start; }
@@ -939,6 +955,8 @@ html[data-motion="off"] .hx *, html[data-motion="off"] .hx *::before, html[data-
 @media (max-width: 639px) { .nav--glass .nav__logo img { height: 30px; } }
 .nav--glass .nav__actions .btn { background: transparent; color: #f5ffff; border: 1px solid rgba(255, 255, 255, .34); border-radius: 999px;
   clip-path: none; corner-shape: round; }
+/* Log in: the quieter of the two, no outline (the outlined pill stays the demo button) */
+.nav--glass .nav__actions .nav__login { border-color: transparent; }
 html .nav--glass .nav__actions .btn:hover { background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .55); }
 .nav--glass .nav__actions .btn:active { transform: scale(.97); }
 .nav--glass .nav__actions .btn:focus-visible { outline: 2px solid #94cddd; outline-offset: 2px; }
@@ -969,6 +987,7 @@ html .nav--glass .nav__actions .btn:hover { background: rgba(255, 255, 255, .08)
 @media (max-width: 1023px) {
   .nav--glass.is-open .nav__links .nav__link { color: var(--ink); }
   .nav--glass.is-open .nav__actions .btn { color: #ffffff; background: var(--action); border-color: transparent; }
+  .nav--glass.is-open .nav__actions .nav__login { color: var(--ink); background: color-mix(in oklab, var(--brand-sky) 26%, var(--bg)); }
 }
 @media (scripting: none) and (max-width: 1023px) { .nav--glass .nav__links .nav__link { color: #f5ffff; } }
 
@@ -1007,7 +1026,7 @@ html .nav--glass .nav__actions .btn:hover { background: rgba(255, 255, 255, .08)
 :is(h1, h2, .t-h1, .t-h2, .statement__h, .hx-h1):not(.doc h2) { font-family: var(--font-brand); }
 
 /* ------------------------------------------------------------ bell page (/products/school-bell-pa-system/, pages.mjs bellPage)
-   A short intro, then the model viewer: detail left, the device on Mist right, five model cards under it. Without
+   A short intro, then the model viewer: detail left, the device on Mist right, five model cards above it. Without
    script the five panels stack; with it (.bv--js) they share one grid cell and cross-fade on opacity in 200 ms. */
 :root { --bv-mist: #eef9fc; --bv-line: #cde6ee; --bv-line-hover: #a9d5e2; }
 main > section.section.bintro { padding: calc(var(--nav) + var(--s-8)) 0 var(--s-7); }   /* the header is fixed over it */
@@ -1021,8 +1040,8 @@ main > section.section.bintro { padding: calc(var(--nav) + var(--s-8)) 0 var(--s
 main > section.section.bv-sec { padding-top: 0; }
 @media (max-width: 639px) { main > section.section.bintro { padding: calc(var(--nav) + var(--s-7)) 0 var(--s-6); } }
 
-.bv { --bv-pad: var(--s-7); scroll-margin-top: calc(var(--nav) + var(--s-4)); }
-.bv__panel { scroll-margin-top: calc(var(--nav) + var(--s-4) + var(--bv-pad)); }   /* a #model link lands with the viewer clear of the header */
+.bv { --bv-pad: var(--s-7); }
+.bv__panel { scroll-margin-top: var(--bv-pad); }   /* a #model link lands with the viewer box (not just the panel inside it) at the shared anchor offset */
 .bv__stage { --c: var(--cut); background: #ffffff; padding: var(--bv-pad);
   clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c)); }
 .bv__panel { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-areas: "text media"; gap: var(--s-7); align-items: start; }
@@ -1058,8 +1077,9 @@ main > section.section.bv-sec { padding-top: 0; }
 @media (prefers-reduced-motion: reduce) { .bv--js .bv__panel, .bv--js .bv__panel.is-active { transition: none; } }
 html[data-motion="off"] .bv--js .bv__panel { transition: none; }
 
-/* the model row: five cut-corner cards; the open one has an Indigo edge and a Mist fill */
-.bv__tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s-3); margin-top: var(--s-4); }
+/* the model row: cut-corner cards above the panel they open (every viewer, as on Nurse Call); the open one has an
+   Indigo edge and a Mist fill */
+.bv__tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s-3); margin: 0 0 var(--s-4); }
 .bv__tabs[hidden] { display: none; }
 .bv__tab { --c: 12px; --i: 1px; --ic: calc(var(--c) - 0.586px); position: relative; isolation: isolate; display: flex; flex-direction: column; gap: 2px; min-width: 0; min-height: 44px;
   padding: var(--s-3) var(--s-4) var(--s-4); background: var(--bv-line); color: var(--brand-indigo); text-decoration: none; -webkit-tap-highlight-color: transparent; cursor: pointer;
@@ -1360,8 +1380,8 @@ html:not([data-motion="off"]) .bv__tab:hover { background: var(--bv-line-hover);
 .npart__tag { position: absolute; top: 8px; left: 8px; padding: 2px 7px; border-radius: 999px; background: rgba(255, 255, 255, .92); font: 500 11px/1.4 var(--font-text); color: var(--muted); }
 .npart__t { font: 500 15px/1.35 var(--font-text); color: var(--brand-indigo); }
 .nparts .compare__note { margin-top: var(--s-5); }
-/* the three tier cards: a row of three from 640px, thumbnail beside the words */
-.bv__tabs--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* the three tier cards (NCS, QMS): above the tier they open, a row of three from 640px, thumbnail beside the words */
+.bv__tabs--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0 0 var(--s-4); }
 @media (min-width: 640px) {
   .bv__tabs--3 { display: grid; overflow: visible; scroll-snap-type: none; padding-bottom: 0; }
   .bv__tabs--3[hidden] { display: none; }
@@ -1426,13 +1446,12 @@ html:not([data-motion="off"]) .bv__tab:hover { background: var(--bv-line-hover);
 .cohex .lcard__hex, .coapp__hex .lcard__hex { width: 100%; height: 100%; fill: var(--bv-mist); stroke: var(--brand-blue); stroke-width: 1.5; stroke-linejoin: round; }
 .cohex .ico { position: relative; width: 22px; height: 22px; }
 
-/* about and partners: four cards a row on desktop, two on a tablet, one on a phone (icon beside the words) */
+/* about: four cards a row on desktop, two on a tablet, one on a phone (icon beside the words) */
 .cocards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-4); margin: 0; padding: 0; list-style: none; }
 .cocard { display: flex; flex-direction: column; gap: var(--s-3); padding: var(--s-6) var(--s-5); background: #ffffff; }
 .cocard .cohex { margin-bottom: var(--s-2); }
 .cocard h3 { font: 500 var(--t-lead)/1.3 var(--font-text); color: var(--head); }
 .cocard p { margin: 0; color: var(--ink); }
-.cocards--partners .cocard p { font-size: var(--t-small); color: var(--muted); }
 @media (max-width: 1023px) { .cocards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 639px) {
   .cocards { grid-template-columns: minmax(0, 1fr); gap: var(--s-3); }
@@ -1547,16 +1566,15 @@ html:not([data-motion="off"]) .coprods a:hover { background: var(--bv-line); }
   .coapp__grid .cohex .ico { width: 18px; height: 18px; }
 }
 
-/* ten reasons: numbered cut cards, five a row on desktop */
-.coten { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s-3); margin: 0; padding: 0; list-style: none; }
+/* why Sygnet (nine reasons): numbered cut cards, three a row (3 x 3) from tablet up, one a row on a phone */
+.coten { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); margin: 0; padding: 0; list-style: none; }
 .coten li { display: flex; flex-direction: column; gap: var(--s-2); padding: var(--s-5); background: #ffffff; }
 .coten__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--s-2); }
 .coten__n { font: 500 var(--t-lead)/1 var(--font-mono); color: var(--action); }
 .coten__top .ico { width: 24px; height: 24px; color: var(--brand-indigo); }
 .coten b { font: 500 var(--t-lead)/1.3 var(--font-text); color: var(--head); }
 .coten__x { font-size: var(--t-small); color: var(--muted); }
-@media (max-width: 1199px) { .coten { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 639px) {
+@media (max-width: 767px) {
   .coten { grid-template-columns: minmax(0, 1fr); }
   .coten li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 2px var(--s-3); padding: var(--s-4); }
   .coten__top { grid-row: 1 / span 2; flex-direction: column; align-items: flex-start; gap: var(--s-2); margin: 0; }
@@ -1568,11 +1586,6 @@ html:not([data-motion="off"]) .coprods a:hover { background: var(--bv-line); }
 .coout + .bstr { margin-top: var(--s-6); }
 @media (max-width: 1023px) { .coout { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 479px) { .coout { grid-template-columns: minmax(0, 1fr); } }
-
-/* partners: the closing line beside the partner button */
-.copart__close { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s-4) var(--s-6); margin-top: var(--s-7); }
-.copart__close .bline { margin: 0; max-width: 28ch; }
-.copart__close .btn-row { margin: 0; }
 
 /* let's build together: one white cut panel, the words beside the kinds of site and the demo button */
 .cotog { --c: var(--cut); display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--s-7); align-items: center; padding: var(--s-7); background: #ffffff; }
@@ -1605,7 +1618,7 @@ main > section.section.coend { padding-top: 0; }
 
 /* a feature block: one white cut panel, words left (5) and the picture or screen right (7) on Mist */
 .qfs { display: grid; gap: var(--gutter); }
-.qf { --c: var(--cut); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-areas: "text media"; gap: var(--s-7); align-items: center; padding: var(--s-7); background: #ffffff; scroll-margin-top: calc(var(--nav) + var(--s-4));
+.qf { --c: var(--cut); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-areas: "text media"; gap: var(--s-7); align-items: center; padding: var(--s-7); background: #ffffff;
   clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c)); }
 .qf--flip { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "media text"; }
 .qf__text { grid-area: text; min-width: 0; }
@@ -2474,7 +2487,7 @@ html[data-motion="off"] .rv-wait { opacity: 1; transform: none; transition: none
    Panel: a white cut-corner stage; from 1024px the words, chips and actions sit left and the use cases right.
    Without script every panel shows, stacked with a rule between; with it (.ix--js) one shows, the others are [hidden].
    Contrast on white: Indigo 11:1, muted #3f4a78 8.5:1, Signal Blue action #3a66c4 5.2:1. */
-.ix { --ix-line: var(--bv-line); --ix-fill: var(--bv-mist); scroll-margin-top: calc(var(--nav) + var(--s-4)); }
+.ix { --ix-line: var(--bv-line); --ix-fill: var(--bv-mist); }
 .ix__tabs { position: relative; display: flex; gap: 10px; margin: 0 0 var(--s-4); overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity;
   padding: 2px 0 var(--s-2); scrollbar-width: thin; scrollbar-color: var(--ix-line) transparent; }
 .ix__tab { --c: 12px; --i: 1px; --ic: calc(var(--c) - 0.586px); position: relative; isolation: isolate; flex: 0 0 128px; scroll-snap-align: start;
@@ -2507,7 +2520,7 @@ html[data-motion="off"] .rv-wait { opacity: 1; transform: none; transition: none
 /* the stage and one panel */
 .ix__stage { --c: var(--cut); background: #ffffff; padding: var(--s-7);
   clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c)); }
-.ix__panel { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "intro" "helps" "sols" "act"; gap: var(--s-5); scroll-margin-top: calc(var(--nav) + var(--s-4)); }
+.ix__panel { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "intro" "helps" "sols" "act"; gap: var(--s-5); }
 .ix__panel[hidden] { display: none; }
 .ix__panel + .ix__panel { margin-top: var(--s-7); padding-top: var(--s-7); border-top: 1px solid var(--ix-line); }   /* no script: stacked */
 .ix--js .ix__panel + .ix__panel { margin-top: 0; padding-top: 0; border-top: 0; }
@@ -2613,7 +2626,7 @@ main > section.section.solp-list { padding: clamp(48px, 6vw, 80px) 0 clamp(48px,
 .solp-group:first-child { margin-top: 0; }
 .solp-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--bv-line); }
 .solp-rows--custom { border-top: 0; }   /* follows the last group as one more row */
-.solp-row { display: grid; gap: var(--s-4); padding: clamp(28px, 3vw, 44px) 0; border-bottom: 1px solid var(--bv-line); scroll-margin-top: calc(var(--nav) + 16px); }
+.solp-row { display: grid; gap: var(--s-4); padding: clamp(28px, 3vw, 44px) 0; border-bottom: 1px solid var(--bv-line); }
 @media (min-width: 900px) { .solp-row { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: clamp(32px, 5vw, 80px); } }
 .solp-row__name :is(h2, h3) { margin: 0; font: 500 clamp(26px, 1vw + 20px, 36px)/1.15 var(--font-text); letter-spacing: -.01em; color: var(--brand-indigo); }
 .solp-row__n { margin: 6px 0 0; font-size: 16px; line-height: 1.4; color: var(--muted); }
@@ -2641,3 +2654,84 @@ main > section.section.solp-list { padding: clamp(48px, 6vw, 80px) 0 clamp(48px,
 .solp-pics { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--s-3); margin: 0; }
 .solp-pics img { display: block; width: auto; height: auto; max-width: 132px; max-height: 120px; object-fit: contain; }
 .solp-pics figcaption { flex-basis: 100%; font-size: 13px; color: var(--muted); }
+
+/* ------------------------------------------------------------ solutions: the "Need something customised?" row (2026-11-20)
+   the Contact button and the WhatsApp link side by side, wrapping on a phone */
+.solp-cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-6); margin-top: var(--s-5); }
+.solp-wa .wa-ico { width: 20px; height: 20px; flex: none; }
+
+/* home: Solutions moved to Mist (its neighbours are white), so its rows hover to white */
+@media (hover: hover) { .hs--mist .ed__row:hover { background: #ffffff; } }
+
+/* ------------------------------------------------------------ floating buttons (layout.mjs waFloat, brFloat)
+   48px squares, bottom right, cut corners like the buttons, white rim so they read on Mist and on the Indigo bands.
+   WhatsApp (every page): Signal Blue, white glyph (5.3:1). Download brochure (product pages only): Indigo, white glyph,
+   stacked 12px above WhatsApp on the same right edge. Under the header (z 50), so the phone menu sheet covers them.
+   The script hides each one (.is-hidden) while it would sit over the footer or anything that can be pressed. */
+.fab { --c: var(--cut-sm); --fab-edge: 16px; --fab: 48px; --fab-gap: 12px;
+  position: fixed; z-index: 40; right: calc(var(--fab-edge) + env(safe-area-inset-right)); bottom: calc(var(--fab-edge) + env(safe-area-inset-bottom));
+  display: grid; place-items: center; width: var(--fab); height: var(--fab); margin: 0; padding: 0; border: 2px solid #ffffff; background: var(--p-action); color: #ffffff; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c)); }
+@supports (corner-shape: bevel) { .fab { clip-path: none; border-radius: var(--c); corner-shape: bevel; } }
+@media (min-width: 1024px) { .fab { --fab-edge: 24px; } }
+.fab[hidden] { display: none; }
+.wa-float .wa-ico { width: 24px; height: 24px; }
+.wa-float:hover { background: var(--brand-indigo); }
+.br-float { bottom: calc(var(--fab-edge) + var(--fab) + var(--fab-gap) + env(safe-area-inset-bottom)); background: var(--brand-indigo); }
+.br-float .ico { width: 22px; height: 22px; }
+.br-float:hover { background: var(--p-action); }
+/* focus: a white ring inset in the button (the clip-path would cut an outside ring), plus the hover colour */
+.fab:focus-visible { outline: 2px solid #ffffff; outline-offset: -6px; }
+.wa-float:focus-visible { background: var(--brand-indigo); }
+.br-float:focus-visible { background: var(--p-action); }
+.fab.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(8px); }
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="off"]) .fab { transition: opacity 160ms ease, transform 160ms ease, visibility 0s linear 0s, background-color 150ms ease; }
+  html:not([data-motion="off"]) .fab.is-hidden { transition: opacity 160ms ease, transform 160ms ease, visibility 0s linear 160ms; }
+}
+/* reduced motion: they step aside by fading only, no slide */
+@media (prefers-reduced-motion: reduce) { .fab.is-hidden { transform: none; } }
+/* without script it cannot step aside, so the footer's last line gets room under it (the brochure button needs
+   script and stays hidden without it) */
+@media (max-width: 1023px) { html:not(.wa-js) .footer__legal { padding-bottom: 72px; } }
+@media print { .fab { display: none; } }
+
+/* ------------------------------------------------------------ brochure dialog (product pages: layout.mjs brochureDialog)
+   The "Download brochure" button sits beside "Request a demo"; it opens a white cut-corner form card over an Indigo veil */
+.btn--brochure .ico, .bform .form__actions .ico { width: 18px; height: 18px; }
+.bdlg { width: min(560px, calc(100% - 32px)); max-width: none; max-height: calc(100dvh - 32px); padding: 0; border: 0; background: none; color: var(--ink); overflow: visible; }
+.bdlg::backdrop { background: color-mix(in oklab, var(--brand-indigo) 62%, transparent); }
+.bform { position: relative; grid-template-columns: minmax(0, 1fr); max-height: calc(100dvh - 32px); overflow-y: auto; padding: var(--s-6); background: #ffffff; }
+.bform input { width: 100%; }
+.bform > .field--full { grid-column: 1 / -1; }
+.bdlg__head { padding-right: 40px; }
+.bdlg__head .eyebrow { margin-bottom: var(--s-3); }
+.bdlg__head h2 { margin: 0 0 var(--s-2); font-size: var(--t-h3); line-height: 1.2; }
+.bdlg__head p { margin: 0; }
+.bdlg__x { position: absolute; top: 12px; right: 12px; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: none; color: var(--ink); cursor: pointer; }
+.bdlg__x .ico { width: 20px; height: 20px; }
+.bdlg__x:hover { color: var(--action); }
+.bform .form__status:empty { display: none; }
+.bform .form__status { margin: 0; font-size: var(--t-small); color: var(--ink); }
+@media (min-width: 640px) { .bform { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 639px) { .bform { padding: var(--s-5); } }
+html:not([data-motion="off"]) .bdlg[open] { animation: bdlg-in 200ms cubic-bezier(.2, .8, .2, 1); }
+@keyframes bdlg-in { from { opacity: 0; transform: translateY(8px) scale(.98); } }
+@media (prefers-reduced-motion: reduce) { html .bdlg[open] { animation: none; } }
+
+/* ------------------------------------------------------------ office address and social links (footer, Contact page) */
+.footer__addr { display: block; padding-top: var(--s-2); line-height: 1.55; color: var(--muted); }
+.contact-list__addr address { font: 400 17px/1.55 var(--font-text); letter-spacing: 0; font-style: normal; color: var(--ink); }
+.social { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); margin: 0; padding: 0; list-style: none; }
+.social a { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; font: 500 16px/1.2 var(--font-text); letter-spacing: 0; color: var(--brand-indigo); text-decoration: none; }
+.social a:hover span { text-decoration: underline; text-underline-offset: 4px; }
+.social a:focus-visible { outline: 2px solid var(--brand-indigo); outline-offset: 2px; }
+.soc-ico { width: 22px; height: 22px; flex: none; }
+/* footer: icon-only buttons in white on Indigo, the name kept for screen readers */
+.footer .social--foot { display: flex; flex-direction: row; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-2); }
+.social--foot a { justify-content: center; width: 44px; height: 44px; color: var(--ink); border: 1px solid color-mix(in oklab, var(--ink) 28%, transparent); border-radius: 50%; }
+.social--foot a span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.social--foot a:hover { border-color: var(--brand-sky); color: var(--brand-sky); }
+.social--foot a:focus-visible { outline-color: var(--brand-sky); }
+.social--foot .soc-ico { width: 20px; height: 20px; }

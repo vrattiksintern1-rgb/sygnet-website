@@ -1,7 +1,7 @@
 // The page shell shared by every page: head (SEO + share tags), the fixed light header with its mega
 // panels, and the closing footer (close row, company line, link groups, legal row with the Vrattiks credit).
-import { SITE, PRODUCTS, INDUSTRIES } from './data.mjs';
-import { esc, url, CHEV, btn, icon } from './ui.mjs';
+import { SITE, PRODUCTS, INDUSTRIES, BROCHURE_URL } from './data.mjs';
+import { esc, url, CHEV, btn, icon, WA_ICON, socialLinks } from './ui.mjs';
 import { BRAND } from './brand.mjs';
 
 // fonts are self-hosted (build/fonts): Nulshock Bold, the brand kit's primary face, for h1/h2 headings; Jost, the
@@ -46,9 +46,10 @@ const NAV = [
     ...[...priority, ...secondary].map(p => [url.product(p.slug), p.short]), ['/products/', 'All products']]) },
   { key: 'industries', label: 'Industries', href: '/industries/', menu: menuList([
     ...INDUSTRIES.map(i => [url.industry(i.slug), i.name]), ['/industries/', 'All industries']]) },
-  { key: 'platform', label: 'Platform', href: '/platform/', menu: menuList([
-    ['/platform/', 'Sygnet IoT Connect'], ['/hardware/', 'Smart edge hardware'], ['/developer/', 'Developer'],['/resources/', 'Resources']]) },
-  { key: 'solutions', label: 'Solutions', href: '/solutions/' },
+  // 2026-11-20: Developer and Resources removed with their pages; "Smart edge hardware" moved from Platform to Solutions
+  { key: 'platform', label: 'Platform', href: '/platform/' },
+  { key: 'solutions', label: 'Solutions', href: '/solutions/', menu: menuList([
+    ['/solutions/', 'All solutions'], ['/hardware/', 'Custom-designed hardware']]) },
   { key: 'partners', label: 'Partners', href: '/partners/' },
   { key: 'company', label: 'Company', href: '/company/', menu: menuList([
     ['/company/', 'About Sygnet IoT'], ['/case-studies/', 'Case studies'], ['/contact/', 'Contact']]) },
@@ -72,7 +73,8 @@ function header(current, glass = false) {
 ${items}
     </nav>
     <div class="nav__actions">
-      <a class="btn btn--primary" href="/contact/#demo">${glass ? 'Request a Demo' : 'Request a demo'}</a>
+      <button class="btn btn--secondary nav__login" type="button">Log in</button>
+      <a class="btn btn--primary" href="/contact/">${glass ? 'Request a Demo' : 'Request a demo'}</a>
     </div>
     <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
       <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
@@ -85,7 +87,7 @@ ${items}
 const FOOT = [
   ['Products', [...priority.map(p => [url.product(p.slug), p.short]), ['/products/', 'All products']]],
   ['Industries', INDUSTRIES.map(i => [url.industry(i.slug), i.name])],
-  ['Platform', [['/platform/', 'Sygnet IoT Connect'], ['/hardware/', 'Smart edge hardware'], ['/developer/', 'Developer'], ['/solutions/', 'Solutions'], ['/resources/', 'Resources']]],
+  ['Platform & solutions', [['/platform/', 'Sygnet IoT Connect'], ['/solutions/', 'All solutions'], ['/hardware/', 'Custom-designed hardware']]],
   ['Company', [['/company/', 'About us'], ['/case-studies/', 'Case studies'], ['/partners/', 'Partner program'], ['/contact/', 'Contact']]],
 ];
 
@@ -105,7 +107,7 @@ function footer(close) {
           <p class="t-lead">${esc(line)}</p>
         </div>
         <div class="cta-band__act">
-          ${btn(c.href || '/contact/#demo', c.label || 'Request a demo')}
+          ${btn(c.href || '/contact/', c.label || 'Request a demo')}
           <a class="cta-band__row" href="tel:${SITE.tel}">${icon('phone')}<span>${SITE.phone}</span></a>
           <a class="cta-band__row" href="mailto:${SITE.email}">${icon('mail')}<span>${SITE.email}</span></a>
         </div>
@@ -117,7 +119,8 @@ function footer(close) {
           <a class="nav__logo" href="/">${LOGO_WHITE}</a>
           <p class="footer__line">${esc(SITE.line)}</p>
           <p class="footer__sub">${esc(SITE.subline)}</p>
-          <address class="footer__contact"><a href="tel:${SITE.tel}">${SITE.phone}</a><a href="mailto:${SITE.email}">${SITE.email}</a><span>${SITE.city}</span></address>
+          <address class="footer__contact"><a href="tel:${SITE.tel}">${SITE.phone}</a><a href="mailto:${SITE.email}">${SITE.email}</a><span class="footer__addr">${SITE.address.map(esc).join('<br>')}</span></address>
+          ${socialLinks(SITE.social, 'social social--foot')}
         </div>
         <nav class="footer__groups span-6 start-7" aria-label="Footer">${groups}</nav>
       </div>
@@ -132,8 +135,79 @@ function footer(close) {
 </footer>`;
 }
 
+// the floating buttons (site.css "floating buttons"), bottom right, 48px, cut corners like the buttons:
+//   WhatsApp (every page): Signal Blue with a white glyph and a white rim, so it reads on Mist and on the Indigo bands.
+//   Download brochure (product pages only, brFloat): Indigo with a white glyph and rim, 12px above WhatsApp. It is the
+//   same kind of button as the in-page "Download brochure" buttons (data-brochure-open): it opens this product's
+//   brochure form, and the file downloads only after the form is sent. It is rendered hidden and the form's script
+//   shows it, so without script (or without <dialog>) there is no dead button.
+// The script below hides each one on its own (.is-hidden) while it would sit over the footer or over anything that can
+// be pressed in the page (buttons, links, tabs, fields), so neither ever covers footer text or a call to action; a
+// button keeps its place while it has keyboard focus. Without script the footer's last line gets room under WhatsApp (site.css).
+const brFloat = p => `<button class="fab br-float" type="button" data-brochure-open data-product="${esc(p.slug)}" aria-haspopup="dialog" aria-label="Download brochure for ${esc(p.name)}" hidden>${icon('download')}</button>`;
+const waFloat = `<a class="fab wa-float" href="${SITE.whatsapp}" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">${WA_ICON}</a>
+<script>(function(){var fs=[].slice.call(document.querySelectorAll('.fab'));if(!fs.length)return;document.documentElement.classList.add('wa-js');
+var q='main a[href], main button, main summary, main select, main input, main textarea, main [role=tab], main .hx-btn, footer',raf=0;
+function hit(r,b){return r.bottom>b.top-8&&r.top<b.bottom+8&&r.right>b.left-8&&r.left<b.right+8}
+function check(){raf=0;var els=document.querySelectorAll(q);fs.forEach(function(a){if(a.hidden)return;
+if(a===document.activeElement){a.classList.remove('is-hidden');return}
+var b=a.getBoundingClientRect(),off=false;
+for(var i=0;i<els.length&&!off;i++){var r=els[i].getBoundingClientRect();if(r.width&&hit(r,b))off=true}
+a.classList.toggle('is-hidden',off)})}
+function tick(){if(!raf)raf=requestAnimationFrame(check)}
+addEventListener('scroll',tick,{passive:true});addEventListener('resize',tick);addEventListener('load',tick);
+fs.forEach(function(a){a.addEventListener('blur',tick)});document.addEventListener('fab:shown',tick);tick()})()</script>`;
+
+// ---------------------------------------------------------------- brochure form (every product page)
+// Each "Download brochure" button (ui.mjs brochureBtn) opens this dialog. The visitor fills name, email, mobile and
+// organisation; only then does the brochure download. The file is the product's BROCHURE_URL (data.mjs), one per
+// product (tiers and models share it). While it is empty, or a site path does not answer (checked with HEAD first),
+// nothing downloads: the form says "Thank you. We will send the brochure to you shortly." (no 404, no empty file).
+// data-endpoint: the client's form address (POST, FormData), same as the Contact form; empty = nothing is sent yet.
+// site.css "brochure dialog".
+const brochureDialog = p => `<dialog class="bdlg" id="brochure" aria-labelledby="bdlg-h">
+<form class="form--card bform" method="dialog" novalidate data-endpoint="" data-file="${esc((BROCHURE_URL[p.slug] || '').trim())}" data-product="${esc(p.name)}">
+  <button class="bdlg__x" type="button" data-brochure-close aria-label="Close">${icon('x')}</button>
+  <div class="bdlg__head field--full">
+    <p class="eyebrow">Brochure</p>
+    <h2 id="bdlg-h">${esc(p.name)}</h2>
+    <p class="t-small muted">Tell us who you are and the brochure downloads straight away.</p>
+  </div>
+  <input type="hidden" name="product" value="${esc(p.slug)}">
+  <div class="field"><label for="b-name">Your name</label><input id="b-name" name="name" type="text" autocomplete="name" required aria-describedby="b-name-err"><p class="field__error" id="b-name-err" hidden>Write your name.</p></div>
+  <div class="field"><label for="b-email">Work email</label><input id="b-email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="b-email-err"><p class="field__error" id="b-email-err" hidden>Write an email address with an @, like name@company.com.</p></div>
+  <div class="field"><label for="b-phone">Mobile number</label><input id="b-phone" name="mobile" type="tel" autocomplete="tel" inputmode="tel" pattern="[+]?[0-9][0-9 \\-]{8,16}[0-9]" required aria-describedby="b-phone-err"><p class="field__error" id="b-phone-err" hidden>Write a mobile number of at least 10 digits, like +91 98765 43210.</p></div>
+  <div class="field"><label for="b-org">Organisation</label><input id="b-org" name="organisation" type="text" autocomplete="organization" required aria-describedby="b-org-err"><p class="field__error" id="b-org-err" hidden>Write the hospital, school or company name.</p></div>
+  <div class="form__actions field--full"><button class="btn btn--primary" type="submit">${icon('download')}<span>Download brochure</span></button></div>
+  <p class="form__status field--full" role="status" data-brochure-status></p>
+</form>
+</dialog>
+<script>(function(){var d=document.getElementById('brochure');if(!d||!d.showModal)return;var f=d.querySelector('form'),st=d.querySelector('[data-brochure-status]'),
+fs=[].slice.call(f.querySelectorAll('input:not([type=hidden])')),sub=f.querySelector('[type=submit]'),K='syg-brochure-lead';
+function chk(el){var ok=el.checkValidity(),e=document.getElementById(el.id+'-err');if(ok){el.removeAttribute('aria-invalid');if(e)e.hidden=true}else{el.setAttribute('aria-invalid','true');if(e)e.hidden=false}return ok}
+fs.forEach(function(el){el.addEventListener('input',function(){if(el.getAttribute('aria-invalid')==='true')chk(el)})});
+function open(){st.textContent='';sub.disabled=false;try{var s=JSON.parse(localStorage.getItem(K)||'{}');fs.forEach(function(el){if(!el.value&&s[el.name])el.value=s[el.name]})}catch(e){}
+d.showModal();var first=fs.filter(function(el){return !el.value})[0]||sub;first.focus()}
+var pid=f.querySelector('[name=product]');
+document.querySelectorAll('[data-brochure-open]').forEach(function(b){b.addEventListener('click',function(){if(b.dataset.product)pid.value=b.dataset.product;open()});
+if(b.hidden){b.hidden=false;document.dispatchEvent(new Event('fab:shown'))}});
+d.querySelector('[data-brochure-close]').addEventListener('click',function(){d.close()});
+d.addEventListener('click',function(e){if(e.target===d)d.close()});
+f.addEventListener('submit',function(e){e.preventDefault();var bad=fs.filter(function(el){return !chk(el)});
+if(bad.length){st.textContent=bad.length===1?'1 field to fix.':bad.length+' fields to fix.';bad[0].focus();return}
+var data={};fs.forEach(function(el){data[el.name]=el.value.trim()});try{localStorage.setItem(K,JSON.stringify(data))}catch(e){}
+var ep=(f.dataset.endpoint||'').trim();if(/^https?:\\/\\//.test(ep)||ep.charAt(0)==='/'){try{fetch(ep,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'},keepalive:true})}catch(e){}}
+var file=(f.dataset.file||'').trim();
+function later(){st.textContent='Thank you. We will send the brochure to you shortly.';sub.disabled=true}
+function get(){var a=document.createElement('a');a.href=file;a.download='';document.body.appendChild(a);a.click();a.remove();
+st.textContent='Thank you, '+data.name+'. Your brochure is downloading.';setTimeout(function(){d.close()},2200)}
+if(!file)return later();
+if(file.charAt(0)==='/'&&file.charAt(1)!=='/'){sub.disabled=true;fetch(file,{method:'HEAD'}).then(function(r){sub.disabled=false;r.ok?get():later()},function(){sub.disabled=false;later()})}
+else get()})})()</script>`;
+
 export function page({ path, title, desc, type = 'product', nav, body, moments = [], close, noindex = false, glassNav = false }) {
   const canonical = SITE.domain + path;
+  const product = PRODUCTS.find(p => path === url.product(p.slug));
   const pre = moments.length ? `<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
 <link rel="modulepreload" href="/assets/moments/moments.js">
 <link rel="modulepreload" href="/assets/moments/lib.js">
@@ -173,7 +247,7 @@ ${ROOT}
 <script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
 <script src="/assets/backgrounds/backgrounds.js"></script>
 ${pre}
-<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: SITE.legal, alternateName: SITE.platform, slogan: SITE.line, url: SITE.domain, logo: `${SITE.domain}/img/brand/icon-512.png`, email: SITE.email, telephone: SITE.phone, address: { '@type': 'PostalAddress', addressLocality: 'Surat', addressRegion: 'Gujarat', addressCountry: 'IN' } })}</script>
+<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@type': 'Organization', name: SITE.legal, alternateName: SITE.platform, slogan: SITE.line, url: SITE.domain, logo: `${SITE.domain}/img/brand/icon-512.png`, email: SITE.email, telephone: SITE.phone, address: { '@type': 'PostalAddress', streetAddress: SITE.street, addressLocality: 'Surat', addressRegion: 'Gujarat', postalCode: SITE.postcode, addressCountry: 'IN' }, sameAs: SITE.social.map(s => s[2]) })}</script>
 </head>
 <body>
 <!-- type: tech (hardware + platform). Brand kit (BrandKit (1).pdf): Mist ground, Indigo ink, Signal Blue actions, Sky highlights,
@@ -184,6 +258,8 @@ ${header(nav, glassNav)}
 ${body}
 </main>
 ${footer(close)}
+${product ? brFloat(product) + '\n' + brochureDialog(product) : ''}
+${waFloat}
 <script type="module" src="/assets/system.js"></script>
 <script type="module" src="/assets/nav-dropdown.js"></script>
 <script type="module" src="/assets/motion/motion.js"></script>

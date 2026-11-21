@@ -11,8 +11,14 @@ export const SITE = {
   subline: 'From Sensors to Insights. From Data to Decisions.',  // Sygnet Profile, cover
   phone: '+91 95749 60077',
   tel: '+919574960077',
+  whatsapp: 'https://wa.me/919574960077',   // the same number, for the floating chat button and the custom-build CTA
   email: 'sales@sygnetconnect.io',
-  city: 'Surat, Gujarat, India',   // city only everywhere until the client confirms the street address
+  city: 'Surat, Gujarat, India',   // short form: page descriptions, the Company page, the legal pages
+  // full office address (client, 2026-11-20): the footer, the Contact page and the Organization schema
+  address: ['Building No. 1, Ground Floor, Navarang Industrial Society', 'Udhana–Magdalla Road, near Sosyo Circle', 'Surat, Gujarat 395002, India'],
+  street: 'Building No. 1, Ground Floor, Navarang Industrial Society, Udhana–Magdalla Road, near Sosyo Circle',
+  postcode: '395002',
+  social: [['facebook', 'Facebook', 'https://www.facebook.com/sygnetiotconnect/'], ['instagram', 'Instagram', 'https://www.instagram.com/sygnetiotconnect/']],
   domain: 'https://sygnetconnect.io',
   year: 2026,
   credit: 'Designed & developed by Vrattiks',
@@ -1072,6 +1078,27 @@ export const PRODUCTS = [
 
 export const productBySlug = Object.fromEntries(PRODUCTS.map(p => [p.slug, p]));
 
+// ---------------------------------------------------------------- brochures
+// One brochure per product page, keyed by product slug. Every "Download brochure" button on that page (the in-page
+// buttons and the floating one) opens the same form (layout.mjs brochureDialog), and the file downloads only after
+// the form is sent. One file per product: tiers and models (NCS, QMS, Bell) share their product's brochure.
+// Fill a value with a site path ('/assets/brochures/ncs.pdf', file placed under site/) or a full https:// URL.
+// While a value is empty, the form still takes the details and answers "Thank you. We will send the brochure to you
+// shortly." with no download. The build stops if a site path points at a file that is not there (build.mjs).
+export const BROCHURE_URL = {
+  'nurse-call-system': '',
+  'queue-management-system': '',
+  'school-bell-pa-system': '',
+  'water-atm': '',
+  'rural-water-center': '',
+  'textile-connect': '',
+  'energy-monitoring': '',
+  'dairy-connect': '',
+  'smart-milk-vending': '',
+  'napkin-vending': '',
+  'reverse-vending': '',
+};
+
 // ---------------------------------------------------------------- industries
 // The nine industries of the header menu, the sitemap and the footer (the Profile's four "Industry Applications" tabs,
 // p. 8, map onto them: Smart Healthcare -> healthcare, Smart Manufacturing -> manufacturing, Smart Retail -> retail,
@@ -1148,7 +1175,7 @@ export const INDUSTRIES = [
       ['recycle', 'Bottle and can returns', 'A return point that brings people back in.'],                               // Reverse Vending
       ['zap', 'Utility monitoring'],                                                                                     // P
     ],
-    group: 'Cross-industry' },
+    group: null },   // 2026-11-20: "Cross-industry" removed (client: it is not an industry)
   { slug: 'building', name: 'Building', suite: 'Building Connect', icon: 'building-2',
     products: ['school-bell-pa-system', 'queue-management-system', 'energy-monitoring'],
     who: 'Facility managers, campuses and commercial buildings',
@@ -1213,11 +1240,10 @@ export const SOLUTIONS = [
   { group: 'Healthcare', items: ['Nurse call system|nurse-call-system', 'Queue management system|queue-management-system', 'OPD flow management|queue-management-system', 'Bed occupancy monitoring', 'Hospital asset tracking', 'Vaccine cold chain monitoring'] },
   { group: 'Dairy', items: ['Milk collection center automation|dairy-connect', 'Bulk milk cooler monitoring|dairy-connect', 'Milk chilling center monitoring|dairy-connect', 'Milk tanker tracking|dairy-connect', 'Milk quality monitoring|dairy-connect'] },
   { group: 'Agriculture', items: ['Smart irrigation system', 'Soil moisture monitoring', 'Fertigation automation', 'Greenhouse monitoring', 'Farm pump automation', 'Livestock environment monitoring', 'Weather station monitoring'] },
-  { group: 'Cross-industry', items: ['GPS fleet tracking', 'Smart locker monitoring', 'ESL monitoring', 'Vending machine monitoring|smart-milk-vending'] },
 ];
 export const SOLUTION_COUNT = SOLUTIONS.reduce((n, g) => n + g.items.length, 0);
 // line icons (Lucide names, ui.mjs icon()) for each group and each solution on /solutions/
-export const SOLUTION_GROUP_ICONS = { Water: 'droplet', Energy: 'zap', 'Building & Utility': 'building-2', Industrial: 'factory', Healthcare: 'hospital', Dairy: 'milk', Agriculture: 'sprout', 'Cross-industry': 'boxes' };
+export const SOLUTION_GROUP_ICONS = { Water: 'droplet', Energy: 'zap', 'Building & Utility': 'building-2', Industrial: 'factory', Healthcare: 'hospital', Dairy: 'milk', Agriculture: 'sprout' };
 export const SOLUTION_ICONS = {
   'Water ATM monitoring': 'droplet', 'RO plant monitoring': 'filter', 'Water treatment plant monitoring': 'factory', 'Water quality monitoring': 'test-tube',
   'Borewell monitoring': 'circle-dot', 'Tank level monitoring': 'container', 'Pump monitoring': 'settings', 'Flow meter monitoring': 'waves',
@@ -1234,7 +1260,6 @@ export const SOLUTION_ICONS = {
   'Milk tanker tracking': 'truck', 'Milk quality monitoring': 'test-tube',
   'Smart irrigation system': 'droplet', 'Soil moisture monitoring': 'shovel', 'Fertigation automation': 'flask-conical', 'Greenhouse monitoring': 'leaf',
   'Farm pump automation': 'tractor', 'Livestock environment monitoring': 'thermometer', 'Weather station monitoring': 'cloud-sun',
-  'GPS fleet tracking': 'navigation', 'Smart locker monitoring': 'lock', 'ESL monitoring': 'tag', 'Vending machine monitoring': 'cup-soda',
 };
 
 // ---------------------------------------------------------------- platform (old site + brief)
@@ -1247,8 +1272,8 @@ export const LAYERS = [
 ];
 
 export const DEV = [
+  ['Third-party integration', 'Connect ERP, CRM and the tools you already use'],
   ['Open APIs', 'REST, MQTT and Webhooks'],
-  ['SDKs', 'Flutter, Python, Node.js and Embedded'],
   ['Multi-tenant', 'One SaaS platform, many customers'],
   ['White label', 'Your brand on the platform'],
   ['Secure OTA', 'Firmware updates over the air'],
@@ -1280,7 +1305,6 @@ export const WHY = [
 ];
 export const ENGINEERING = [
   ['PCB design', 'Schematics and boards designed in-house.'],
-  ['Firmware', 'Embedded code written for the board it runs on.'],
   ['Cloud', 'Devices connect to Sygnet IoT Connect or your own cloud.'],
   ['Apps', 'Web and mobile apps for the people who use the data.'],
   ['Certification', 'Taking the product through the certification it needs.'],
@@ -1301,7 +1325,7 @@ export const TIERS = [
 // no "enterprise grade", "compliance ready" or "thousands to millions" wording; facts (year, team) stay a placeholder.
 export const COMPANY = {
   about: [
-    ['factory', 'Who we are', 'Sygnet IoT Pvt. Ltd. is an Industrial IoT platform company building a complete ecosystem of intelligent hardware, cloud software, mobile applications and operational intelligence solutions.'],
+    ['factory', 'Who we are', 'Sygnet IoT Pvt. Ltd. is an IoT platform company building a complete ecosystem of intelligent hardware, cloud software, mobile applications and operational intelligence solutions.'],
     ['cloud', 'Sygnet IoT Connect', 'Through its flagship platform, Sygnet IoT Connect, organizations can digitize assets, monitor operations in real time, automate workflows and gain actionable business insights.'],
     ['plug', 'Plug and play', 'The plug-and-play architecture reduces deployment time and makes enterprise IoT accessible, scalable and easy to manage.'],
     ['chart-line', 'Built for results', 'Sygnet builds technologies that help industries improve operational efficiency, reduce costs and make faster, data-driven decisions.'],
@@ -1309,7 +1333,7 @@ export const COMPANY = {
   strengths: [['timer', 'Faster deployment'], ['layers', 'Scalable architecture'], ['shield-check', 'Secure by design'], ['activity', 'Real-time intelligence'], ['factory', 'Built for industries']],
   // as printed; the middle part is the phrase the profile highlights
   vision: ['To become a globally trusted ', 'Operational Intelligence Platform', ' powering connected enterprises across industries.'],
-  mission: ['To simplify Industrial IoT by delivering a complete ', 'plug-and-play', ' ecosystem of intelligent hardware, scalable software and industry-ready applications.'],
+  mission: ['To simplify IoT by delivering a complete ', 'plug-and-play', ' ecosystem of intelligent hardware, scalable software and industry-ready applications.'],
   purpose: [['piggy-bank', 'Reduce operational costs'], ['trending-up', 'Improve productivity'], ['gauge', 'Increase asset utilization'], ['workflow', 'Automate operations'], ['chart-column', 'Enable data-driven decisions']],
   values: [['shield-check', 'Trusted technology'], ['cloud', 'Scalable solutions'], ['puzzle', 'Seamless integration'], ['handshake', 'Long-term partnerships'], ['lightbulb', 'Continuous innovation'], ['globe', 'Global perspective']],
   stack: [['radio', 'Sensors'], ['cpu', 'Controllers'], ['router', 'Gateways'], ['antenna', 'Communication networks'], ['cloud', 'Cloud infrastructure'],
@@ -1335,7 +1359,6 @@ export const COMPANY = {
     ['plug', 'Plug & play deployment', 'Pre-configured hardware and a ready platform for rapid deployment.'],
     ['timer', 'Faster implementation', 'Proven frameworks and reusable modules reduce deployment time significantly.'],
     ['coins', 'Lower project cost', 'A complete solution under one ecosystem reduces integration and engineering cost.'],
-    ['box', 'Open architecture', 'Open protocols and standards for flexibility and future readiness.'],
     ['puzzle', 'Easy integration', 'Seamless integration with ERP, third-party systems and enterprise applications.'],
     ['shield-check', 'Secure by design', 'End-to-end data security and role-based access.'],
     ['trending-up', 'Scalable platform', 'Built to scale with high performance as you add devices and sites.'],
@@ -1359,7 +1382,7 @@ export const COMPANY = {
 };
 
 // ---------------------------------------------------------------- Home (pages.mjs home): one intro section per main page
-// In the header menu's order: Products, Industries, Platform (Platform, Hardware, Developer, Solutions, Resources), Partners,
+// In the header menu's order: Products, Industries, Platform (Platform, Hardware, Solutions), Partners,
 // Company (About, Case studies, Contact). Every word is taken from the page it introduces (its hero, its first section or
 // data above); nothing is new. layout: the renderer in pages.mjs HOME_LAYOUTS (tabs, feature, strip, editorial, slim,
 // numbered, statement, centre, split); no two neighbours share one. ground: white, mist or indigo (the band).
@@ -1373,39 +1396,32 @@ export const HOME = {
     intro: 'Connect any device, collect its data, automate at the edge and run industry apps on top, in the cloud or on your own servers.' },
   sections: [
     // the industry explorer (pages.mjs industryExplorer), the same component as /industries/
-    { id: 'industries', eyebrow: 'Industries', href: '/industries/', act: 'all industries', layout: 'tabs', ground: 'mist',
+    { id: 'industries', eyebrow: 'Industries', href: '/industries/', layout: 'tabs', ground: 'mist',
       h2: 'Nine industries, one platform.', intro: 'Each suite bundles the Sygnet products and monitoring solutions that industry asks for most.',
       note: 'Also serving logistics and hospitality.' },
     { id: 'hardware', eyebrow: 'Hardware', href: '/hardware/', layout: 'feature', ground: 'white', img: 'hw-industrial-controller',
-      h2: 'Industrial IoT hardware, and custom boards built to order.',
-      intro: 'Controllers, sensor nodes, gateways and edge devices made for Sygnet IoT Connect, plus custom engineering from PCB design and firmware to certification and production.',
+      h2: 'IoT hardware, and custom boards built to order.',
+      intro: 'Controllers, sensor nodes, gateways and edge devices made for Sygnet IoT Connect, plus custom-designed hardware, from PCB design and firmware through to certification and production.',
       items: [['cpu', 'Industrial controllers'], ['radio', 'Sensor nodes'], ['wifi', 'Wireless nodes'], ['router', 'Industrial gateways'], ['hard-drive', 'Data loggers'], ['server', 'Edge computing devices']],
       note: 'Also in the range: bridge devices and communication modules.' },
-    { id: 'developer', eyebrow: 'Developer', href: '/developer/', layout: 'strip', ground: 'mist',
-      h2: 'Build on Sygnet IoT Connect.', intro: 'Open APIs, SDKs for Flutter, Python, Node.js and embedded devices, secure OTA firmware updates, and white label for your own brand.',
-      items: [['database', 'REST', 'Read and manage devices and data from any app or server.'], ['radio', 'MQTT', 'Light, real-time messaging for devices in the field.'],
-        ['webhook', 'Webhooks', 'Events pushed to your server as they happen.'], ['code-xml', 'SDKs', 'Flutter, Python, Node.js and Embedded.'],
-        ['refresh-cw', 'Secure OTA', 'Firmware updates over the air.'], ['tag', 'White label', 'Your brand on the platform.']],
-      note: 'The API reference is being prepared; until then our engineers share the API details directly with your team.' },
-    { id: 'solutions', eyebrow: 'Solutions', href: '/solutions/', layout: 'editorial', ground: 'white',
+    { id: 'solutions', eyebrow: 'Solutions', href: '/solutions/', layout: 'editorial', ground: 'mist',   // Mist: its neighbours (Hardware, Partners) are white now Developer and Resources are gone
       h2: `${SOLUTION_COUNT} IoT monitoring solutions on one platform.`,
-      intro: 'Water, energy, buildings, factories, hospitals, dairies, farms and fleets. Each solution runs on Sygnet IoT Connect, and many come as part of a Sygnet product.',
+      intro: 'Water, energy, buildings, factories, hospitals, dairies and farms. Each solution runs on Sygnet IoT Connect, and many come as part of a Sygnet product.',
       items: SOLUTIONS.map(g => [SOLUTION_GROUP_ICONS[g.group], g.group, `${g.items.length} solutions`, `/solutions/#${slugOf(g.group)}`]) },
-    { id: 'resources', eyebrow: 'Resources', href: '/resources/', layout: 'slim', ground: 'mist', icon: 'file-text',
-      h2: 'Brochures, catalogues and documentation.', intro: 'Ask our team and we will send the one you need while the download library is prepared.' },
     { id: 'partners', eyebrow: 'Partners', href: '/partners/', layout: 'numbered', ground: 'white',
       h2: 'Partner program for integrators and resellers.',
       intro: 'Sell, install and support Sygnet products in your region. Four tiers, from Authorized Partner to Strategic Partner, each with training and support.',
       items: TIERS.map(([m, r], k) => [['award', 'medal', 'trophy', 'gem'][k], m, r]) },
     { id: 'company', eyebrow: 'Company', href: '/company/', layout: 'statement', ground: 'indigo',
-      h2: 'Circuit to cloud, in one company.', muted: 'Hardware, firmware, cloud and apps, built in-house.',
-      intro: COMPANY.about[0][2],
+      // 2026-11-20 client: the "Circuit to cloud, in one company" line replaced by one brief, the /company/ head + Profile p. 2
+      h2: 'About Sygnet IoT.', muted: 'A full stack IoT platform company.',
+      intro: `${COMPANY.about[0][2]} ${COMPANY.about[1][2]}`,
       items: COMPANY.strengths.map(([ic, t]) => [ic, t]) },
     { id: 'case-studies', eyebrow: 'Case studies', href: '/case-studies/', layout: 'centre', ground: 'white',
       h2: 'Case studies and clients.', intro: 'Each story is published with the client’s permission and is being prepared now.' },
     { id: 'contact', eyebrow: 'Contact', href: '/contact/', layout: 'split', ground: 'mist',
       h2: 'Request a demo or talk to our experts.', intro: 'Tell us about your site and what you want to connect. Our team in Surat will reply by email or phone.',
       items: [['phone', 'Phone', SITE.phone, `tel:${SITE.tel}`], ['mail', 'Email', SITE.email, `mailto:${SITE.email}`],
-        ['map-pin', 'Office', SITE.city], ['calendar-check', 'Request a demo', 'Tell us what you run.', '/contact/#demo']] },
+        ['map-pin', 'Office', SITE.city], ['calendar-check', 'Request a demo', 'Tell us what you run.', '/contact/']] },
   ],
 };

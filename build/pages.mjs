@@ -1,7 +1,7 @@
 // Every page of the site, rendered from data.mjs through the shared shell (layout.mjs).
 import { readFileSync } from 'node:fs';
 import { SITE, CATALOG, PRODUCTS, INDUSTRIES, SOLUTIONS, SOLUTION_COUNT, SOLUTION_GROUP_ICONS, SOLUTION_ICONS, LAYERS, DEV, SECURITY, HARDWARE, HW_QUALITIES, ENGINEERING, TIERS, CERTS, CERTS_NOTE, HOSPITALS, COMPANY, HOME, productBySlug, industryBySlug } from './data.mjs';
-import { esc, url, btn, demoBtn, section, head, card, productGrid, productCard, slot, chipSoon, checks, faq, specs, productLinks, industryLinks, WINDOWS, SCENES, ARROW, icon, shot, eyebrow, brandTile } from './ui.mjs';
+import { esc, url, btn, demoBtn, brochureBtn, socialLinks, section, head, card, productGrid, productCard, slot, chipSoon, checks, faq, specs, productLinks, industryLinks, WINDOWS, SCENES, ARROW, WA_ICON, icon, shot, eyebrow, brandTile } from './ui.mjs';
 import { page } from './layout.mjs';
 
 const priority = PRODUCTS.filter(p => p.tier === 'priority');
@@ -41,11 +41,12 @@ const productVisual = p => SCENES[p.window] && !p.soon ? `<div class="hero-visua
 // company credentials as text badges only (client rule 2026-11-20: no hospital accreditation or compliance claim anywhere)
 const certBadges = () => `<ul class="badges">${CERTS.map(c => `<li class="badge">${icon('shield-check')}${esc(c)}</li>`).join('')}</ul>`;
 const hospitalList = () => `<ul class="names">${HOSPITALS.map(h => `<li>${esc(h)}</li>`).join('')}</ul>`;
-function trustBlock(id, title = 'Hospitals using Sygnet nurse call.', muted = 'Named in our NCS catalog.') {
+// Case studies and Healthcare: no mention of the NCS catalog as the source (client, 2026-11-20)
+function trustBlock(id, title = 'Hospitals using Sygnet nurse call.', muted = 'A few of the hospitals we work with.') {
   return section({ id, cls: 'trust' }, `${head(id, title, muted)}
 <div class="grid grid--top">
-  <div class="span-6 stack-4">${hospitalList()}<p class="t-small muted">And three more institutions shown in the catalog by their seal only.</p></div>
-  <div class="span-6 start-7 stack-4"><p class="t-label muted">Certifications. ${esc(CERTS_NOTE)}</p>${certBadges()}</div>
+  <div class="span-6 stack-4">${hospitalList()}<p class="t-small muted">Along with three more healthcare institutions.</p></div>
+  <div class="span-6 start-7 stack-4"><p class="t-label muted">Our certifications. Certificate copies will be added soon.</p>${certBadges()}</div>
 </div>`);
 }
 const layersList = (list = LAYERS) => `<ol class="layers">${list.map(([n, t]) => `<li><b>${n}</b><span>${esc(t)}</span></li>`).join('')}</ol>`;
@@ -84,8 +85,8 @@ const revealScript = `<script>(function(){var d=document.documentElement,els=doc
 //   light pulse ............. from 3400, one segment after the other, 4.8 s a round, linear
 // Reduced motion or motion off: no animation, the final frame. Without script: the same CSS timeline, no parallax.
 const HX_LINE1 = ['Smart', 'IoT', 'systems,', 'built'];
-const HX_LINE2 = 'from circuit to cloud';
-const HX_GRAD = 'circuit to cloud';
+const HX_LINE2 = 'for real-world operations.';
+const HX_GRAD = 'real-world operations.';
 const HX_WORD_D = [0, 70, 130, 180];
 const mixHex = (a, b, t) => '#' + [0, 2, 4].map(i => Math.round(parseInt(a.slice(1 + i, 3 + i), 16) * (1 - t) + parseInt(b.slice(1 + i, 3 + i), 16) * t).toString(16).padStart(2, '0')).join('');
 function hxHeadline() {
@@ -143,13 +144,13 @@ const HMC_HEX = '<svg class="hmc__hex" viewBox="0 0 40 44" aria-hidden="true"><p
 //   Industries   tabbed viewer (the industry explorer, the /industries/ component)                     Mist
 //   Platform     horizontal flow: five hexagon steps joined by chevrons                                Indigo band
 //   Hardware     image-led feature row: the controller render bleeds to the left edge, list beside     white
-//   Developer    icon strip: six capabilities in one row, no borders                                   Mist
-//   Solutions    editorial two-column: sticky heading left, hairline rows right                        white
-//   Resources    slim strip: one line, one button                                                      Mist
+//   Solutions    editorial two-column: sticky heading left, hairline rows right                        Mist
 //   Partners     numbered list rows: 01 to 04, hairline dividers                                       white
 //   Company      full-bleed Indigo statement, the mark's chevrons behind it                            Indigo band
 //   Case studies centred statement                                                                     white
 //   Contact      split: words left, a cut-corner contact sheet right                                   Mist
+// (2026-11-20: the Developer strip and the Resources slim line were removed with their pages; the strip and slim
+// renderers stay in HOME_LAYOUTS unused.)
 const exploreBtn = (href, name) => `<a class="btn btn--secondary hs__btn" href="${href}">Explore ${esc(name)}${ARROW}</a>`;
 const hsAct = s => `<div class="hs__act">${exploreBtn(s.href, s.act || s.eyebrow)}</div>`;
 const hsHead = (id, s) => `<div class="hs__text"${rv()}>${eyebrow(s.eyebrow)}<h2 id="${id}-h">${esc(s.h2)}${s.muted ? ` <span class="muted">${esc(s.muted)}</span>` : ''}</h2><p class="hs__intro">${esc(s.intro)}</p></div>`;
@@ -161,11 +162,10 @@ const hsClose = '</div></section>';
 const linkOr = (href, cls, inner) => href ? `<a class="${cls}" href="${href}">${inner}${ARROW}</a>` : `<div class="${cls}">${inner}</div>`;
 
 const HOME_LAYOUTS = {
-  // the industry explorer under a two-column head (H2 left, intro right), the button after it
+  // the industry explorer under a two-column head (H2 left, intro right); no button (2026-11-20 client: "Explore all industries" removed)
   tabs: s => `${hsOpen(s, 'hs--ix')}
   ${hsHead(s.id, s)}
   <div class="hs__body">${industryExplorer()}${hsNote(s)}</div>
-  ${hsAct(s)}
 ${hsClose}\n${ixScript}`,
   // a large render on the render's own dark ground, bleeding to the left edge on a desktop; DOM: words, picture, list
   feature: s => `${hsOpen(s)}<div class="hwf">
@@ -265,7 +265,7 @@ function home() {
     <div class="hx__art" aria-hidden="true"><span class="hx__hex"></span><span class="hx__arch"></span><span class="hx__arch hx__arch--2"></span>${hxTiles()}</div>
     <div class="hx__main">
       ${hxHeadline()}
-      <div class="hx-ask"><a class="hx-btn" href="/contact/#demo">Request a Demo${ARROW}</a></div>
+      <div class="hx-ask"><a class="hx-btn" href="/contact/">Request a Demo${ARROW}</a></div>
     </div>
     ${hxFlow()}
   </div>
@@ -306,7 +306,7 @@ function productPage(p) {
 <div class="grid grid--top"><div class="span-6 stack-5">${specs(models)}${tiers}</div><div class="span-6 start-7"><div class="panel-win">${WINDOWS[p.window](false)}</div></div></div>`));
   } else {
     sections.push(section({ id: 'interest' }, `${head('interest', 'Be first to hear when it launches.', 'Tell us what you want to measure.')}
-<div class="grid grid--top"><div class="span-6 stack-5"><p class="t-lead">Write to us with the site and the equipment you want monitored, and we will come back when the catalogue is ready.</p><div class="btn-row">${btn('/contact/?product=energy-monitoring#demo', 'Register interest')}</div></div><div class="span-6 start-7">${specs([['Energy Monitoring', 'Catalogue in preparation', '']], 'Specifications')}</div></div>`));
+<div class="grid grid--top"><div class="span-6 stack-5"><p class="t-lead">Write to us with the site and the equipment you want monitored, and we will come back when the catalogue is ready.</p><div class="btn-row">${btn('/contact/?product=energy-monitoring', 'Register interest')}</div></div><div class="span-6 start-7">${specs([['Energy Monitoring', 'Catalogue in preparation', '']], 'Specifications')}</div></div>`));
   }
   sections.push(`<section class="section ground-inverse band" id="platform" aria-labelledby="platform-h"><div class="wrap">
 ${head('platform', `${p.name.replace('Sygnet ', '')} runs on Sygnet IoT Connect.`, 'The same platform under every Sygnet product.')}
@@ -317,16 +317,16 @@ ${head('platform', `${p.name.replace('Sygnet ', '')} runs on Sygnet IoT Connect.
   if (p.faq.length) sections.push(section({ id: 'faq' }, `<div class="grid grid--top"><div class="span-5"><div class="section-head"><h2 id="faq-h">Questions about ${esc(p.short)}. <span class="muted">Answered from what we build today.</span></h2></div></div><div class="span-6 start-7">${faq(p.faq)}</div></div>`));
 
 
-  const body = `${heroSplit({ notice, h1: p.h1, lead: p.lead, visual: productVisual(p), actions: p.soon ? `${btn('/contact/?product=energy-monitoring#demo', 'Register interest')}${btn('/industries/energy/', 'See Energy Connect', 'secondary')}` : undefined })}
+  const body = `${heroSplit({ notice, h1: p.h1, lead: p.lead, visual: productVisual(p), actions: p.soon ? `${btn('/contact/?product=energy-monitoring', 'Register interest')}${btn('/industries/energy/', 'See Energy Connect', 'secondary')}` : undefined })}
 ${sections.join('\n')}`;
   return page({ path: url.product(p.slug), nav: 'products', title: p.title, desc: p.desc, body,
-    close: p.soon ? { h2: 'Tell us what you want to measure', label: 'Register interest', href: '/contact/?product=energy-monitoring#demo' } : { h2: `See ${p.short} working on your site`, label: 'Request a demo', href: `/contact/?product=${p.slug}#demo` } });
+    close: p.soon ? { h2: 'Tell us what you want to measure', label: 'Register interest', href: '/contact/?product=energy-monitoring' } : { h2: `See ${p.short} working on your site`, label: 'Request a demo', href: `/contact/?product=${p.slug}` } });
 }
 
 // ---------------------------------------------------------------- School Bell & PA (p.viewer): a model viewer
 // Short intro, then one viewer: product detail left, the device on Mist right (4:3). All five panels are in the
 // HTML, stacked, so search engines and visitors without script read every model; the script (bellScript) turns
-// them into tabs: one panel shown, a row of five model cards under it (role=tablist), a 200 ms opacity
+// them into tabs: one panel shown, a row of five model cards above it (role=tablist), a 200 ms opacity
 // cross-fade, the URL hash (#tbg ... #tbw-d) kept in step, arrow keys between cards. Then the ecosystem, the
 // range's benefits and the comparison, whose column heads open that model in the viewer. site.css "bell page".
 const BHEX = '<svg class="bv__hex" viewBox="0 0 52 56" aria-hidden="true"><path d="M26 2 48 14.5v27L26 54 4 41.5v-27z"/></svg>';
@@ -377,19 +377,20 @@ document.addEventListener('click',function(e){var a=e.target.closest&&e.target.c
  e.preventDefault();show(i,{hash:true});bring(true);tabs[i].focus({preventScroll:true})});
 function fromHash(){var i=ids.indexOf(location.hash.slice(1));return i}
 var start=fromHash();show(start<0?0:start,{instant:true});
+if(start>=0){var land=function(){root.scrollIntoView({block:'start'})};requestAnimationFrame(land);addEventListener('load',land,{once:true})}
 addEventListener('hashchange',function(){var i=fromHash();if(i>=0&&i!==cur){show(i);bring(true)}});
 })()</script>`;
 
 function bellPage(p) {
   const notice = `${esc(p.code)} · for ${esc(p.industries.map(s => industryBySlug[s].name.toLowerCase()).slice(0, 3).join(', '))}`;
-  const demo = `/contact/?product=${p.slug}#demo`;
+  const demo = `/contact/?product=${p.slug}`;
   const M = p.range;
 
   const intro = `<section class="section bintro hero--brand" data-enter aria-labelledby="hero-h"><div class="wrap">
   <p class="eyebrow">${notice}</p>
   <h1 id="hero-h">${esc(p.h1)}</h1>
   <p class="t-lead">${esc(p.lead)}</p>
-  <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+  <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
 </div></section>`;
 
   const panel = (m, i) => `<article class="bv__panel${i === 0 ? ' is-active' : ''}" id="${m.id}">
@@ -402,7 +403,7 @@ function bellPage(p) {
       ${checks(m.features)}
       ${m.apps ? `<h3 class="bv__label">Applications</h3><ul class="bv__apps">${m.apps.map(a => `<li>${esc(a)}</li>`).join('')}</ul>` : ''}
       <div class="bv__best"><span class="bv__best-ico">${BHEX}${icon('school')}</span><div><h3 class="bv__label">Best for</h3><p>${esc(m.best)}</p></div></div>
-      <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+      <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
     </div>
     <div class="bv__media" style="${bellCap(m.img)}">${bellImg(m.img, { eager: i === 0 })}<span class="shot__tag">Product render</span></div>
   </article>`;
@@ -410,11 +411,11 @@ function bellPage(p) {
       <span class="bv__thumb">${bellImg(m.img, { alt: '' })}</span><span class="bv__tcode">${esc(m.code)}</span><span class="bv__tname">${esc(m.name)}</span></a>`;
   const viewer = `<section class="section bv-sec" id="models" aria-label="The five models">
 <div class="wrap"><div class="bv" data-bv>
-  <div class="bv__stage">
-  ${M.map(panel).join('\n  ')}
-  </div>
   <div class="bv__tabs" role="tablist" aria-label="Choose a model" hidden>
     ${M.map(tab).join('\n    ')}
+  </div>
+  <div class="bv__stage">
+  ${M.map(panel).join('\n  ')}
   </div>
 </div></div>
 </section>`;
@@ -479,14 +480,14 @@ const machinePhone = () => `<div class="bapp" role="img" aria-label="Illustratio
 </div>`;
 
 function dairyPage(p) {
-  const demo = `/contact/?product=${p.slug}#demo`;
+  const demo = `/contact/?product=${p.slug}`;
   const M = p.range;
 
   const intro = `<section class="section bintro hero--brand" data-enter aria-labelledby="hero-h"><div class="wrap">
   <p class="eyebrow">${esc(p.eyebrow)}</p>
   <h1 id="hero-h">${esc(p.h1)}</h1>
   <p class="t-lead">${esc(p.lead)}</p>
-  <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+  <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
 </div></section>`;
 
   const panel = (m, i) => `<article class="bv__panel${i === 0 ? ' is-active' : ''}" id="${m.id}">
@@ -500,7 +501,7 @@ function dairyPage(p) {
       <h3 class="bv__label">Ideal for</h3>
       <ul class="bv__apps">${m.ideal.map(a => `<li>${esc(a)}</li>`).join('')}</ul>
       <div class="bv__best"><span class="bv__best-ico">${BHEX}${icon('map-pin')}</span><div><h3 class="bv__label">Locations</h3><p>${esc(m.where)}</p></div></div>
-      <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+      <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
     </div>
     <div class="bv__media" style="${bellCap(m.img)}">${bellImg(m.img, { eager: i === 0 })}<span class="shot__tag">Product render</span></div>
   </article>`;
@@ -508,11 +509,11 @@ function dairyPage(p) {
       <span class="bv__thumb">${bellImg(m.img, { alt: '' })}</span><span class="bv__ttext"><span class="bv__tcode">${esc(m.code)}</span><span class="bv__tname">${esc(m.tab)}</span></span></a>`;
   const viewer = `<section class="section bv-sec" id="models" aria-label="The two Milk ATM models">
 <div class="wrap"><div class="bv" data-bv>
-  <div class="bv__stage">
-  ${M.map(panel).join('\n  ')}
-  </div>
   <div class="bv__tabs bv__tabs--2" role="tablist" aria-label="Choose a model" hidden>
     ${M.map(tab).join('\n    ')}
+  </div>
+  <div class="bv__stage">
+  ${M.map(panel).join('\n  ')}
   </div>
 </div></div>
 </section>`;
@@ -585,7 +586,7 @@ ${dItems(p.environment)}`);
 
 // ---------------------------------------------------------------- Nurse Call System (p.layout 'ncs')
 // The School Bell & PA page's structure: centred intro (.bintro), the viewer (.bv, bellScript) with three tiers
-// (#plus, #professional, #enterprise; all three panels in the HTML so the page reads in full without script),
+// (#plus, #professional, #enterprise; tier cards above the panels; all three panels in the HTML so the page reads in full without script),
 // then typical set-ups, how a call works (.dsteps), shared benefits (.bben), trust as text, and the comparison
 // last (.compare--bell; its column heads open that tier above). Each tier lists its components as small cards,
 // one catalogue picture each (build/tools/cutout_ncs.py). Client rules: no accreditation or compliance claim, set-ups never mapped
@@ -593,14 +594,14 @@ ${dItems(p.environment)}`);
 // the viewer's lead device: shown at up to its 2x cut-out size (sources are small catalogue crops)
 const ncsCap = id => { const m = SIZE[id]; return `--capw: ${m.w}px; --caph: ${m.h}px`; };
 function ncsPage(p) {
-  const demo = `/contact/?product=${p.slug}#demo`;
+  const demo = `/contact/?product=${p.slug}`;
   const M = p.range;
 
   const intro = `<section class="section bintro hero--brand" data-enter aria-labelledby="hero-h"><div class="wrap">
   <p class="eyebrow">${esc(p.eyebrow)}</p>
   <h1 id="hero-h">${esc(p.h1)}</h1>
   <p class="t-lead">${esc(p.lead)}</p>
-  <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+  <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
 </div></section>`;
 
   const wired = `<p class="nwire">${icon('cable')}<span>Available in wired and wireless options</span></p>`;
@@ -621,7 +622,7 @@ function ncsPage(p) {
       ${wired}
       <h3 class="bv__label">Key features</h3>
       ${features}
-      <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+      <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
     </div>
     <div class="bv__media" style="${ncsCap(m.img)}">${bellImg(m.img, { eager: i === 0 })}<span class="shot__tag">Product render</span></div>
     <div class="nparts">
@@ -633,11 +634,11 @@ function ncsPage(p) {
       <span class="bv__thumb">${bellImg(m.img, { alt: '' })}</span><span class="bv__ttext"><span class="bv__tcode">${esc(m.code)}</span><span class="bv__tname">${esc(m.name)}</span></span></a>`;
   const viewer = `<section class="section bv-sec" id="tiers" aria-label="The three NCS tiers">
 <div class="wrap"><div class="bv bv--ncs" data-bv>
-  <div class="bv__stage">
-  ${M.map(panel).join('\n  ')}
-  </div>
   <div class="bv__tabs bv__tabs--3" role="tablist" aria-label="Choose a tier" hidden>
     ${M.map(tab).join('\n    ')}
+  </div>
+  <div class="bv__stage">
+  ${M.map(panel).join('\n  ')}
   </div>
 </div></div>
 </section>`;
@@ -754,14 +755,14 @@ const QS = {
 };
 
 function qmsPage(p) {
-  const demo = `/contact/?product=${p.slug}#demo`;
+  const demo = `/contact/?product=${p.slug}`;
   const M = p.range;
 
   const intro = `<section class="section bintro hero--brand" data-enter aria-labelledby="hero-h"><div class="wrap">
   <p class="eyebrow">${esc(p.eyebrow)}</p>
   <h1 id="hero-h">${esc(p.h1)}</h1>
   <p class="t-lead">${esc(p.lead)}</p>
-  <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+  <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
 </div></section>`;
 
   const panel = (m, i) => `<article class="bv__panel${i === 0 ? ' is-active' : ''}" id="${m.id}">
@@ -773,7 +774,7 @@ function qmsPage(p) {
       <h3 class="bv__label">What it includes</h3>
       ${checks(m.points)}
       <div class="bv__best"><span class="bv__best-ico">${BHEX}${icon('target')}</span><div><h3 class="bv__label">Best for</h3><p>${esc(m.best)}</p></div></div>
-      <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+      <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
     </div>
     <div class="bv__media" style="${bellCap(m.img)}">${bellImg(m.img, { eager: i === 0 })}<span class="shot__tag">Product render</span></div>
   </article>`;
@@ -781,11 +782,11 @@ function qmsPage(p) {
       <span class="bv__thumb">${bellImg(m.img, { alt: '' })}</span><span class="bv__ttext"><span class="bv__tcode">${esc(m.name)}</span><span class="bv__tname">${esc(m.tab)}</span></span></a>`;
   const viewer = `<section class="section bv-sec" id="tiers" aria-label="The three QMS tiers">
 <div class="wrap"><div class="bv bv--qms" data-bv>
-  <div class="bv__stage">
-  ${M.map(panel).join('\n  ')}
-  </div>
   <div class="bv__tabs bv__tabs--3" role="tablist" aria-label="Choose a tier" hidden>
     ${M.map(tab).join('\n    ')}
+  </div>
+  <div class="bv__stage">
+  ${M.map(panel).join('\n  ')}
   </div>
 </div>
 ${dStrip(p.strengths, 'Across all three tiers')}
@@ -934,7 +935,8 @@ function init(root){if(!root)return;
   if(k==='ArrowRight'||k==='ArrowDown')i=(cur+1)%n;else if(k==='ArrowLeft'||k==='ArrowUp')i=(cur-1+n)%n;else if(k==='Home')i=0;else if(k==='End')i=n-1;else return;
   e.preventDefault();show(i,{hash:true});tabs[i].focus();tabs[i].scrollIntoView({block:'nearest',inline:'nearest',behavior:calm()?'auto':'smooth'})});
  reg.push({ids:ids,show:show,bring:bring,tabs:tabs,cur:function(){return cur}});
- var s=ids.indexOf(location.hash.slice(1));show(s<0?0:s,{instant:true});}
+ var s=ids.indexOf(location.hash.slice(1));show(s<0?0:s,{instant:true});
+ if(s>=0){var land=function(){root.scrollIntoView({block:'start'})};requestAnimationFrame(land);addEventListener('load',land,{once:true})}}
 function find(id){for(var k=0;k<reg.length;k++){var i=reg[k].ids.indexOf(id);if(i>=0)return [reg[k],i]}return null}
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('[data-bv-go]');if(!a)return;var f=find(a.getAttribute('data-bv-go'));if(!f)return;
  e.preventDefault();f[0].show(f[1],{hash:true});f[0].bring(true);f[0].tabs[f[1]].focus({preventScroll:true})});
@@ -945,14 +947,14 @@ const TC_HEX = '<svg class="tchex__hex" viewBox="0 0 52 56" aria-hidden="true"><
 const tcHex = ic => `<span class="tchex">${TC_HEX}${icon(ic)}</span>`;
 
 function textilePage(p) {
-  const demo = `/contact/?product=${p.slug}#demo`;
+  const demo = `/contact/?product=${p.slug}`;
 
   const intro = `<section class="section bintro hero--brand" data-enter aria-labelledby="hero-h"><div class="wrap">
   <p class="eyebrow">${esc(p.eyebrow)}</p>
   <h1 id="hero-h">${esc(p.h1)}</h1>
   <p class="t-lead">${esc(p.lead)}</p>
   <ol class="tcflow" aria-label="${esc(p.chips.join(', '))}">${p.chips.map((c, k) => `<li>${k ? icon('chevron-right', 'ico tcflow__sep') : ''}<span>${esc(c)}</span></li>`).join('')}</ol>
-  <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+  <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
 </div></section>`;
 
   // the four layers: detail left, a drawn screen on Mist right
@@ -966,7 +968,7 @@ function textilePage(p) {
       <h3 class="bv__label">What it covers</h3>
       ${checks(m.points)}
       <p class="tcclose">${esc(m.close)}</p>
-      <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+      <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
     </div>
     <div class="bv__media tcmedia">${TC_SCREENS[m.screen]()}</div>
   </article>`;
@@ -974,11 +976,11 @@ function textilePage(p) {
       ${tcHex(m.icon)}<span class="bv__ttext"><span class="bv__tcode">${esc(m.code)}</span><span class="bv__tname">${esc(m.tab)}</span></span></a>`;
   const viewer = `<section class="section bv-sec" id="layers" aria-label="The four intelligence layers">
 <div class="wrap"><div class="bv bv--tc" data-bv="layers">
-  <div class="bv__stage">
-  ${L.map(panel).join('\n  ')}
-  </div>
   <div class="bv__tabs bv__tabs--4" role="tablist" aria-label="Choose an intelligence layer" hidden>
     ${L.map(tab).join('\n    ')}
+  </div>
+  <div class="bv__stage">
+  ${L.map(panel).join('\n  ')}
   </div>
 </div></div>
 </section>`;
@@ -1002,11 +1004,11 @@ function textilePage(p) {
       ${tcHex(s.icon)}<span class="bv__ttext"><span class="bv__tcode">${esc(s.code)}</span><span class="bv__tname">${esc(s.tab)}</span></span></a>`;
   const chain = section({ id: 'value-chain' }, `${head('value-chain', 'Designed for the complete textile value chain.', 'One platform. Every process. Every factory.', 'Whether you run a standalone unit or an integrated textile facility, Sygnet Textile Connect gives operational visibility across the whole value chain.')}
 <div class="bv bv--tc bv--chain" data-bv="chain">
-  <div class="bv__stage">
-  ${C.map(cpanel).join('\n  ')}
-  </div>
   <div class="bv__tabs bv__tabs--7" role="tablist" aria-label="Choose a stage of the value chain" hidden>
     ${C.map(ctab).join('\n    ')}
+  </div>
+  <div class="bv__stage">
+  ${C.map(cpanel).join('\n  ')}
   </div>
 </div>
 <script>window.sygBv&&window.sygBv(document.querySelector('[data-bv="chain"]'))</script>
@@ -1067,7 +1069,7 @@ const waDash = () => qWin('wadash', 'Water ATM overview', 'Illustration of the W
     <span class="wadash__days">${WA_DAYS.map(d => `<i>${d}</i>`).join('')}</span></div>`);
 
 function waterPage(p) {
-  const demo = `/contact/?product=${p.slug}#demo`;
+  const demo = `/contact/?product=${p.slug}`;
   const M = p.range;
 
   const intro = `<section class="section bintro wa-intro hero--brand" data-enter aria-labelledby="hero-h"><div class="wrap">
@@ -1076,7 +1078,7 @@ function waterPage(p) {
   <p class="t-lead">${esc(p.lead)}</p>
   <ul class="wachips" aria-label="Key qualities">${p.chips.map(([ic, t]) => `<li>${icon(ic)}<span>${esc(t)}</span></li>`).join('')}</ul>
   <p class="watag">${esc(p.tagline[0])}<span>${esc(p.tagline[1])}</span></p>
-  <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+  <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
 </div></section>`;
 
   // the two products: detail left, the device on Mist right (4:3)
@@ -1090,7 +1092,7 @@ function waterPage(p) {
       ${qPoints(m.points)}
       ${m.for ? `<h3 class="bv__label">${esc(m.forLabel)}</h3><ul class="bv__apps">${m.for.map(a => `<li>${esc(a)}</li>`).join('')}</ul>` : ''}
       ${m.monitor ? `<h3 class="bv__label">${esc(m.monitorLabel)}</h3>${checks(m.monitor)}` : ''}
-      <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+      <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
     </div>
     <div class="bv__media" style="${ncsCap(m.img)}">${bellImg(m.img, { eager: i === 0 })}<span class="shot__tag">Product render</span></div>
   </article>`;
@@ -1098,11 +1100,11 @@ function waterPage(p) {
       <span class="bv__thumb">${bellImg(m.img, { alt: '' })}</span><span class="bv__ttext"><span class="bv__tcode">${esc(m.code)}</span><span class="bv__tname">${esc(m.tab)}</span></span></a>`;
   const viewer = `<section class="section bv-sec" id="models" aria-label="The Water ATM and the Water ATM Panel">
 <div class="wrap"><div class="bv bv--wa" data-bv>
-  <div class="bv__stage">
-  ${M.map(panel).join('\n  ')}
-  </div>
   <div class="bv__tabs bv__tabs--2" role="tablist" aria-label="Choose a product" hidden>
     ${M.map(tab).join('\n    ')}
+  </div>
+  <div class="bv__stage">
+  ${M.map(panel).join('\n  ')}
   </div>
 </div></div>
 </section>`;
@@ -1203,7 +1205,7 @@ const centredIntro = (p, demo) => `<section class="section bintro wa-intro hero-
   <p class="t-lead">${esc(p.lead)}</p>
   ${p.chips ? `<ul class="wachips" aria-label="Key qualities">${p.chips.map(([ic, t]) => `<li>${icon(ic)}<span>${esc(t)}</span></li>`).join('')}</ul>` : ''}
   ${p.tagline ? `<p class="watag">${esc(p.tagline[0])}<span>${esc(p.tagline[1])}</span></p>` : ''}
-  <div class="btn-row">${btn(demo, 'Request a demo')}</div>
+  <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>
 </div></section>`;
 // the picture: the product's cut-out on Mist with its "Product render" tag, or the hexagon illustration with one tag
 // ("Awaiting from client" as the Sky chip, any other word as the plain tag)
@@ -1262,13 +1264,13 @@ const monitorBlock = m => `<div class="dmon wamon">
 
 // Energy Monitoring, Smart Milk Vending, Napkin Vending, Reverse Vending: each section only when its data exists
 function simplePage(p) {
-  const demo = `/contact/?product=${p.slug}#demo`;
+  const demo = `/contact/?product=${p.slug}`;
   const v = p.view;
   const inner = `${viewHead(v)}
       <h3 class="bv__label">${esc(v.pointsLabel)}</h3>
       ${qPoints(v.points)}
       ${v.awaiting ? slot(v.awaiting) : ''}${v.note ? `<p class="bvone__note">${esc(v.note)}</p>` : ''}
-      <div class="btn-row">${btn(demo, 'Request a demo')}</div>`;
+      <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>`;
   const parts = [centredIntro(p, demo), oneView(p.name, inner, oneMedia(v))];
   if (p.empower) parts.push(section({ id: 'impact' }, `${head('impact', p.empower.head[0], p.empower.head[1])}${dItems(p.empower.items, 'bben--4')}`));
   if (p.monitor) parts.push(section({ id: 'monitoring' }, `${head('monitoring', p.monitor.head[0], p.monitor.head[1])}${monitorBlock(p.monitor)}`));
@@ -1282,7 +1284,7 @@ function simplePage(p) {
 
 // Rural Water Center (Synget Water Centers_26.pdf): the PDF's sections in its order, the comparison table last
 function rwcPage(p) {
-  const demo = `/contact/?product=${p.slug}#demo`;
+  const demo = `/contact/?product=${p.slug}`;
   const v = p.view;
   const inner = `${viewHead(v)}
       <h3 class="bv__label">Services offered</h3>
@@ -1291,7 +1293,7 @@ function rwcPage(p) {
       <ul class="bv__apps">${v.for.map(a => `<li>${esc(a)}</li>`).join('')}</ul>
       <h3 class="bv__label">On every centre</h3>
       ${checks(v.marks)}
-      <div class="btn-row">${btn(demo, 'Request a demo')}</div>`;
+      <div class="btn-row">${btn(demo, 'Request a demo')}${brochureBtn()}</div>`;
 
   const how = section({ id: 'how' }, `${head('how', 'How a Rural Water Center works.', 'Simple, sustainable and scalable.')}
 <ol class="dsteps dsteps--6">${p.process.map(([ic, t, x], k) => `<li><span class="bben__ico">${icon(ic)}</span><span class="dsteps__n">0${k + 1}</span><b>${esc(t)}</b><span>${esc(x)}</span></li>`).join('')}</ol>
@@ -1378,7 +1380,7 @@ function ixChips(i) {
   const grp = i.group ? [`<li><a class="ix__chip ix__chip--sol" href="${solGroupLink(i)}">${icon('layers')}<span>${esc(i.group)} solutions</span></a></li>`] : [];
   return `<ul class="ix__chips">${[...prods, ...grp].join('')}</ul>`;
 }
-const ixDemo = i => `/contact/?industry=${i.slug}#demo`;
+const ixDemo = i => `/contact/?industry=${i.slug}`;
 function ixPanel(i, k) {
   return `<article class="ix__panel${k === 0 ? ' is-active' : ''}" id="${i.slug}" aria-labelledby="${i.slug}-h">
     <div class="ix__head">${ixHex(i.icon)}<div><p class="ix__suite">${esc(i.suite)}</p><h3 id="${i.slug}-h">${esc(i.name)}</h3></div></div>
@@ -1437,7 +1439,7 @@ ${industryExplorer()}
 </div></section>
 ${ixScript}`;
   return page({ path: '/industries/', nav: 'industries', title: 'Industries: IoT suites for healthcare, manufacturing, water, energy and more', desc: 'Sygnet IoT industry suites for healthcare, manufacturing, water, energy, retail, buildings, agriculture, smart cities and education.', body,
-    close: { h2: 'Talk to us about your industry', line: 'Tell us what you run and we will walk you through the Sygnet products for it, on your own use case.', href: '/contact/?topic=industry#demo' } });
+    close: { h2: 'Talk to us about your industry', line: 'Tell us what you run and we will walk you through the Sygnet products for it, on your own use case.', href: '/contact/?topic=industry' } });
 }
 
 // an industry's own page: the same parts as its panel, at full width, then the other eight as links
@@ -1465,7 +1467,7 @@ ${section({ id: 'more', cls: 'ix-sec' }, `${head('more', 'Other industries.')}<n
 const layerStack = () => `<div class="hero-visual stackvis span-6 start-7" role="img" aria-label="The five layers of Sygnet IoT Connect: device, edge, cloud, applications and AI">${[...LAYERS].reverse().map(([n], k) => `<span class="stackvis__l stackvis__l--${k}">${icon(['brain', 'smartphone', 'cloud', 'router', 'cpu'][k])}<b>${n}</b></span>`).join('')}</div>`;
 
 function platform() {
-  const body = `${heroSplit({ notice: 'Sygnet IoT Connect', h1: 'One IoT platform from device to AI', lead: 'Connect any device, collect its data, automate at the edge and run industry apps on top, in the cloud or on your own servers. Every Sygnet product runs on it.', visual: layerStack(), actions: `${demoBtn()}${btn('/developer/', 'Developer details', 'secondary')}` })}
+  const body = `${heroSplit({ notice: 'Sygnet IoT Connect', h1: 'One IoT platform from device to AI', lead: 'Connect any device, collect its data, automate at the edge and run industry apps on top, in the cloud or on your own servers. Every Sygnet product runs on it.', visual: layerStack(), actions: demoBtn() })}
 ${section({ id: 'layers' }, `${head('layers', 'Every layer connected.', 'From devices to AI, everything works together.')}${layersList()}`)}
 ${statement('The four jobs the platform does for every device you connect, whether it is a bed switch, a loom or a water tap.')}
 <section class="section ground-inverse band" id="security" aria-labelledby="security-h"><div class="wrap">
@@ -1477,7 +1479,7 @@ ${section({ id: 'build' }, `${head('build', 'Built for developers, ready for ent
 <div class="stack-4" style="margin-top: var(--s-6)"><p class="t-label muted">Industry suites on the platform</p><div class="chips">${industryLinks(INDUSTRIES.map(i => i.slug))}</div><a class="link" href="/solutions/">See all ${SOLUTION_COUNT} solutions</a></div>`)}
 ${revealScript}
 `;
-  return page({ path: '/platform/', nav: 'platform', title: 'Sygnet IoT Connect: IoT platform from device to cloud to AI', desc: 'Sygnet IoT Connect: device, edge, cloud, applications and AI layers, REST, MQTT and Webhooks, SDKs, multi-tenant SaaS, white label, secure OTA, cloud or on-premise.', body });
+  return page({ path: '/platform/', nav: 'platform', title: 'Sygnet IoT Connect: IoT platform from device to cloud to AI', desc: 'Sygnet IoT Connect: device, edge, cloud, applications and AI layers, REST, MQTT and Webhooks, third-party integration, multi-tenant SaaS, white label, secure OTA, cloud or on-premise.', body });
 }
 
 // ---------------------------------------------------------------- Solutions (/solutions/, site.css "solutions page")
@@ -1487,7 +1489,9 @@ ${revealScript}
 // its Sky band (layout.mjs close: false; the closing "Request a demo" line was removed at the client's request,
 // 2026-11-20). No script, no animation but the links' hover. The header wears the Platform hero's ground
 // (.hero--brand: the mark's chevrons and hexagon in a faint tint on Mist). No count in the H1: 52 was our
-// own tally of the cleaned old-site list, in no client document. Row ids are the anchors Home and the industry pages link to (#water ... #cross-industry).
+// own tally of the cleaned old-site list, in no client document. Row ids are the anchors Home and the industry pages link to (#water ... #agriculture).
+// 2026-11-20: the Cross-industry group is gone (client: it is not an industry), and the custom-build row is a
+// "Need something customised?" call to action: Contact button and WhatsApp link, no product wording.
 const solSlug = g => g.toLowerCase().replace(/[^a-z]+/g, '-');
 const solItem = s => { const [n, l] = s.split('|'); return { n, p: l ? productBySlug[l] : null }; };
 // the Sygnet products a group's solutions link to, in order, each once
@@ -1495,7 +1499,7 @@ const solProducts = g => [...new Map(g.items.map(solItem).filter(i => i.p).map(i
 // renders that show the Sygnet name cleanly (Water ATM panel, NCS station display, QMS kiosk, Community Milk ATM)
 const SOL_RENDERS = { Water: ['water-atm-panel-cut'], Healthcare: ['ncs-station-display-cut', 'qms-kiosk-cut'], Dairy: ['dairy-milk-atm-cut'] };
 const SOL_ROWS = [['utilities', 'Water, energy, buildings and factories', ['Water', 'Energy', 'Building & Utility', 'Industrial']],
-  ['sectors', 'Hospitals, dairies, farms and fleets', ['Healthcare', 'Dairy', 'Agriculture', 'Cross-industry']]];
+  ['sectors', 'Hospitals, dairies and farms', ['Healthcare', 'Dairy', 'Agriculture']]];
 const solLink = (href, text, cls = 'solp-a') => `<a class="${cls}" href="${href}">${text}</a>`;
 const solProdList = list => `<ul class="solp-prods">${list.map(p => `<li>${solLink(url.product(p.slug), esc(p.name))}${p.soon ? ' <span class="solp-soon">(coming soon)</span>' : ''}</li>`).join('')}</ul>`;
 const solPics = ids => ids ? `<figure class="solp-pics">${ids.map(id => bellImg(id)).join('')}<figcaption>Product render</figcaption></figure>` : '';
@@ -1519,93 +1523,69 @@ function solutions() {
   const head = `<section class="section solp-head hero--brand" aria-labelledby="hero-h"><div class="wrap">
   <p class="solp-eyebrow">Solutions</p>
   <h1 id="hero-h">IoT monitoring solutions on one platform</h1>
-  <p class="solp-lead">Water, energy, buildings, factories, hospitals, dairies, farms and fleets. Each solution runs on Sygnet IoT Connect, and many come as part of a Sygnet product.</p>
-  <nav class="solp-jump" aria-label="Jump to a solution"><ul>${SOL_ROWS.flatMap(r => r[2]).map(n => `<li><a href="#${solSlug(n)}">${esc(n)}</a></li>`).join('')}<li><a href="#custom">Not on the list?</a></li></ul></nav>
+  <p class="solp-lead">Water, energy, buildings, factories, hospitals, dairies and farms. Each solution runs on Sygnet IoT Connect, and many come as part of a Sygnet product.</p>
+  <nav class="solp-jump" aria-label="Jump to a solution"><ul>${SOL_ROWS.flatMap(r => r[2]).map(n => `<li><a href="#${solSlug(n)}">${esc(n)}</a></li>`).join('')}<li><a href="#hardware">Hardware</a></li><li><a href="#custom">Need something customised?</a></li></ul></nav>
 </div></section>`;
   const list = `<section class="section solp-list" aria-label="All solutions"><div class="wrap">
   ${SOL_ROWS.map(([k, label, names]) => `<h2 class="solp-group" id="g-${k}">${esc(label)}</h2>
   <ul class="solp-rows" aria-labelledby="g-${k}">
   ${names.map(n => solRow(byName[n])).join('\n  ')}
   </ul>`).join('\n  ')}
+  <h2 class="solp-group" id="g-hardware">Hardware</h2>
+  <ul class="solp-rows" aria-labelledby="g-hardware">
+  <li class="solp-row" id="hardware">
+    <div class="solp-row__name"><h3 id="hardware-h">Custom-designed hardware</h3><p class="solp-row__n">${HARDWARE.length} categories</p></div>
+    <div class="solp-row__body solp-row__body--pic">
+      <div class="solp-row__text">
+        <p class="solp-row__desc">${HARDWARE.map(([n]) => esc(n)).join(', ')}. Made for Sygnet IoT Connect, plus custom boards built to order.</p>
+        <div class="solp-row__prods">${solLink('/hardware/', `See the hardware range${ARROW}`)}</div>
+      </div>
+      <figure class="solp-pics">${bellImg('hw-industrial-gateway')}<figcaption>Industrial gateway</figcaption></figure>
+    </div>
+  </li>
+  </ul>
   <div class="solp-rows solp-rows--custom">
     <div class="solp-row" id="custom">
-      <div class="solp-row__name"><h2 id="custom-h">Not on the list?</h2><p class="solp-row__n">We build custom IoT, circuit to cloud.</p></div>
+      <div class="solp-row__name"><h2 id="custom-h">Need something customised?</h2><p class="solp-row__n">Talk to our team.</p></div>
       <div class="solp-row__body"><div class="solp-row__text">
         <p class="solp-row__desc">If the device you need does not exist yet, our engineers design the board, write the firmware, connect it to the platform and build the app.</p>
-        <div class="solp-row__prods">${solProdList(['textile-connect', 'water-atm', 'dairy-connect'].map(s => productBySlug[s]))}</div>
-        <a class="solp-a solp-more" href="/hardware/">See custom engineering${ARROW}</a>
+        <div class="solp-cta">${btn('/contact/', 'Contact')}<a class="solp-a solp-wa" href="${SITE.whatsapp}" target="_blank" rel="noopener">${WA_ICON}<span>Chat on WhatsApp</span></a></div>
       </div></div>
     </div>
   </div>
 </div></section>`;
   const body = `${head}\n${list}`;
-  return page({ path: '/solutions/', nav: 'solutions', title: 'Solutions: IoT monitoring solutions for every industry', desc: `IoT monitoring solutions from Sygnet IoT: water, energy, building and utility, industrial, healthcare, dairy, agriculture and cross-industry.`, body, close: false });
+  return page({ path: '/solutions/', nav: 'solutions', title: 'Solutions: IoT monitoring solutions for every industry', desc: `IoT monitoring solutions from Sygnet IoT: water, energy, building and utility, industrial, healthcare, dairy and agriculture, and custom-designed hardware.`, body, close: false });
 }
 
 function hardware() {
-  const body = `${heroSplit({ notice: 'Smart edge hardware', h1: 'Industrial IoT hardware, and custom boards built to order', lead: 'Controllers, sensor nodes, gateways and edge devices made for Sygnet IoT Connect, plus custom engineering from PCB design and firmware to certification and production.', visual: shotVisual('hw-industrial-gateway'), actions: `${demoBtn('Talk to an engineer')}${btn('/developer/', 'Developer details', 'secondary')}` })}
+  const body = `${heroSplit({ notice: 'Custom-designed hardware', h1: 'IoT hardware, and custom boards built to order', lead: 'Controllers, sensor nodes, gateways and edge devices made for Sygnet IoT Connect, plus custom-designed hardware, from PCB design and firmware through to certification and production.', visual: shotVisual('hw-industrial-gateway'), actions: demoBtn('Talk to an engineer') })}
 ${section({ id: 'range', h: 2 }, `${head('range', 'The hardware range.', 'Built for reliability, scalability and rapid deployment.')}
 <div class="grid grid--cards">${HARDWARE.map(([n, img]) => `<article class="card card--img span-3 m-nolift">${shot(img, '', { cls: 'card__shot' })}<h3>${esc(n)}</h3></article>`).join('')}</div>
 <div class="chips" style="margin-top: var(--s-6)">${HW_QUALITIES.map(q => `<span class="chip chip--static">${q}</span>`).join('')}</div>
 <div style="margin-top: var(--s-6)">${slot('Model-wise specifications for each category', 'Specifications coming soon')}</div>`)}
-${section({ id: 'engineering' }, `${head('engineering', 'Custom engineering, circuit to cloud.', 'One team from the first schematic to production.')}${layersList(ENGINEERING)}`)}
+${section({ id: 'engineering' }, `${head('engineering', 'Custom-designed hardware, from circuit to cloud.', 'One team from the first schematic to production.')}${layersList(ENGINEERING)}`)}
 ${section({ id: 'certs' }, `${head('certs', 'Certifications.', 'As listed in our NCS catalog.')}
 <p class="t-label muted" style="margin-bottom: var(--s-4)">${esc(CERTS_NOTE)}</p>${certBadges()}</div>`)}`;
-  return page({ path: '/hardware/', nav: 'platform', title: 'Smart edge hardware: controllers, gateways, sensor nodes and custom engineering', desc: 'Sygnet smart edge hardware: industrial controllers, sensor nodes, wireless nodes, bridge devices, industrial gateways, data loggers, communication modules and edge computing devices.', body });
+  return page({ path: '/hardware/', nav: 'solutions', title: 'Custom-designed hardware: controllers, gateways, sensor nodes and custom boards', desc: 'Sygnet custom-designed hardware: industrial controllers, sensor nodes, wireless nodes, bridge devices, industrial gateways, data loggers, communication modules and edge computing devices.', body });
 }
 
-function developer() {
-  const code = `<div class="win win--dark" role="img" aria-label="Illustrative code showing a device publishing telemetry over MQTT">
-<div class="win__bar"><span class="win__dots"><i></i><i></i><i></i></span><span class="win__title">device.py</span><span class="win__tag">Illustrative screen</span></div>
-<pre class="code"><span class="c"># Illustrative only.</span>
-<span class="c"># The API reference is coming soon.</span>
-client.connect(broker)
-client.publish(
-  "devices/&lt;device-id&gt;/telemetry",
-  payload
-)
-<span class="c"># A webhook fires on your server.</span>
-<span class="c"># REST reads history for your app.</span></pre></div>`;
-  const body = `${heroSplit({ notice: 'REST · MQTT · Webhooks', h1: 'Build on Sygnet IoT Connect', lead: 'Open APIs, SDKs for Flutter, Python, Node.js and embedded devices, secure OTA firmware updates, and white label for your own brand.', visual: `<div class="hero-visual frame frame--win span-6 start-7">${code}</div>`, actions: `${btn('/contact/?topic=developer#demo', 'Request API access')}${btn('/platform/', 'Platform overview', 'secondary')}` })}
-${section({ id: 'apis' }, `${head('apis', 'Three ways to talk to the platform.', 'Use the one that fits your system.')}${cardRow([['REST', 'Read and manage devices and data from any app or server.', 'database'], ['MQTT', 'Light, real-time messaging for devices in the field.', 'radio'], ['Webhooks', 'Events pushed to your server as they happen.', 'workflow']].map(([t, x, ic]) => ({ title: t, text: x, ico: ic })))}
-<div style="margin-top: var(--s-6)" class="stack-4"><p class="t-label muted">SDKs</p><div class="chips">${['Flutter', 'Python', 'Node.js', 'Embedded'].map(s => `<span class="chip chip--static">${s}</span>`).join('')}</div></div>`)}
-${section({ id: 'features' }, `${head('features', 'What else is in the box.', 'For products you build and brand.')}${cardRow(DEV.slice(2).map(([t, x]) => ({ title: t, text: x })))}`)}
-${section({ id: 'docs' }, `${head('docs', 'Documentation.', 'The API reference is being prepared.')}
-<div class="grid grid--top"><div class="span-6">${slot('API reference and SDK documentation', 'Coming soon')}</div>
-<div class="span-6 start-7 stack-5"><p class="t-lead">Until the docs are public, our engineers share the API details directly with your team.</p><div class="btn-row">${btn('/contact/?topic=developer#demo', 'Request API access')}</div></div></div>`)}`;
-  return page({ path: '/developer/', nav: 'platform', type: 'software', title: 'Developer: APIs, SDKs and OTA for Sygnet IoT Connect', desc: 'Build on Sygnet IoT Connect: REST, MQTT and Webhooks, SDKs for Flutter, Python, Node.js and embedded, multi-tenant, white label, secure OTA, cloud or on-premise.', body, close: { h2: 'Get API access for your team', label: 'Request API access', href: '/contact/?topic=developer#demo' } });
-}
-
-function resources() {
-  const lib = [['Product flyers', 'Napkin Vending, Water ATM Panel and Smart Milk Vending. Reverse Vending to come.', 'file-text'], ['Product catalogues', 'Nurse call, queue management, school bell, water, textile and dairy catalogues.', 'clipboard-list'], ['API reference', 'REST, MQTT and Webhooks documentation.', 'database'], ['Company profile', 'Sygnet IoT capabilities in one document.', 'building']];
-  const body = `${heroSplit({ notice: 'Resources', h1: 'Brochures, catalogues and documentation', lead: 'Product flyers, catalogues and technical documents for Sygnet products. Ask our team and we will send the one you need while the download library is prepared.', visual: shotVisual('bell-range-tbw-d'), actions: `${btn('/contact/?topic=brochure#demo', 'Ask for a brochure')}${btn('/case-studies/', 'Case studies', 'secondary')}` })}
-${section({ id: 'library' }, `${head('library', 'The library.', 'Downloads go live as each document is approved.')}
-${cardRow(lib.map(([t, x, ic]) => ({ title: t, text: x, ico: ic })))}
-<div style="margin-top: var(--s-6)">${slot('Downloadable PDF versions of each document', 'Coming soon')}</div>`)}
-${section({ id: 'questions' }, `${head('questions', 'Common questions.', 'Answered from what we do today.')}${faq([
-    ['Do you build custom hardware?', 'Yes. Custom IoT engineering covers PCB design, firmware, cloud, apps and certification through to production.'],
-    ['Can the platform run on our own servers?', 'Yes. Sygnet IoT Connect runs in the cloud or on-premise.'],
-    ['Can we put our own brand on it?', 'Yes. The platform supports white label.'],
-    ['Where are you based?', 'In Surat, Gujarat, India.'],
-  ])}`)}`;
-  return page({ path: '/resources/', nav: 'platform', title: 'Resources: Sygnet IoT brochures, catalogues and documentation', desc: 'Sygnet IoT resources: product flyers, catalogues, API reference and company profile, with answers to common questions.', body });
-}
-
+// The company profile's eight partner types (data.mjs COMPANY.partners), as on the client's screenshot.
+const PARTNER_TYPES = COMPANY.partners;
 function partners() {
   const tierPanel = `<div class="hero-visual frame frame--win span-6 start-7"><div class="win" role="img" aria-label="The four partner tiers"><div class="win__bar"><span class="win__dots"><i></i><i></i><i></i></span><span class="win__title">Partner tiers</span></div><div class="win__body">
 <table class="tiers"><thead><tr><th scope="col">Tier</th><th scope="col">Partner level</th></tr></thead><tbody>${TIERS.map(([m, r]) => `<tr><th scope="row"><span class="tier__dot tier--${m.toLowerCase()}"></span>${m}</th><td>${r}</td></tr>`).join('')}</tbody></table></div></div></div>`;
-  const body = `${heroSplit({ notice: 'Partner program', h1: 'Partner program for integrators and resellers', lead: 'Sell, install and support Sygnet products in your region. Four tiers, from Authorized Partner to Strategic Partner, each with training and support.', visual: tierPanel, actions: `${btn('/contact/?topic=partner#demo', 'Apply to partner')}${btn('/products/', 'See the products', 'secondary')}` })}
-${section({ id: 'who' }, `${head('who', 'Who we partner with.', 'Businesses that already serve our industries.')}${cardRow([['System integrators', 'Add Sygnet products to the projects you already deliver.', 'workflow'], ['Resellers', 'Sell the Sygnet range to hospitals, schools, mills and utilities.', 'store'], ['OEMs', 'Build Sygnet hardware or the platform into your own products, under white label.', 'cpu']].map(([t, x, ic]) => ({ title: t, text: x, ico: ic })))}`)}
+  const body = `${heroSplit({ notice: 'Partner program', h1: 'Partner program for integrators and resellers', lead: 'Sell, install and support Sygnet products in your region. Four tiers, from Authorized Partner to Strategic Partner, each with training and support.', visual: tierPanel, actions: btn('/contact/?topic=partner', 'Apply to partner') })}
+${section({ id: 'who' }, `${head('who', 'Partner ecosystem.', 'Sygnet works with:')}<ul class="cocards">${PARTNER_TYPES.map(([ic, t, x]) => `<li class="cocard">${coHex(ic)}<h3>${esc(t)}</h3><p>${esc(x)}</p></li>`).join('')}</ul>`)}
 ${section({ id: 'tiers' }, `${head('tiers', 'Four tiers.', 'Grow from Bronze to Platinum.')}
 <div class="grid grid--cards">${TIERS.map(([m, r, b]) => `<article class="card span-3 m-nolift tier tier--${m.toLowerCase()}"><span class="tier__swatch"></span><span class="tier__metal">${m}</span><p class="t-label muted">${r}</p><ul class="checks">${b.map(x => `<li>${x}</li>`).join('')}</ul></article>`).join('')}</div>
 <div style="margin-top: var(--s-6)">${slot('Tier requirements, partner terms and partner logos')}</div>`)}`;
-  return page({ path: '/partners/', nav: 'partners', title: 'Partner program: Bronze, Silver, Gold and Platinum Sygnet partners', desc: 'Become a Sygnet IoT partner: Bronze (Authorized), Silver (Solution), Gold (Advanced) and Platinum (Strategic) tiers for system integrators, resellers and OEMs.', body, close: { h2: 'Apply to become a Sygnet partner', label: 'Apply to partner', href: '/contact/?topic=partner#demo' } });
+  return page({ path: '/partners/', nav: 'partners', title: 'Partner program: Bronze, Silver, Gold and Platinum Sygnet partners', desc: 'Become a Sygnet IoT partner: Bronze (Authorized), Silver (Solution), Gold (Advanced) and Platinum (Strategic) tiers for system integrators, OEMs, ELV integrators, automation companies, IT solution providers and consultants.', body, close: { h2: 'Apply to become a Sygnet partner', label: 'Apply to partner', href: '/contact/?topic=partner' } });
 }
 
 // ---------------------------------------------------------------- Company / About (/company/)
 // Rebuilt 2026-11-20 from the Sygnet Profile (data.mjs COMPANY) on the bell page's parts: the centred intro (.bintro),
-// the viewer (.bv, bellScript) for the four industry applications (#healthcare, #manufacturing, #retail, #utilities;
-// all four panels are in the HTML, so without script they stack and read in full), the lists (.bben, .bstr, .bline),
+// the lists (.bben, .bstr, .bline),
 // the Indigo band (.lcards) and the Sky placeholder (slot). The profile's Solution, Platform, Hardware and Contact
 // pages are not used here; one link row points to the site's own pages. "Formerly Resonent" appears on this page only.
 // site.css "company page".
@@ -1622,7 +1602,7 @@ function company() {
   <p class="bintro__former">Formerly ${esc(SITE.formerly)}</p>
 </div></section>`;
 
-  const about = section({ id: 'about' }, `${head('about', 'About Sygnet IoT.', 'A full stack Industrial IoT platform company.')}
+  const about = section({ id: 'about' }, `${head('about', 'About Sygnet IoT.', 'A full stack IoT platform company.')}
 <ul class="cocards">${C.about.map(([ic, t, x]) => `<li class="cocard">${coHex(ic)}<h3>${esc(t)}</h3><p>${esc(x)}</p></li>`).join('')}</ul>
 ${coPills(C.strengths, 'Our strengths')}`);
 
@@ -1638,55 +1618,18 @@ ${head('purpose', 'Vision, mission and purpose.', 'What Sygnet works towards.')}
 ${dStrip(C.values, 'Our values', 'bstr--6')}
 </div></section>`;
 
-  const challenge = section({ id: 'challenge' }, `${head('challenge', 'Why Industrial IoT projects struggle.', 'Too many parts to join up.')}
+  const challenge = section({ id: 'challenge' }, `${head('challenge', 'Why IoT projects struggle.', 'Too many parts to join up.')}
 <p class="cochal__lead">To connect one operation, organizations must integrate all of these:</p>
 <ul class="coparts">${C.stack.map(([ic, t]) => `<li>${icon(ic)}<span>${esc(t)}</span></li>`).join('')}</ul>
 <p class="cochal__lead">This complexity increases project cost, delays deployment and impacts ROI.</p>
 ${dStrip(C.impact, 'What the complexity does')}
 <p class="bline">Sygnet brings the hardware, firmware, cloud and apps together <span>under one company.</span></p>`);
 
-  // the industry viewer: a selector of four, then one panel; the picture side is a designed card (the profile's
-  // device pictures on p. 8 carry no Sygnet mark), so it repeats the list as hexagon tiles and is hidden from screen readers
-  const appPanel = (a, i) => `<article class="bv__panel${i === 0 ? ' is-active' : ''}" id="${a.id}">
-    <div class="bv__text">
-      <p class="bv__code">Industry application</p>
-      <h3 class="bv__name" id="${a.id}-h">${esc(a.name)}</h3>
-      <p class="bv__line">${esc(a.line)}</p>
-      <h4 class="bv__label">Applications</h4>
-      ${checks(a.items.map(([, t]) => t))}
-      <div class="bv__best"><span class="bv__best-ico">${BHEX}${icon('cloud')}</span><div><h4 class="bv__label">Platform</h4><p>Built on Sygnet IoT Connect.</p></div></div>
-      <h4 class="bv__label">Sygnet products</h4>
-      <ul class="coprods">${a.products.map(s => `<li><a href="${url.product(s)}"><span>${esc(productBySlug[s].name)}</span>${ARROW}</a></li>`).join('')}</ul>
-    </div>
-    <div class="bv__media coapp" aria-hidden="true">
-      <div class="coapp__head">${coHex(a.icon, 'coapp__hex')}<span><b>${esc(a.name)}</b><span>On Sygnet IoT Connect</span></span></div>
-      <ul class="coapp__grid coapp__grid--${a.items.length}">${a.items.map(([ic, t]) => `<li>${coHex(ic)}<span>${esc(t)}</span></li>`).join('')}</ul>
-    </div>
-  </article>`;
-  const appTab = a => `<a class="bv__tab" href="#${a.id}" id="tab-${a.id}" role="tab" aria-controls="${a.id}" aria-selected="false" tabindex="-1">
-      ${coHex(a.icon, 'cohex bv__thumb cotab__hex')}<span class="bv__ttext"><span class="bv__tcode">${a.items.length} applications</span><span class="bv__tname">${esc(a.name)}</span></span></a>`;
-  const apps = `<section class="section" id="applications" aria-labelledby="applications-h"><div class="wrap">
-${head('applications', 'Industry applications.', 'Ready to deploy.', 'Smart solutions for four industries, built on Sygnet IoT Connect. Choose one to see its applications.')}
-<div class="bv bv--apps" data-bv>
-  <div class="bv__tabs bv__tabs--4" role="tablist" aria-label="Choose an industry" hidden>
-    ${C.apps.map(appTab).join('\n    ')}
-  </div>
-  <div class="bv__stage">
-  ${C.apps.map(appPanel).join('\n  ')}
-  </div>
-</div>
-${dStrip(C.appsClose, 'How the applications are delivered')}
-</div></section>`;
-
-  const why = section({ id: 'why' }, `${head('why', 'Why Sygnet: ten reasons.', 'A complete technology partner.', 'Unlike traditional vendors, Sygnet provides everything under one ecosystem.')}
+  const why = section({ id: 'why' }, `${head('why', 'Why Sygnet.', 'A complete technology partner.', 'Unlike traditional vendors, Sygnet provides everything under one ecosystem.')}
 <ol class="coten">${C.reasons.map(([ic, t, x], k) => `<li><span class="coten__top"><span class="coten__n">${String(k + 1).padStart(2, '0')}</span>${icon(ic)}</span><b>${esc(t)}</b><span class="coten__x">${esc(x)}</span></li>`).join('')}</ol>
 <h3 class="dlabel">Our solutions help organizations</h3>
 <ul class="coout">${C.outcomes.map(([ic, t]) => `<li>${icon(ic)}<span>${esc(t)}</span></li>`).join('')}</ul>
 ${dStrip(C.promise, 'What we stand for')}`);
-
-  const partnersSec = section({ id: 'partners' }, `${head('partners', 'Partner ecosystem.', 'Sygnet works with:')}
-<ul class="cocards cocards--partners">${C.partners.map(([ic, t, x]) => `<li class="cocard">${coHex(ic)}<h3>${esc(t)}</h3><p>${esc(x)}</p></li>`).join('')}</ul>
-<div class="copart__close"><p class="bline">Together, we deliver <span>scalable digital transformation solutions.</span></p><div class="btn-row">${btn('/partners/', 'Become a partner', 'secondary')}</div></div>`);
 
   const together = `<section class="section" id="together" aria-labelledby="together-h"><div class="wrap"><div class="cotog">
   <div class="cotog__copy"><div class="section-head"><h2 id="together-h">Let’s build smarter operations together.</h2></div>
@@ -1699,15 +1642,15 @@ ${dStrip(C.promise, 'What we stand for')}`);
 ${slot('Company facts: founding year, team, locations.')}
 </div></section>`;
 
-  const body = `${intro}\n${about}\n${purpose}\n${challenge}\n${apps}\n${bellScript}\n${why}\n${partnersSec}\n${together}\n${end}`;
+  const body = `${intro}\n${about}\n${purpose}\n${challenge}\n${why}\n${together}\n${end}`;
   return page({ path: '/company/', nav: 'company', title: 'About Sygnet IoT: operational intelligence for connected enterprises',
-    desc: `${SITE.legal} (formerly Resonent TechnoLabs) is an Industrial IoT platform company: intelligent hardware, cloud software, mobile apps and operational intelligence on Sygnet IoT Connect.`, body });
+    desc: `${SITE.legal} (formerly Resonent TechnoLabs) is an IoT platform company: intelligent hardware, cloud software, mobile apps and operational intelligence on Sygnet IoT Connect.`, body });
 }
 
 function caseStudies() {
   // one card per product line, each named once (Water ATM and Water Centers are separate lines)
   const stories = [['Healthcare', 'Sygnet NCS Nurse Call System'], ['Education', 'Sygnet School Bell & PA System'], ['Water', 'Sygnet Water ATM'], ['Rural water', 'Sygnet Water Centers'], ['Manufacturing', 'Sygnet Textile Connect'], ['Dairy', 'Sygnet Dairy Connect']];
-  const body = `${heroSplit({ notice: 'Case studies', h1: 'Case studies and clients', lead: 'Installations of Sygnet products in hospitals, schools, mills and water projects. Each story is published with the client’s permission and is being prepared now.', visual: shotVisual('water-centre'), actions: `${demoBtn('Ask for references')}${btn('/industries/', 'Browse industries', 'secondary')}` })}
+  const body = `${heroSplit({ notice: 'Case studies', h1: 'Case studies and clients', lead: 'Installations of Sygnet products in hospitals, schools, mills and water projects. Each story is published with the client’s permission and is being prepared now.', visual: shotVisual('water-centre'), actions: demoBtn('Ask for references') })}
 ${trustBlock('clients')}
 ${section({ id: 'stories' }, `${head('stories', 'Case studies.', 'One story per product line, written with each client.')}
 <div class="grid grid--cards">${stories.map(([ind, name]) => `<article class="card span-4 m-nolift"><p class="t-label muted">${esc(ind)}</p><h3>${esc(name)}</h3><p>Client, problem, what we installed and the result.</p></article>`).join('')}</div>
@@ -1728,18 +1671,30 @@ function contact() {
   <div class="form__actions"><button class="btn btn--primary" type="submit">Request a demo</button></div>
   <p class="form__status" role="status" data-form-status></p>
 </form></div>`;
-  const body = `<section class="hero hero--split hero--brand hero--form" data-enter aria-labelledby="hero-h">
+  // runs before the form is parsed: the Contact page always opens at its top (header, heading, intro, form), never at the
+  // previous page's scroll position or an old #demo jump; a reload or Back/Forward keeps the browser's own position
+  const top = `<script>
+  (function () { try {
+    var n = performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null, t = n ? n.type : 'navigate';
+    if (t === 'reload' || t === 'back_forward') return;
+    if (location.hash === '#demo') history.replaceState(history.state, '', location.pathname + location.search);
+    if (location.hash) return;
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    addEventListener('load', function () { window.scrollTo(0, 0); history.scrollRestoration = 'auto'; }, { once: true });
+  } catch (e) {} })();
+</script>`;
+  const body = `${top}
+<section class="hero hero--split hero--brand hero--form" data-enter aria-labelledby="hero-h">
 <div class="wrap"><div class="hero-text grid hero-split">
   <div class="hero-copy span-5">
     <p class="eyebrow">Contact</p>
     <h1 id="hero-h">Request a demo or talk to our experts</h1>
     <p class="t-lead">Tell us about your site and what you want to connect. Our team in Surat will reply by email or phone.</p>
-    <dl class="contact-list"><div><dt>Phone</dt><dd><a href="tel:${SITE.tel}">${SITE.phone}</a></dd></div><div><dt>Email</dt><dd><a href="mailto:${SITE.email}">${SITE.email}</a></dd></div><div><dt>Office</dt><dd>${SITE.city}</dd></div></dl>
+    <dl class="contact-list"><div><dt>Phone</dt><dd><a href="tel:${SITE.tel}">${SITE.phone}</a></dd></div><div><dt>Email</dt><dd><a href="mailto:${SITE.email}">${SITE.email}</a></dd></div><div><dt>Office</dt><dd class="contact-list__addr"><address>${SITE.address.map(esc).join('<br>')}</address></dd></div><div><dt>Follow us</dt><dd>${socialLinks(SITE.social)}</dd></div></dl>
   </div>
   ${form}
 </div></div>
 </section>
-${section({ id: 'routes', h: 2 }, `${head('routes', 'Not sure where to start?', 'Pick the product closest to your problem.')}${productGrid(priority)}`)}
 <script>
   // pre-select the product when a page links here with ?product=<slug>
   (function () { try { var p = new URLSearchParams(location.search), s = document.getElementById('f-product'), v = p.get('product') || p.get('topic');
@@ -1776,8 +1731,6 @@ export function allPages() {
     ['/platform/', platform()],
     ['/solutions/', solutions()],
     ['/hardware/', hardware()],
-    ['/developer/', developer()],
-    ['/resources/', resources()],
     ['/partners/', partners()],
     ['/company/', company()],
     ['/case-studies/', caseStudies()],
