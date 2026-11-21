@@ -120,6 +120,24 @@ html:not([data-motion="off"]) .card--link:hover { background: color-mix(in oklab
   .nav:not(.nav--glass) .nav__links .nav__link { padding: 0 10px; }
   .nav:not(.nav--glass) .nav__links .nav__link::before, .nav:not(.nav--glass) .nav__links .nav__link[aria-current="page"]::after { left: 10px; right: 10px; }
 }
+/* desktop: the menu words and the two buttons keep their natural width (the longer "Partner log in" used to squeeze
+   the row until Company spilled out of it); the space between them is what gives way */
+@media (min-width: 1024px) {
+  .nav .nav__links { flex: 1 0 auto; }
+  .nav.nav--glass .nav__links { flex: none; }
+  .nav .nav__actions { flex: none; }
+  .nav .nav__actions .btn { white-space: nowrap; }
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .nav .nav__actions { gap: var(--s-2); }
+  .nav .nav__actions .btn { padding-inline: 14px; font-size: 14px; }
+  .nav--glass > .nav__bar.wrap { padding-inline: 16px; }
+  .nav.nav--glass .nav__links { gap: 0; }
+  .nav.nav--glass .nav__links .nav__link { padding: 0 5px; }
+}
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .nav--glass .nav__links .nav__link { padding: 0 9px; }
+}
 /* the phone and tablet menu sheet: one column per panel, every row whole, room above the fixed button bar */
 @media (max-width: 1023px) {
   .nav.is-open .nav__links { padding: var(--s-2) var(--gut) calc(var(--btn-h) + 96px + env(safe-area-inset-bottom)); overscroll-behavior: contain; background: #ffffff; }

@@ -1475,7 +1475,7 @@ ${head('security', 'Security built in.', 'From the device to the dashboard.')}
 <div class="grid grid--top"><div class="span-6 stack-5">${checks(SECURITY)}</div>
 <div class="span-6 start-7">${slot('Security certifications and compliance details')}</div></div>
 </div></section>
-${section({ id: 'build' }, `${head('build', 'Built for developers, ready for enterprises.', 'Open interfaces and flexible deployment.')}${cardRow(DEV.map(([t, x]) => ({ title: t, text: x })))}
+${section({ id: 'build' }, `${head('build', 'Ready for enterprises.', 'Open interfaces and flexible deployment.')}${cardRow(DEV.map(([t, x]) => ({ title: t, text: x })))}
 <div class="stack-4" style="margin-top: var(--s-6)"><p class="t-label muted">Industry suites on the platform</p><div class="chips">${industryLinks(INDUSTRIES.map(i => i.slug))}</div><a class="link" href="/solutions/">See all ${SOLUTION_COUNT} solutions</a></div>`)}
 ${revealScript}
 `;

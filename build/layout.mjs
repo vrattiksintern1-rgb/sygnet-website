@@ -49,7 +49,7 @@ const NAV = [
   // 2026-11-20: Developer and Resources removed with their pages; "Smart edge hardware" moved from Platform to Solutions
   { key: 'platform', label: 'Platform', href: '/platform/' },
   { key: 'solutions', label: 'Solutions', href: '/solutions/', menu: menuList([
-    ['/solutions/', 'All solutions'], ['/hardware/', 'Custom-designed hardware']]) },
+    ['/solutions/', 'Solutions'], ['/hardware/', 'Custom-designed hardware']]) },
   { key: 'partners', label: 'Partners', href: '/partners/' },
   { key: 'company', label: 'Company', href: '/company/', menu: menuList([
     ['/company/', 'About Sygnet IoT'], ['/case-studies/', 'Case studies'], ['/contact/', 'Contact']]) },
@@ -73,7 +73,7 @@ function header(current, glass = false) {
 ${items}
     </nav>
     <div class="nav__actions">
-      <button class="btn btn--secondary nav__login" type="button">Log in</button>
+      <button class="btn btn--secondary nav__login" type="button">Partner log in</button>
       <a class="btn btn--primary" href="/contact/">${glass ? 'Request a Demo' : 'Request a demo'}</a>
     </div>
     <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
@@ -87,7 +87,7 @@ ${items}
 const FOOT = [
   ['Products', [...priority.map(p => [url.product(p.slug), p.short]), ['/products/', 'All products']]],
   ['Industries', INDUSTRIES.map(i => [url.industry(i.slug), i.name])],
-  ['Platform & solutions', [['/platform/', 'Sygnet IoT Connect'], ['/solutions/', 'All solutions'], ['/hardware/', 'Custom-designed hardware']]],
+  ['Platform & solutions', [['/platform/', 'Sygnet IoT Connect'], ['/solutions/', 'Solutions'], ['/hardware/', 'Custom-designed hardware']]],
   ['Company', [['/company/', 'About us'], ['/case-studies/', 'Case studies'], ['/partners/', 'Partner program'], ['/contact/', 'Contact']]],
 ];
 
